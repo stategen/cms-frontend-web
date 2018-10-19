@@ -1,0 +1,87 @@
+/**
+ *  Do not remove this unless you get business authorization.
+ *  ResponseExtend
+ *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
+ *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+ */
+import {TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT} from "@utils/DvaUtil";
+import ResponseExtend from "../beans/ResponseExtend"
+import {ColumnProps} from "antd/lib/table";
+import moment from 'moment';
+import {responseStatusOptions} from '../enums/ResponseStatus';
+
+export interface ResponseExtendColumns<R> {
+  /** code  */
+  code?: ColumnProps<R>,
+
+  /** exeptionClass  */
+  exeptionClass?: ColumnProps<R>,
+
+  /** data  */
+  data?: ColumnProps<R>,
+
+  /** status  */
+  status?: ColumnProps<R>,
+
+  /** message  */
+  message?: ColumnProps<R>,
+
+  /** success  */
+  success?: ColumnProps<R>,
+
+ /** 操作 */
+ Operation?: ColumnProps<R>,
+
+ [columnName: string]: ColumnProps<R>,
+
+}
+
+export const responseExtendDefaultColumns: ResponseExtendColumns<ResponseExtend<T>> = {
+
+  /** code  */
+  code: {
+    title: 'code',
+    dataIndex: 'code',
+    key: 'code',
+  },
+
+  /** exeptionClass  */
+  exeptionClass: {
+    title: 'exeptionClass',
+    dataIndex: 'exeptionClass',
+    key: 'exeptionClass',
+  },
+
+  /** data  */
+  data: {
+    title: 'data',
+    dataIndex: 'data',
+    key: 'data',
+  },
+
+  /** status  */
+  status: {
+    title: 'status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (text: any, record: ResponseExtend<T>, index: number) => {
+      const optionProp = responseStatusOptions[text];
+      return optionProp != null ? optionProp.title : null;
+    },
+  },
+
+  /** message  */
+  message: {
+    title: 'message',
+    dataIndex: 'message',
+    key: 'message',
+  },
+
+  /** success  */
+  success: {
+    title: 'success',
+    dataIndex: 'success',
+    key: 'success',
+  },
+
+}
