@@ -2,14 +2,13 @@
  *  Do not remove this unless you get business authorization.
  *  Role
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+ *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
 import {roleCustomState,RoleCustomSubscriptions , RoleCustomEffects, RoleCustomReducers} from '@pages/role/RoleCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
-import SimpleResponse from "../beans/SimpleResponse";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
@@ -27,16 +26,10 @@ export type RoleSubscriptions = RoleInitSubscriptions & RoleCustomSubscriptions;
 
 export interface RoleInitEffects extends Effects {
   setup?: Effect;
+  /** 删除角色 */
+  delete?: Effect,
   /** 批量删除角色 */
-  batchDelete?: Effect,
-  /** 删除角色 */
-  deleteByRoleId?: Effect,
-  /** 删除角色 */
-  deleteWithResponse?: Effect,
-  /** 角色列表 */
-  getAll?: Effect,
-  /** 角色分页列表 */
-  getRolePageList?: Effect,
+  deleteByRoleIds?: Effect,
   /** 角色分页列表,多条件 */
   getRolePageListByDefaultQuery?: Effect,
   /** 创建角色 */
@@ -49,16 +42,10 @@ export type RoleEffects = RoleInitEffects & RoleCustomEffects;
 
 interface RoleInitReducers<S extends RoleState> extends Reducers<S> {
   setup_success?: Reducer<RoleState>,
+  /** 删除角色  成功后 更新状态*/
+  delete_success?: Reducer<RoleState>,
   /** 批量删除角色  成功后 更新状态*/
-  batchDelete_success?: Reducer<RoleState>,
-  /** 删除角色  成功后 更新状态*/
-  deleteByRoleId_success?: Reducer<RoleState>,
-  /** 删除角色  成功后 更新状态*/
-  deleteWithResponse_success?: Reducer<RoleState>,
-  /** 角色列表  成功后 更新状态*/
-  getAll_success?: Reducer<RoleState>,
-  /** 角色分页列表  成功后 更新状态*/
-  getRolePageList_success?: Reducer<RoleState>,
+  deleteByRoleIds_success?: Reducer<RoleState>,
   /** 角色分页列表,多条件  成功后 更新状态*/
   getRolePageListByDefaultQuery_success?: Reducer<RoleState>,
   /** 关闭role对话框  更新状态*/
@@ -135,58 +122,22 @@ export class RoleDispatch {
     }
   }
 
+  /** 删除角色 */
+  static delete_effect(params: { roleId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+    return {
+      type: roleInitModel.namespace + '/delete',
+      payload: {
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
+  };
+
   /** 批量删除角色 */
-  static batchDelete_effect(params: { roleIds: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static deleteByRoleIds_effect(params: { roleIds: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
-      type: roleInitModel.namespace + '/batchDelete',
-      payload: {
-        ...params,
-        areaExtraProps__,
-        stateExtraProps__,
-      }
-    }
-  };
-
-  /** 删除角色 */
-  static deleteByRoleId_effect(params: { roleId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/deleteByRoleId',
-      payload: {
-        ...params,
-        areaExtraProps__,
-        stateExtraProps__,
-      }
-    }
-  };
-
-  /** 删除角色 */
-  static deleteWithResponse_effect(params: { roleId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/deleteWithResponse',
-      payload: {
-        ...params,
-        areaExtraProps__,
-        stateExtraProps__,
-      }
-    }
-  };
-
-  /** 角色列表 */
-  static getAll_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/getAll',
-      payload: {
-        ...params,
-        areaExtraProps__,
-        stateExtraProps__,
-      }
-    }
-  };
-
-  /** 角色分页列表 */
-  static getRolePageList_effect(params: { pageSize: number, page: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/getRolePageList',
+      type: roleInitModel.namespace + '/deleteByRoleIds',
       payload: {
         ...params,
         areaExtraProps__,

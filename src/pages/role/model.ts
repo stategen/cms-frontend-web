@@ -12,7 +12,6 @@ import {roleCustomState} from './RoleCustomFaces';
 import AntdPageList from "@i/beans/AntdPageList";
 import Role from "@i/beans/Role";
 import RoleType from "@i/enums/RoleType";
-import SimpleResponse from "@i/beans/SimpleResponse";
 
 const roleModel: RoleModel = roleDefaultModel;
 roleModel.state=mergeObjects(roleModel.state,roleCustomState);

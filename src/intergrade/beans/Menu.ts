@@ -2,14 +2,14 @@
  *  Do not remove this unless you get business authorization.
  *  Menu
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+ *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
  */
 import VisitCheckType from "../enums/VisitCheckType";
 import VisitType from "../enums/VisitType";
 import {Bean} from "@utils/DvaUtil";
 
 /** menuId */
-export const MENU_ID: string = 'menuId';
+export const Menu_ID: string = 'menuId';
 export enum MenuFields {
   /** breadChildren */
   breadChildren = 'breadChildren',

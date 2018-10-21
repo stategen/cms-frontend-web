@@ -2,12 +2,12 @@
  *  Do not remove this unless you get business authorization.
  *  User
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+ *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
  */
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import AntdPageList from "../beans/AntdPageList";
-import SimpleResponse from "../beans/SimpleResponse";
+import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 import {apiUrlKey} from "../configs/tradeCms-config";
 
@@ -30,7 +30,7 @@ export default class UserApis {
    * DELETE /api/user/:userId
    * 删除用户
    */
-  static deleteUserById(params: { userId: string }): SimpleResponse {
+  static delete(params: { userId: string }): string {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/:userId';
@@ -40,26 +40,26 @@ export default class UserApis {
   }
 
   /**
-   * DELETE /api/user/deleteUserByIds
+   * DELETE /api/user/deleteByUserIds
    * 批量删除用户
    */
-  static deleteUserByIds(params: { userIds?: string[] }): SimpleResponse {
+  static deleteByUserIds(params: { userIds?: string[] }): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/user/deleteUserByIds';
+    requestInit.url = '/api/user/deleteByUserIds';
     requestInit.data = params;
     requestInit.method = Method.DELETE;
     return Net.fetch(requestInit);
   }
 
   /**
-   * GET /api/user/getUsers
+   * GET /api/user/getUserPageListByDefaultQuery
    * 用户列表
    */
-  static getUsers(params: { page: number, pageSize: number, address?: string[], createTime?: Date[] }): AntdPageList<User> {
+  static getUserPageListByDefaultQuery(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, pageSize?: number, page?: number }): AntdPageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/user/getUsers';
+    requestInit.url = '/api/user/getUserPageListByDefaultQuery';
     requestInit.data = params;
     requestInit.method = Method.GET;
     return Net.fetch(requestInit);

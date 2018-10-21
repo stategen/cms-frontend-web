@@ -1,17 +1,18 @@
+/**
+ *  Do not remove this unless you get business authorization.
+ *  Role
+ *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
+ *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
+ */
 import {connect} from 'dva';
 import {RoleDispatch, roleEffects, RoleProps, roleReducers, RoleState} from '@i/interfaces/RoleFaces';
-import Role, {ROLE_ID} from "@i/beans/Role";
+import Role, {Role_ID} from "@i/beans/Role";
 import {roleDefaultColumns} from "@i/columns/RoleColumns";
 import {Table, Modal, Col, Button, Popconfirm} from "antd";
 import Page from "@components/Page/Page";
-import User from "@i/beans/User";
 import DropOption from "@components/DropOption/DropOption";
 import {getRoleFormConfigs} from "@i/forms/RoleFormConfigs";
-import {FormItemProps} from "antd/lib/form/FormItem";
-import {
-  BaseProps,
-  AreaState, Payload, ConnectionPros
-} from "@utils/DvaUtil";
+import {BaseProps, ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
@@ -20,22 +21,6 @@ import {RoleApiForms} from "@i/forms/RoleApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
 
 const {confirm} = Modal;
-const formItemLayout: FormItemProps = {
-  labelCol: {
-    xs: {span: 32},
-    sm: {span: 10},
-  },
-  wrapperCol: {
-    xs: {span: 32},
-    sm: {span: 18},
-  },
-};
-
-const cleanSelectRoleRowsProps: AreaState<Role> = {
-  selectedRowKeys: [],
-};
-
-const menuOptions = [{key: 'Update', name: 'Update'}, {key: 'Delete', name: 'Delete'}];
 
 const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps & AppProps & BaseProps) => {
   const {pathname} = location;
@@ -58,7 +43,7 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
   };
 
   const onDeleteItem = (roleId) => {
-    dispatch(RoleDispatch.deleteWithResponse_effect({roleId}, cleanSelectRoleRowsProps))
+    dispatch(RoleDispatch.delete_effect({roleId}, cleanSelectRowsProps))
   };
 
 
@@ -93,8 +78,8 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
     title: 'Operation',
     key: 'operation',
     width: 100,
-    render: (text, record: User) => {
-      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions}/>
+    render: (text, record: Role) => {
+      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={operateOptions}/>
     },
   });
 
@@ -104,7 +89,7 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
     const title = isCreate ? 'Create' : 'Update';
     const currentRole: Role = isCreate ? {} : roleArea.item;
     let roleFormConfigs = getRoleFormConfigs(currentRole);
-    RoleEditorModalPage = createModelPage(true, title, roleArea, roleFormConfigs, ROLE_ID, dispatch);
+    RoleEditorModalPage = createModelPage(true, title, roleArea, roleFormConfigs, Role_ID, dispatch);
   }
 
   const onFilter = () => {
@@ -144,7 +129,7 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
   };
 
   const handleDeleteItems = () => {
-    dispatch(RoleDispatch.batchDelete_effect({roleIds: roleArea.selectedRowKeys}, cleanSelectRoleRowsProps));
+    dispatch(RoleDispatch.deleteByRoleIds_effect({roleIds: roleArea.selectedRowKeys}, cleanSelectRowsProps));
   };
 
   const pagination = roleArea.pagination;
@@ -164,6 +149,7 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
     columns: roleColumns,
     pagination: pagination,
   }
+
 
   return (
     <Page inner>
@@ -187,10 +173,10 @@ const rolePage = ({location, dispatch, roleState, appState, loading}: RoleProps 
   )
 };
 
-const newVar = connect(({role: roleState, app: appState, loading}: StatesAlias & ConnectionPros) => ({
+const RolePage = connect(({role: roleState, app: appState, loading}: StatesAlias & ConnectionPros) => ({
   roleState,
   appState,
   loading
 }))(rolePage);
 
-export default newVar;
+export default RolePage;

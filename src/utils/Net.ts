@@ -6,7 +6,7 @@ import {message} from 'antd';
 import {routerRedux} from 'dva/router'
 import ResponseExtend from "@i/beans/ResponseExtend";
 import fetch from "dva/fetch";
-import fetchJsonp  from "fetch-jsonp";
+
 
 export enum Method {
   GET = 'GET',

@@ -1,159 +1,182 @@
-import React from 'react'
-import {routerRedux} from 'dva/router'
-import {connect} from 'dva'
-import {Row, Col, Button, Popconfirm} from 'antd'
-import {Page} from '@components/index'
-import queryString from 'query-string'
-import List from './components/List'
-import Filter from './components/Filter'
-import Modal from './components/Modal';
-import {userEffects, UserProps, userReducers} from '@i/interfaces/UserFaces';
-import {ModalFuncProps} from "antd/lib/modal";
+/**
+ *  Do not remove this unless you get business authorization.
+ *  User
+ *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
+ *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
+ */
+import {connect} from 'dva';
+import {UserDispatch, userEffects, UserProps, userReducers, UserState} from '@i/interfaces/UserFaces';
+import User, {User_ID} from "@i/beans/User";
+import {userDefaultColumns} from "@i/columns/UserColumns";
+import {Table, Modal, Col, Button, Popconfirm} from "antd";
+import Page from "@components/Page/Page";
+import DropOption from "@components/DropOption/DropOption";
+import {getUserFormConfigs} from "@i/forms/UserFormConfigs";
+import {BaseProps, ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
+import {AppProps} from "@i/interfaces/AppFaces";
+import {TableProps, TableRowSelection} from "antd/lib/table";
+import Row from "antd/lib/grid/row";
+import {createModelPage} from "@components/QueryModal/QueryModal";
+import {UserApiForms} from "@i/forms/UserApiForms";
+import StatesAlias from "@i/configs/tradeCms-statesAlias";
 
-/*dva限定死了，必须与model中的namespace一致*/
-const userPage = ({location, dispatch, userState, loading}:UserProps) => {
+const {confirm} = Modal;
 
-  const {query, pathname} = location;
-  const {pagination, modalVisible, modalType, isMotion, selectedRowKeys} = userState;
-  const {user, list:users} = userState;
+const userPage = ({location, dispatch, userState, appState, loading}: UserProps & AppProps & BaseProps) => {
+  const {pathname} = location;
+  const userArea = userState.userArea;
+  const userColumns = Object.values(userDefaultColumns);
 
-  const handleRefresh = (newQuery?) => {
-    dispatch(routerRedux.push({
-      pathname,
-      search: queryString.stringify({
-        ...query,
-        ...newQuery,
-      }),
-    }))
-  }
-  const isCreate =modalType ===`${userEffects.createUser}`;
-
-  const modalProps:ModalFuncProps = {
-    ...({}),
-    item: isCreate ? {} : user,
-    visible: modalVisible,
-    title: isCreate? 'Create User' : 'Update User',
-
-    maskClosable: false,
-    confirmLoading: loading.effects[modalType],
-    wrapClassName: 'vertical-center-modal',
-    onOk:(data)=>{
-      dispatch({
-        type: modalType,
-        payload: data,
-      })
-        .then(() => {
-          handleRefresh();
-        })
-    },
-    onCancel:()=>{
-      dispatch({
-        type: userReducers.hideModal,
-      })
-    },
-  }
-
-  const listProps = {
-    dataSource: users,
-    loading: loading.effects[`${userEffects.getUsers}`],
-    pagination,
-    location,
-    isMotion,
-    onChange(page) {
-      handleRefresh({
-        page: page.current,
-        pageSize: page.pageSize,
-      })
-    },
-    onDeleteItem(userId) {
-      dispatch({
-        type: userEffects.deleteUserById,
-        payload: userId,
-      })
-        .then(() => {
-          handleRefresh({
-            page: (users.length === 1 && pagination.current > 1) ? pagination.current - 1 : pagination.current,
-          })
-        })
-    },
-    onEditItem(user) {
-      dispatch({
-        type: userReducers.showModal,
-        payload: {
-          modalType: userEffects.patchUser,
-          user: user,
-        },
-      })
-    },
-    rowSelection: {
-      selectedRowKeys,
-      onChange: (keys) => {
-        dispatch({
+  const onAdd = () => {
+    const userState: UserState = {
+      userArea: {
+        type: userEffects.insert,
+        item: {},
+        doEdit: true,
+        cancelState: {
           type: userReducers.updateState,
-          payload: {
-            selectedRowKeys: keys,
-          },
-        })
-      },
-    },
-  }
+          doEdit: false,
+        }
+      }
+    }
+    dispatch(UserDispatch.updateState_reducer(userState));
+  };
 
-  const filterProps = {
-    isMotion,
-    filter: {
-      ...query,
-    },
-    onFilterChange(value) {
-      handleRefresh({
-        ...value,
-        page: 1,
-      })
-    },
-    onAdd() {
-      dispatch({
-        type: userReducers.showModal,
-        payload: {
-          modalType: userEffects.createUser,
+  const onDeleteItem = (userId) => {
+    dispatch(UserDispatch.delete_effect({userId}, cleanSelectRowsProps))
+  };
+
+
+  const onEditItem = (user) => {
+    dispatch(UserDispatch.updateState_reducer({
+      userArea: {
+        type: userEffects.update,
+        item: user,
+        doEdit: true,
+        cancelState: {
+          type: userReducers.updateState,
+          doEdit: false,
+        }
+      }
+    }))
+  };
+
+  const handleMenuClick = (record, e) => {
+    if (e.key === 'Update') {
+      onEditItem(record);
+    } else if (e.key === 'Delete') {
+      confirm({
+        title: 'Are you sure delete this record?',
+        onOk: () => {
+          onDeleteItem(record.userId)
         },
       })
-    },
-    switchIsMotion() {
-      dispatch({type: userReducers.switchIsMotion})
-    },
+    }
   }
+
+  userColumns.push({
+    title: 'Operation',
+    key: 'operation',
+    width: 100,
+    render: (text, record: User) => {
+      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={operateOptions}/>
+    },
+  });
+
+  let UserEditorModalPage = null;
+  if (userArea.doEdit) {
+    const isCreate = userArea.type === `${userEffects.insert}`;
+    const title = isCreate ? 'Create' : 'Update';
+    const currentUser: User = isCreate ? {} : userArea.item;
+    let userFormConfigs = getUserFormConfigs(currentUser);
+    UserEditorModalPage = createModelPage(true, title, userArea, userFormConfigs, User_ID, dispatch);
+  }
+
+  const onFilter = () => {
+    dispatch(UserDispatch.updateState_reducer({
+      userArea: {
+        type: userEffects.getUserPageListByDefaultQuery,
+        doQuery: true,
+        cancelState: {
+          type: userReducers.updateState,
+          doQuery: false,
+        }
+      }
+    }));
+  }
+
+
+  let UserQueryForm = null;
+  if (userArea.doQuery) {
+    const title = 'Query';
+    const filtersFormConfigs = UserApiForms.getUserPageListByDefaultQueryFormConfigs(userArea.queryRule ? userArea.queryRule : {});
+    UserQueryForm = createModelPage(false, title, userArea, filtersFormConfigs, "", dispatch);
+  }
+
+  const rowSelection: TableRowSelection<User> = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      const dispachData: UserState = {
+        userArea: {
+          selectedRowKeys
+        }
+      }
+      dispatch(UserDispatch.updateState_reducer(dispachData));
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.userId === 'ADMIN',
+      /*name: record.name,*/
+    }),
+  };
 
   const handleDeleteItems = () => {
-    dispatch({
-      type: userEffects.deleteUserByIds,
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-      .then(() => {
-        handleRefresh({
-          page: (users.length === selectedRowKeys.length && pagination.current > 1) ? pagination.current - 1 : pagination.current,
-        })
-      })
+    dispatch(UserDispatch.deleteByUserIds_effect({userIds: userArea.selectedRowKeys}, cleanSelectRowsProps));
+  };
+
+  const pagination = userArea.pagination;
+  if (pagination) {
+    pagination.onChange = (page: number, pageSize?: number) => {
+      dispatch(UserDispatch.getUserPageListByDefaultQuery_effect({...userArea.queryRule, pageSize, page}));
+    };
+    pagination.showSizeChanger = true;
   }
+
+  const tableProps: TableProps<User> = {
+    rowSelection: rowSelection,
+    bordered: true,
+    rowKey: (user: User) => user.userId,
+    dataSource: userArea.list,
+    loading: loading.effects[`${userEffects.getAll}`],
+    columns: userColumns,
+    pagination: pagination,
+  }
+
 
   return (
     <Page inner>
-      <Filter {...filterProps} />
-      {
-        selectedRowKeys.length > 0 &&
-        <Row style={{marginBottom: 24, textAlign: 'right', fontSize: 13}}>
-          <Col>
-            {`Selected ${selectedRowKeys.length} items `}
+      <Row>
+        <Col>
+          <Button type="ghost" onClick={onAdd}>Create</Button>
+          <Button type="ghost" onClick={onFilter}>Filter</Button>
+          {
+            userArea.selectedRowKeys.length > 0 &&
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
               <Button type="primary" style={{marginLeft: 8}}>Remove</Button>
+              {`Selected ${userArea.selectedRowKeys.length} items `}
             </Popconfirm>
-          </Col>
-        </Row>
-      };
-      <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
+          }
+        </Col>
+      </Row>
+      <Table {...tableProps} />
+      {UserEditorModalPage && <UserEditorModalPage/>}
+      {UserQueryForm && <UserQueryForm/>}
     </Page>
   )
-}
-/*dva限定死了，必须与model中的namespace一致*/
-export default connect(({user: userState, loading}) => ({userState, loading}))(userPage)
+};
+
+const UserPage = connect(({user: userState, app: appState, loading}: StatesAlias & ConnectionPros) => ({
+  userState,
+  appState,
+  loading
+}))(userPage);
+
+export default UserPage;

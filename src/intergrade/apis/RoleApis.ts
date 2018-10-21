@@ -2,81 +2,38 @@
  *  Do not remove this unless you get business authorization.
  *  Role
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+ *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
  */
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import AntdPageList from "../beans/AntdPageList";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
-import SimpleResponse from "../beans/SimpleResponse";
 import {apiUrlKey} from "../configs/tradeCms-config";
 
 export default class RoleApis {
   /**
-   * POST /api/role/batchDelete
+   * POST /api/role/delete
+   * 删除角色
+   */
+  static delete(params: { roleId?: string }): string {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.url = '/api/role/delete';
+    requestInit.mediaType = MediaType.FORM;
+    requestInit.data = params;
+    requestInit.method = Method.POST;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * POST /api/role/deleteByRoleIds
    * 批量删除角色
    */
-  static batchDelete(params: { roleIds: string[] }): string[] {
+  static deleteByRoleIds(params: { roleIds: string[] }): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/batchDelete';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/deleteByRoleId
-   * 删除角色
-   */
-  static deleteByRoleId(params: { roleId?: string }): string {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/deleteByRoleId';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/deleteWithResponse
-   * 删除角色
-   */
-  static deleteWithResponse(params: { roleId?: string }): SimpleResponse {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/deleteWithResponse';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/getAll
-   * 角色列表
-   */
-  static getAll(params?: {}): Role[] {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/getAll';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/getRolePageList
-   * 角色分页列表
-   */
-  static getRolePageList(params: { pageSize: number, page: number }): AntdPageList<Role> {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/getRolePageList';
+    requestInit.url = '/api/role/deleteByRoleIds';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
     requestInit.method = Method.POST;
