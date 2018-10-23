@@ -7,7 +7,7 @@ import {SelectionBoxProps} from "antd/lib/table";
 import {OptionProps} from "antd/lib/select";
 import {ReactElement} from "react";
 import {TabPaneProps} from "antd/lib/tabs";
-import Role from "@i/beans/Role";
+
 
 export const TIME_FORMAT = "HH:mm:ss";
 export const DATE_FORMAT = "YYYY-MM-DD";

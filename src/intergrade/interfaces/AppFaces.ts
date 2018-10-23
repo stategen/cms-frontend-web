@@ -2,7 +2,7 @@
  *  Do not remove this unless you get business authorization.
  *  App
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
+ *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
 import {appCustomState,AppCustomSubscriptions , AppCustomEffects, AppCustomReducers} from '@pages/app/AppCustomFaces'
@@ -13,8 +13,8 @@ import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface AppInitState extends BaseState {
-  menuArea?: AreaState<Menu>;
   userArea?: AreaState<User>;
+  menuArea?: AreaState<Menu>;
 }
 
 export type AppState = AppInitState & typeof appCustomState;
@@ -73,8 +73,8 @@ export const appInitModel: AppModel = <AppModel>{
   effects: <AppEffects>{},
 };
 
-appInitModel.state.menuArea = {
-  areaName: 'menuArea',
+appInitModel.state.userArea = {
+  areaName: 'userArea',
   item: null,
   list: [],
   pagination: null,
@@ -83,8 +83,8 @@ appInitModel.state.menuArea = {
   doQuery: false,
   type: null,
 };
-appInitModel.state.userArea = {
-  areaName: 'userArea',
+appInitModel.state.menuArea = {
+  areaName: 'menuArea',
   item: null,
   list: [],
   pagination: null,

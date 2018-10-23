@@ -2,7 +2,7 @@
  *  Do not remove this unless you get business authorization.
  *  User
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
- *  鐢� [stategen.progen]浠ｇ爜鐢熸垚鍣ㄥ垱寤猴紝涓嶈鎵嬪姩淇敼,鍚﹀垯灏嗗湪涓嬫鍒涘缓鏃惰嚜鍔ㄨ鐩�
+ *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
@@ -118,7 +118,7 @@ export class UserDispatch {
     }
     return routerRedux.push(pushRoute);
   }
-  static setup_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, pageSize?: number, page?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static setup_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/setup',
       payload: {
@@ -166,7 +166,7 @@ export class UserDispatch {
   };
 
   /** 用户列表 */
-  static getUserPageListByDefaultQuery_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, pageSize?: number, page?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static getUserPageListByDefaultQuery_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/getUserPageListByDefaultQuery',
       payload: {
