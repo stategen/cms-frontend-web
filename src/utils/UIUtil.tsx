@@ -77,7 +77,7 @@ export default class UIUtil {
     const route = (menu.route || '#');
     // props =props || {to:route};
 
-    return <Link to={route} style={{width: 10}} key={menu.route},{...props} >
+    return <Link to={route} style={{width: 10}} key={menu.route} {...props} >
       <Icon type={menu.icon}/>
       {menu.name}
     </Link>
