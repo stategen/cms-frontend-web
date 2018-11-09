@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
     "module": "es6",
-    "target": "es6",
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
+    "target": "es5",
+    "moduleResolution": "node",
+    "importHelpers": true,
     "jsx": "preserve",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+
+    "experimentalDecorators": true,
     "allowJs": false,
     "lib": ["es2017","dom"],
 
-    "moduleResolution": "node",
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./",
     "paths": {
       /*for webstorm*/
 

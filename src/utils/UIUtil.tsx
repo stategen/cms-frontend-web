@@ -74,7 +74,7 @@ export default class UIUtil {
   }
 
   static buildLink(menu: Menu ={}, props:LinkProps = null) {
-    const route = (menu.route || '#');
+    let route = (menu.route || '#');
     // props =props || {to:route};
 
     return <Link to={route} style={{width: 10}} key={menu.route} {...props} >

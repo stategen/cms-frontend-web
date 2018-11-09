@@ -16,6 +16,22 @@
   window.tradeCms_url = /*[[${@urls.tradeCms_url}]]*/"/tradeCms";
   /*]]>*/
 </script>
+<script>
+  if (window.routerBase !== '') {
+    var _idxOf_rb = location.pathname.indexOf(window.routerBase);
+    if (_idxOf_rb > -1) {
+      window.routerBase = location.pathname.substr(0, _idxOf_rb) + window.routerBase;
+      window.publicPath =window.routerBase+window.publicPath;
+      if (window.routerBase.slice(-1) !== '/') {
+        window.routerBase += '/'
+      }
+      if (window.publicPath.slice(-1) !== '/') {
+        window.publicPath += '/'
+      }
+    }
+  }
+</script>
+
 <body>
   <div id="root"></div>
 </body>
