@@ -21,6 +21,10 @@ export interface Action {
   [propName: string]: any,
 }
 
+export interface RouteOrders{
+  [route:string]:number
+}
+
 export interface Options {
   [enumName: string]: OptionProps;
 }

@@ -3,7 +3,10 @@
  *  created by progen ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 progen代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Subscriptions, Reducer, AreaState, mergeObjects} from '@utils/DvaUtil';
+import {
+  Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Subscriptions, Reducer, AreaState,
+  mergeObjects, RouteOrders
+} from '@utils/DvaUtil';
 import Menu from "@i/beans/Menu";
 import SimpleResponse from "@i/beans/SimpleResponse";
 import User from "@i/beans/User";
@@ -16,9 +19,6 @@ export interface Permission {
   visit: number[];
 }
 
-export interface RouteOrders{
-  [route:string]:number
-}
 export const appCustomState = {
   routeOrders:<RouteOrders>{},
 

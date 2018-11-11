@@ -2,7 +2,6 @@
 /* global document */
 import React from 'react'
 import NProgress from 'nprogress'
-import pathToRegexp from 'path-to-regexp'
 import {connect} from 'dva'
 import {Loader, MyLayout} from '@components/index'
 import {BackTop, Layout} from 'antd'
@@ -12,19 +11,16 @@ import {withRouter} from 'dva/router'
 import Error from '@pages/404'
 import 'themes/index.less'
 import './index.less'
-import {AppDispatch, appEffects, appInitModel, AppProps, appReducers, AppState} from "@i/interfaces/AppFaces";
+import {AppDispatch, appEffects, AppProps, appReducers, AppState} from "@i/interfaces/AppFaces";
 import {Tabs, Icon} from 'antd';
 import {ConnectionPros, DvaTabPaneProps, makeMap} from "@utils/DvaUtil";
 import Menu, {MenuFields} from "@i/beans/Menu";
 import {TabsProps} from "antd/lib/tabs";
-import Link from "umi/link";
 import {routerRedux} from 'dva/router'
-import {ForkOptions} from "child_process";
-import * as queryString from "querystring";
-import {loginInitModel} from "@i/interfaces/LoginFaces";
 import User from "@i/beans/User";
 import RouteUtil from "@utils/RouteUtil";
 import UIUtil from "@utils/UIUtil";
+import MenuUtil from "@utils/MenuUtil";
 
 const {Content, Footer, Sider} = Layout;
 const {Header, styles} = MyLayout;
@@ -44,7 +40,7 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
 
   const {iconFontJS, iconFontCSS, logo} = config;
 
-  const current = RouteUtil.filterMenuByPathname(pathname, menus);
+  const current = MenuUtil.filterMenuByPathname(pathname, menus);
 
   const hasPermission = current ? permission.visit.includes(current.menuId) : false;
   const {href} = window.location;

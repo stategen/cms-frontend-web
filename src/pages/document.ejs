@@ -17,19 +17,25 @@
   /*]]>*/
 </script>
 <script>
-  if (window.routerBase !== '') {
+  if (window.routerBase && window.routerBase !== '') {
     var _idxOf_rb = location.pathname.indexOf(window.routerBase);
     if (_idxOf_rb > -1) {
       window.routerBase = location.pathname.substr(0, _idxOf_rb) + window.routerBase;
-      window.publicPath =window.routerBase+window.publicPath;
+      if (window.publicPath && window.publicPath !=='' && window.publicPath !=='/' ) {
+        window.publicPath = window.routerBase + window.publicPath;
+      }
+
       if (window.routerBase.slice(-1) !== '/') {
         window.routerBase += '/'
       }
+
       if (window.publicPath.slice(-1) !== '/') {
         window.publicPath += '/'
       }
     }
   }
+  console.log('window.routerBase:',window.routerBase);
+  console.log('window.publicPath:',window.publicPath);
 </script>
 
 <body>

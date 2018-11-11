@@ -1,15 +1,5 @@
-import Menu, {MENU_ID} from "@i/beans/Menu";
 import pathToRegexp from "path-to-regexp";
-import Link from "umi/link";
-import {Icon} from "antd";
-import {config} from "@utils/index";
-import {makeMap} from "@utils/DvaUtil";
-import {string} from "prop-types";
-import {History} from "history";
-import {RouteOrders} from "@pages/app/AppCustomFaces";
-
-const {prefix} = config;
-
+import {RouteOrders} from "@utils/DvaUtil";
 
 export default class RouteUtil {
 
@@ -18,19 +8,9 @@ export default class RouteUtil {
     return pathname;
   }
 
-  static isRoutMatchPathname(route, pathname: string): boolean {
-    return pathToRegexp(route || '').exec(pathname) != null;
-  }
-
-  static filterMenuByPathname(pathname: string, menus: Menu[]) {
-    pathname = this.getRealPathname(pathname);
-    for (let i = 0; i < menus.length; i++) {
-      const menu = menus[i];
-      if (this.isRoutMatchPathname(menu.route, pathname)) {
-        return menu;
-      }
-    }
-    return null;
+  static isRoutMatchPathname(route, pathname: string):RegExpExecArray {
+    let match = pathToRegexp(route || '').exec(pathname);
+    return match;
   }
 
   static isRouteOpend(routeOrders:RouteOrders, pathname: string): boolean {

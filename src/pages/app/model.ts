@@ -14,6 +14,7 @@ import {BaseState, mergeObjects} from "@utils/DvaUtil";
 import {AppCommand, appDefaultModel} from "@i/models/AppDefaultModel";
 import {appCustomState, Permission} from "@pages/app/AppCustomFaces";
 import RouteUtil from "@utils/RouteUtil";
+import MenuUtil from "@utils/MenuUtil";
 
 const {prefix} = config;
 
@@ -72,7 +73,7 @@ appModel.effects.setup = function* ({payload,}, {call, put, select}) {
 
   // let menus: Menu[] = yield call(AppApis.getAllMenus,{});
   let menus = appState.menuArea.list;
-  const dashboardMenu = RouteUtil.filterMenuByPathname(dashboardInitModel.pathname, menus);
+  const dashboardMenu = MenuUtil.filterMenuByPathname(dashboardInitModel.pathname, menus);
 
   const permission = <Permission> {};
 

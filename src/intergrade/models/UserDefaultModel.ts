@@ -50,9 +50,14 @@ export class UserCommand {
   /** 删除用户 */
   static * delete_effect({payload}, {call, put, select}) {
     const result: string = yield call(UserApis.delete, payload);
+    const oldUsers: User[]  = yield select(({user: userState}) => userState.userArea.list);
+    const users = delateArray(oldUsers, result ? result : null, "userId");
 
     const newPayload: UserState = {
-      ...result,
+      userArea: {
+        list: users,
+        ...payload ? payload.areaExtraProps__ : null,
+      },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;

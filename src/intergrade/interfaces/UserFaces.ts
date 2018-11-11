@@ -13,8 +13,8 @@ import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface UserInitState extends BaseState {
-  stringArea?: AreaState<string>;
   userArea?: AreaState<User>;
+  stringArea?: AreaState<string>;
 }
 
 export type UserState = UserInitState & typeof userCustomState;
@@ -81,8 +81,8 @@ export const userInitModel: UserModel = <UserModel>{
   effects: <UserEffects>{},
 };
 
-userInitModel.state.stringArea = {
-  areaName: 'stringArea',
+userInitModel.state.userArea = {
+  areaName: 'userArea',
   item: null,
   list: [],
   pagination: null,
@@ -91,8 +91,8 @@ userInitModel.state.stringArea = {
   doQuery: false,
   type: null,
 };
-userInitModel.state.userArea = {
-  areaName: 'userArea',
+userInitModel.state.stringArea = {
+  areaName: 'stringArea',
   item: null,
   list: [],
   pagination: null,
