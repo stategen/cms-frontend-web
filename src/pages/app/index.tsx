@@ -3,7 +3,8 @@
 import React from 'react'
 import NProgress from 'nprogress'
 import {connect} from 'dva'
-import {Loader, MyLayout} from '@components/index'
+// import {Loader, MyLayout} from '@components/index'
+import MyLayout from '@components/MyLayout'
 import {BackTop, Layout} from 'antd'
 import {classnames, config} from '@utils/index'
 import {Helmet} from 'react-helmet'
@@ -21,6 +22,7 @@ import User from "@i/beans/User";
 import RouteUtil from "@utils/RouteUtil";
 import UIUtil from "@utils/UIUtil";
 import MenuUtil from "@utils/MenuUtil";
+import Loader from "@components/Loader/Loader";
 
 const {Content, Footer, Sider} = Layout;
 const {Header, styles} = MyLayout;

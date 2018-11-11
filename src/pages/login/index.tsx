@@ -1,13 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Button, Row, Form, Input } from 'antd'
+import { Button, Row, Form } from 'antd'
 import { config } from '@utils/index'
 import styles from './index.less'
-import {ConnectionPros, FormItemConfigs} from "@utils/DvaUtil";
+import {ConnectionPros} from "@utils/DvaUtil";
 import {FormComponentProps} from "antd/lib/form/Form";
 import {LoginDispatch} from "@i/interfaces/LoginFaces";
-import FormItem from "antd/lib/form/FormItem";
 import UIUtil from "@utils/UIUtil";
 import {LoginApiForms} from "@i/forms/LoginApiForms";
 

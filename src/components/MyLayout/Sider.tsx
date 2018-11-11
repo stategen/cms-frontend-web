@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Icon, Switch } from 'antd'
 import { config } from '@utils/index'
 import styles from './Layout.less'
