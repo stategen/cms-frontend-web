@@ -29,6 +29,10 @@ export namespace LoginApiForms {
         rules: [
           {
             required: true,
+            message: "{javax.validation.constraints.NotNull.message}",
+          },
+          {
+            required: true,
             max: 64,
             message: "{javax.validation.constraints.Max.message}",
           },

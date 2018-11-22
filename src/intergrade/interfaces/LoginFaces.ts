@@ -4,7 +4,7 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
 import {loginCustomState,LoginCustomSubscriptions , LoginCustomEffects, LoginCustomReducers} from '@pages/login/LoginCustomFaces'
 import SimpleResponse from "../beans/SimpleResponse";
 import {routerRedux} from 'dva/router';
@@ -58,6 +58,7 @@ export const loginInitModel: LoginModel = <LoginModel>{
   effects: <LoginEffects>{},
 };
 
+loginInitModel.state=mergeObjects(loginInitModel.state,loginCustomState);
 
 /***把 namespace 带过来，以便生成路径*/
 export const loginEffects = modelPathsProxy<LoginEffects>(loginInitModel);

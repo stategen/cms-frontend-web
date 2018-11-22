@@ -9,6 +9,7 @@ import UserApis from "../apis/UserApis";
 import {abstractModel, updateArray, delateArray, mergeObjects, AreaState} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
+import {PaginationProps} from "antd/lib/pagination";
 import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 
@@ -25,7 +26,7 @@ export class UserCommand {
   /** 创建用户 */
   static * createUser_effect({payload}, {call, put, select}) {
     const user: User = yield call(UserApis.createUser, payload);
-    const oldUsers: User[]  = yield select(({user: userState}) => userState.userArea.list);
+    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
     const users = updateArray(oldUsers, user ? user : null, "userId");
 
     const newPayload: UserState = {
@@ -36,7 +37,6 @@ export class UserCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 创建用户  成功后 更新状态*/
@@ -50,7 +50,7 @@ export class UserCommand {
   /** 删除用户 */
   static * delete_effect({payload}, {call, put, select}) {
     const result: string = yield call(UserApis.delete, payload);
-    const oldUsers: User[]  = yield select(({user: userState}) => userState.userArea.list);
+    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
     const users = delateArray(oldUsers, result ? result : null, "userId");
 
     const newPayload: UserState = {
@@ -61,7 +61,6 @@ export class UserCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 删除用户  成功后 更新状态*/
@@ -75,13 +74,17 @@ export class UserCommand {
   /** 批量删除用户 */
   static * deleteByUserIds_effect({payload}, {call, put, select}) {
     const result: string[] = yield call(UserApis.deleteByUserIds, payload);
+    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
+    const users = delateArray(oldUsers, result ? result : null, "userId");
 
     const newPayload: UserState = {
-      ...result,
+      userArea: {
+        list: users,
+        ...payload ? payload.areaExtraProps__ : null,
+      },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 批量删除用户  成功后 更新状态*/
@@ -95,7 +98,7 @@ export class UserCommand {
   /** 用户列表 */
   static * getUserPageListByDefaultQuery_effect({payload}, {call, put, select}) {
     const userPageList: AntdPageList<User> = yield call(UserApis.getUserPageListByDefaultQuery, payload);
-    const oldUsers: User[]  = yield select(({user: userState}) => userState.userArea.list);
+    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
     const pagination = userPageList ? userPageList.pagination : null;
     const users = updateArray(oldUsers, userPageList ? userPageList.list : null, "userId");
 
@@ -103,12 +106,12 @@ export class UserCommand {
       userArea: {
         list: users,
         pagination,
+        queryRule: payload,
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 用户列表  成功后 更新状态*/
@@ -122,7 +125,7 @@ export class UserCommand {
   /** 修改用户 */
   static * patchUser_effect({payload}, {call, put, select}) {
     const user: User = yield call(UserApis.patchUser, payload);
-    const oldUsers: User[]  = yield select(({user: userState}) => userState.userArea.list);
+    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
     const users = updateArray(oldUsers, user ? user : null, "userId");
 
     const newPayload: UserState = {
@@ -133,7 +136,6 @@ export class UserCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 修改用户  成功后 更新状态*/
@@ -150,23 +152,25 @@ export const userDefaultModel: UserModel = <UserModel>(mergeObjects(abstractMode
 
 userDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((location) => {
-    if (!RouteUtil.isRoutMatchPathname(userDefaultModel.pathname, location.pathname)){
+    const pathname = location.pathname;
+    const match = RouteUtil.getMatch(userDefaultModel.pathname, pathname);
+    if (!match) {
       return;
     }
-
-    const payload = location.query || {page: 1, pageSize: 10};
+    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(location)} ;
+    const getUserPageListByDefaultQueryParams = userDefaultModel.getUserPageListByDefaultQueryInitParamsFn ? userDefaultModel.getUserPageListByDefaultQueryInitParamsFn({pathname, match}) : null;
+    payload = {...payload, ...getUserPageListByDefaultQueryParams}
     dispatch({
       type: 'user/setup',
       payload,
     })
   })
 };
-;
 
 userDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
-  const appState = yield select(_=>_.app);
+  const appState = yield select(_ => _.app);
   const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, userDefaultModel.pathname);
-  if (!routeOpend){
+  if (!routeOpend) {
     return;
   }
   const newPayload = yield UserCommand.setup_effect({payload}, {call, put, select});

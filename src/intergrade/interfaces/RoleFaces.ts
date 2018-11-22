@@ -4,9 +4,10 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
 import {roleCustomState,RoleCustomSubscriptions , RoleCustomEffects, RoleCustomReducers} from '@pages/role/RoleCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
+import {PaginationProps} from "antd/lib/pagination";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 import {routerRedux} from 'dva/router';
@@ -69,6 +70,7 @@ export interface RoleModel extends IModel<RoleState, RoleReducers, RoleEffects> 
   reducers?: RoleReducers;
   effects?: RoleEffects;
   subscriptions?: RoleSubscriptions;
+  getRolePageListByDefaultQueryInitParamsFn?: SetupParamsFun;
 }
 
 export interface RoleProps extends BaseProps {
@@ -94,6 +96,7 @@ roleInitModel.state.roleArea = {
   doQuery: false,
   type: null,
 };
+roleInitModel.state=mergeObjects(roleInitModel.state,roleCustomState);
 
 /***把 namespace 带过来，以便生成路径*/
 export const roleEffects = modelPathsProxy<RoleEffects>(roleInitModel);
@@ -111,7 +114,8 @@ export class RoleDispatch {
     }
     return routerRedux.push(pushRoute);
   }
-  static setup_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+
+  static setup_effect(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/setup',
       payload: {
@@ -135,7 +139,7 @@ export class RoleDispatch {
   };
 
   /** 批量删除角色 */
-  static deleteByRoleIds_effect(params: { roleIds: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static deleteByRoleIds_effect(params: { roleIds: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/deleteByRoleIds',
       payload: {
@@ -147,7 +151,7 @@ export class RoleDispatch {
   };
 
   /** 角色分页列表,多条件 */
-  static getRolePageListByDefaultQuery_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static getRolePageListByDefaultQuery_effect(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/getRolePageListByDefaultQuery',
       payload: {

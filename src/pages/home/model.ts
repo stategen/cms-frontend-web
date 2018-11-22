@@ -1,11 +1,12 @@
 import { parse } from 'qs'
 import modelExtend from 'dva-model-extend'
 import * as weatherService from './services/weather'
-import DashboardApis from "@i/apis/DashboardApis"
+import HomeApis from "@i/apis/HomeApis"
 import {abstractModel} from "@utils/DvaUtil";
+import {homeInitModel} from "@i/interfaces/HomeFaces";
 
 export default modelExtend(abstractModel, {
-  namespace: 'dashboard',
+  namespace: 'home',
   state: {
     weather: {
       city: '深圳',
@@ -30,7 +31,7 @@ export default modelExtend(abstractModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        if (pathname === '/dashboard' || pathname === '/') {
+        if (pathname === homeInitModel.pathname || pathname === '/') {
           dispatch({ type: 'query' })
           dispatch({ type: 'queryWeather' })
         }
@@ -41,7 +42,7 @@ export default modelExtend(abstractModel, {
     * query ({
       payload,
     }, { call, put }) {
-      const data = yield call(DashboardApis.getDashboard, parse(payload))
+      const data = yield call(HomeApis.getDashboard, parse(payload))
       yield put({
         type: 'updateState',
         payload: data,

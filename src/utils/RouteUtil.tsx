@@ -8,7 +8,7 @@ export default class RouteUtil {
     return pathname;
   }
 
-  static isRoutMatchPathname(route, pathname: string):RegExpExecArray {
+  static getMatch(route, pathname: string):RegExpExecArray {
     let match = pathToRegexp(route || '').exec(pathname);
     return match;
   }
@@ -16,10 +16,13 @@ export default class RouteUtil {
   static isRouteOpend(routeOrders:RouteOrders, pathname: string): boolean {
     if (pathname) {
       pathname = this.getRealPathname(pathname);
+      if (pathname.indexOf(":") >0){
+        return true;
+      }
       const routes = Object.keys(routeOrders);
       for (let i = 0; i < routes.length; i++) {
         const route = routes[i]
-        if (this.isRoutMatchPathname(route, pathname)) {
+        if (this.getMatch(route, pathname)) {
           return true
         }
       }
@@ -62,6 +65,16 @@ export default class RouteUtil {
     });
 
     return route;
+  }
+
+  static getQuery(location){
+    const query =location.query;
+    if (query && query instanceof  Object){
+      for (let i in query) {
+        return query;
+      }
+    }
+    return null;
   }
 }
 

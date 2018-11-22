@@ -23,7 +23,7 @@ const loginPage = ({ loading,  dispatch,  form} : ConnectionPros & FormComponent
   }
   const loginFormConfigs = LoginApiForms.loginFormConfigs();
   loginFormConfigs.password.editor =UIUtil.buildInputEditor(null,{type:'password'});
-  const formItems = UIUtil.buildFormItems(form,loginFormConfigs,null);
+  const formItems = UIUtil.buildFormItems(loginFormConfigs,form,null);
 
   return (
     <div className={styles.form}>
@@ -33,24 +33,6 @@ const loginPage = ({ loading,  dispatch,  form} : ConnectionPros & FormComponent
       </div>
       <form>
         {formItems}
-        {/*<FormItem hasFeedback>
-          {form.getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input onPressEnter={handleOk} placeholder="Username" />)}
-        </FormItem>
-        <FormItem hasFeedback>
-          {form.getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input type="password" onPressEnter={handleOk} placeholder="Password" />)}
-        </FormItem>*/}
         <Row>
           <Button type="primary" onClick={handleOk} loading={loading.effects.login}>
             Sign in

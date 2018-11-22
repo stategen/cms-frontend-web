@@ -17,9 +17,6 @@ export interface UserColumns<U> {
   /** 用户名  */
   username?: ColumnProps<U>,
 
-  /** 密码，测试，明文  */
-  password?: ColumnProps<U>,
-
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
   roleType?: ColumnProps<U>,
 
@@ -38,8 +35,8 @@ export interface UserColumns<U> {
   /** isMale  */
   isMale?: ColumnProps<U>,
 
-  /** avatar  */
-  avatar?: ColumnProps<U>,
+  /** avatarUrl  */
+  avatarUrl?: ColumnProps<U>,
 
   /** 邮箱  */
   email?: ColumnProps<U>,
@@ -71,13 +68,6 @@ export const userDefaultColumns: UserColumns<User> = {
     title: '用户名',
     dataIndex: 'username',
     key: 'username',
-  },
-
-  /** 密码，测试，明文  */
-  password: {
-    title: '密码',
-    dataIndex: 'password',
-    key: 'password',
   },
 
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
@@ -126,11 +116,11 @@ export const userDefaultColumns: UserColumns<User> = {
     key: 'isMale',
   },
 
-  /** avatar  */
-  avatar: {
-    title: 'avatar',
-    dataIndex: 'avatar',
-    key: 'avatar',
+  /** avatarUrl  */
+  avatarUrl: {
+    title: 'avatarUrl',
+    dataIndex: 'avatarUrl',
+    key: 'avatarUrl',
   },
 
   /** 邮箱  */

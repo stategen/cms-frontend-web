@@ -27,7 +27,7 @@ const formItemLayout: FormItemProps = {
 export const createModelPage = <T extends Bean, F extends FormConfigs>
 (isEditor: boolean, title: string, areaState: AreaState<T>, formConfigs: F, idkey: String | any, dispatch: Dispatch) => {
   const modalPage = (formComponentProps: FormComponentProps) => {
-    let formItems=UIUtil.buildFormItems(formComponentProps.form,formConfigs,formItemLayout)
+    let formItems=UIUtil.buildFormItems(formConfigs,formComponentProps.form,formItemLayout)
     // let formItems = Object.keys(formConfigs).map((fieldName:string) => {
     //   const formItemConfigs:FormItemConfigs = formConfigs[fieldName];
     //   if (formItemConfigs.isId || formItemConfigs.hidden) {

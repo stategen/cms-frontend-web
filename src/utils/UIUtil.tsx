@@ -1,4 +1,5 @@
-import {Form, Input, InputNumber, Radio, Modal, Cascader, DatePicker, TimePicker, Select} from 'antd';
+import React from 'react'
+import {Input, DatePicker, TimePicker, Select} from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import {Options, FormItemConfigs} from "./DvaUtil";
 import Menu from "@i/beans/Menu";
@@ -57,18 +58,22 @@ export default class UIUtil {
     return (<Input {...props}/>)
   }
 
-  static buildFormItems(wrappedForm:WrappedFormUtils,formConfigs:FormConfigs,formItemProps:FormItemProps){
+  static buildFormItem(formItemConfigs:FormItemConfigs, wrappedForm:WrappedFormUtils,formItemProps:FormItemProps){
+    return (
+      <FormItem {...formItemProps} key={formItemConfigs.name} label={formItemConfigs.label}>
+        {wrappedForm.getFieldDecorator(formItemConfigs.name, formItemConfigs.config)(formItemConfigs.editor)}
+      </FormItem>
+    )
+  }
+
+  static buildFormItems(formConfigs:FormConfigs,wrappedForm:WrappedFormUtils,formItemProps:FormItemProps){
     let formItems = Object.keys(formConfigs).map((fieldName:string) => {
       const formItemConfigs:FormItemConfigs = formConfigs[fieldName];
       if (formItemConfigs.isId || formItemConfigs.hidden) {
         return;
       }
+      return this.buildFormItem(formItemConfigs,wrappedForm,formItemProps)
 
-      return (
-        <FormItem {...formItemProps} key={fieldName} label={formItemConfigs.label}>
-          {wrappedForm.getFieldDecorator(formItemConfigs.name, formItemConfigs.config)(formItemConfigs.editor)}
-        </FormItem>
-      )
     });
     return formItems;
   }

@@ -9,6 +9,7 @@ import RoleApis from "../apis/RoleApis";
 import {abstractModel, updateArray, delateArray, mergeObjects, AreaState} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
+import {PaginationProps} from "antd/lib/pagination";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 
@@ -25,7 +26,7 @@ export class RoleCommand {
   /** 删除角色 */
   static * delete_effect({payload}, {call, put, select}) {
     const result: string = yield call(RoleApis.delete, payload);
-    const oldRoles: Role[]  = yield select(({role: roleState}) => roleState.roleArea.list);
+    const oldRoles: Role[] = yield select(({role: roleState}) => roleState.roleArea.list);
     const roles = delateArray(oldRoles, result ? result : null, "roleId");
 
     const newPayload: RoleState = {
@@ -36,7 +37,6 @@ export class RoleCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 删除角色  成功后 更新状态*/
@@ -50,7 +50,7 @@ export class RoleCommand {
   /** 批量删除角色 */
   static * deleteByRoleIds_effect({payload}, {call, put, select}) {
     const result: string[] = yield call(RoleApis.deleteByRoleIds, payload);
-    const oldRoles: Role[]  = yield select(({role: roleState}) => roleState.roleArea.list);
+    const oldRoles: Role[] = yield select(({role: roleState}) => roleState.roleArea.list);
     const roles = delateArray(oldRoles, result ? result : null, "roleId");
 
     const newPayload: RoleState = {
@@ -61,7 +61,6 @@ export class RoleCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 批量删除角色  成功后 更新状态*/
@@ -81,15 +80,15 @@ export class RoleCommand {
       roleArea: {
         list: rolePageList ? rolePageList.list : [],
         pagination,
+        queryRule: payload,
         ...{
-          doEdit: false,
+                  doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 角色分页列表,多条件  成功后 更新状态*/
@@ -103,21 +102,21 @@ export class RoleCommand {
   /** 关闭role对话框  更新状态*/
   static hideRoleModal_reducer = (state: RoleState, payload): RoleState => {
     const mergedState: RoleState = {
-      roleArea: {
+            roleArea: {
         ...{
-          doEdit: false,
+                doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...{
-        allModalVisible: false,
+                allModalVisible: false,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
 
     return mergeObjects(
       state,
-      mergedState,
+        mergedState,
       payload,
     );
   };
@@ -125,27 +124,27 @@ export class RoleCommand {
   /** 创建角色 */
   static * insert_effect({payload}, {call, put, select}) {
     const role: Role = yield call(RoleApis.insert, payload);
-    const oldRoles: Role[]  = yield select(({role: roleState}) => roleState.roleArea.list);
+    const oldRoles: Role[] = yield select(({role: roleState}) => roleState.roleArea.list);
     const roles = updateArray(oldRoles, role ? role : null, "roleId");
 
     const newPayload: RoleState = {
       roleArea: {
         list: roles,
         ...{
-          doEdit: false,
+                  doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 创建角色  成功后 更新状态*/
   static insert_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
+        mergedState,
       payload,
     );
   };
@@ -153,9 +152,9 @@ export class RoleCommand {
   /** 打开role对话框  更新状态*/
   static showRoleModal_reducer = (state: RoleState, payload): RoleState => {
     const mergedState: RoleState = {
-      roleArea: {
+            roleArea: {
         ...{
-          doEdit: true,
+                doEdit: true,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
@@ -163,7 +162,7 @@ export class RoleCommand {
 
     return mergeObjects(
       state,
-      mergedState,
+        mergedState,
       payload,
     );
   };
@@ -171,27 +170,27 @@ export class RoleCommand {
   /** 更新角色 */
   static * update_effect({payload}, {call, put, select}) {
     const role: Role = yield call(RoleApis.update, payload);
-    const oldRoles: Role[]  = yield select(({role: roleState}) => roleState.roleArea.list);
+    const oldRoles: Role[] = yield select(({role: roleState}) => roleState.roleArea.list);
     const roles = updateArray(oldRoles, role ? role : null, "roleId");
 
     const newPayload: RoleState = {
       roleArea: {
         list: roles,
         ...{
-          doEdit: false,
+                  doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 更新角色  成功后 更新状态*/
   static update_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
+        mergedState,
       payload,
     );
   };
@@ -202,23 +201,25 @@ export const roleDefaultModel: RoleModel = <RoleModel>(mergeObjects(abstractMode
 
 roleDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((location) => {
-    if (!RouteUtil.isRoutMatchPathname(roleDefaultModel.pathname, location.pathname)){
+    const pathname = location.pathname;
+    const match = RouteUtil.getMatch(roleDefaultModel.pathname, pathname);
+    if (!match) {
       return;
     }
-
-    const payload = location.query || {page: 1, pageSize: 10};
+    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(location)} ;
+    const getRolePageListByDefaultQueryParams = roleDefaultModel.getRolePageListByDefaultQueryInitParamsFn ? roleDefaultModel.getRolePageListByDefaultQueryInitParamsFn({pathname, match}) : null;
+    payload = {...payload, ...getRolePageListByDefaultQueryParams}
     dispatch({
       type: 'role/setup',
       payload,
     })
   })
 };
-;
 
 roleDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
-  const appState = yield select(_=>_.app);
+  const appState = yield select(_ => _.app);
   const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, roleDefaultModel.pathname);
-  if (!routeOpend){
+  if (!routeOpend) {
     return;
   }
   const newPayload = yield RoleCommand.setup_effect({payload}, {call, put, select});

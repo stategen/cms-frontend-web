@@ -7,6 +7,7 @@
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import AntdPageList from "../beans/AntdPageList";
+import {PaginationProps} from "antd/lib/pagination";
 import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 import {apiUrlKey} from "../configs/tradeCms-config";
@@ -43,7 +44,7 @@ export default class UserApis {
    * DELETE /api/user/deleteByUserIds
    * 批量删除用户
    */
-  static deleteByUserIds(params: { userIds?: string[] }): string[] {
+  static deleteByUserIds(params: { userIds?: [] }): [] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/deleteByUserIds';
@@ -56,7 +57,7 @@ export default class UserApis {
    * GET /api/user/getUserPageListByDefaultQuery
    * 用户列表
    */
-  static getUserPageListByDefaultQuery(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date }): AntdPageList<User> {
+  static getUserPageListByDefaultQuery(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/getUserPageListByDefaultQuery';

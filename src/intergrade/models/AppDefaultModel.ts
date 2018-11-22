@@ -38,7 +38,6 @@ export class AppCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /** 获所所有菜单  成功后 更新状态*/
@@ -61,7 +60,6 @@ export class AppCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /**   成功后 更新状态*/
@@ -80,10 +78,13 @@ export class AppCommand {
     }
 
     const newPayload: AppState = {
+      simpleResponseArea: {
+        list: user ? [user] : [],
+        ...payload ? payload.areaExtraProps__ : null,
+      },
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /**   成功后 更新状态*/
@@ -100,23 +101,26 @@ export const appDefaultModel: AppModel = <AppModel>(mergeObjects(abstractModel, 
 
 appDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((location) => {
-    if (!RouteUtil.isRoutMatchPathname(appDefaultModel.pathname, location.pathname)){
+    const pathname = location.pathname;
+    const match = RouteUtil.getMatch(appDefaultModel.pathname, pathname);
+    if (!match) {
       return;
     }
-
-    const payload = location.query || {page: 1, pageSize: 10};
+    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(location)} ;
+    const getAllMenusParams = appDefaultModel.getAllMenusInitParamsFn ? appDefaultModel.getAllMenusInitParamsFn({pathname, match}) : null;
+    const getCookieUserParams = appDefaultModel.getCookieUserInitParamsFn ? appDefaultModel.getCookieUserInitParamsFn({pathname, match}) : null;
+    payload = {...payload, getAllMenusParams, getCookieUserParams}
     dispatch({
       type: 'app/setup',
       payload,
     })
   })
 };
-;
 
 appDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
-  const appState = yield select(_=>_.app);
+  const appState = yield select(_ => _.app);
   const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, appDefaultModel.pathname);
-  if (!routeOpend){
+  if (!routeOpend) {
     return;
   }
   const newPayload = yield AppCommand.setup_effect({payload}, {call, put, select});

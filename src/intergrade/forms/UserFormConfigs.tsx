@@ -18,9 +18,6 @@ export interface UserFormConfigs extends FormConfigs {
   /** 用户名  */
   username?: FormItemConfigs,
 
-  /** 密码，测试，明文  */
-  password?: FormItemConfigs,
-
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
   roleType?: FormItemConfigs,
 
@@ -39,8 +36,8 @@ export interface UserFormConfigs extends FormConfigs {
   /** isMale  */
   isMale?: FormItemConfigs,
 
-  /** avatar  */
-  avatar?: FormItemConfigs,
+  /** avatarUrl  */
+  avatarUrl?: FormItemConfigs,
 
   /** 邮箱  */
   email?: FormItemConfigs,
@@ -80,19 +77,9 @@ export const getUserFormConfigs = (user: User): UserFormConfigs => {
         initialValue: user.username,
         rules: [
           {
-            max: 64,
-            message: "{javax.validation.constraints.Max.message}",
+            required: true,
+            message: "{javax.validation.constraints.NotNull.message}",
           },
-        ],
-      }
-    },
-    /** 密码，测试，明文  */
-    password: {
-      name: 'password',
-      label: "密码",
-      config: {
-        initialValue: user.password,
-        rules: [
           {
             max: 64,
             message: "{javax.validation.constraints.Max.message}",
@@ -168,12 +155,12 @@ export const getUserFormConfigs = (user: User): UserFormConfigs => {
         initialValue: user.isMale,
       }
     },
-    /** avatar  */
-    avatar: {
-      name: 'avatar',
-      label: "avatar",
+    /** avatarUrl  */
+    avatarUrl: {
+      name: 'avatarUrl',
+      label: "avatarUrl",
       config: {
-        initialValue: user.avatar,
+        initialValue: user.avatarUrl,
         rules: [
           {
             max: 255,
@@ -227,14 +214,13 @@ export const getUserFormConfigs = (user: User): UserFormConfigs => {
 
   result.userId.editor = UIUtil.buildInputEditor(result.userId);
   result.username.editor = UIUtil.buildInputEditor(result.username);
-  result.password.editor = UIUtil.buildInputEditor(result.password);
   result.roleType.editor = UIUtil.buildEnumEditor(result.roleType, roleTypeOptions);
   result.name.editor = UIUtil.buildInputEditor(result.name);
   result.nickName.editor = UIUtil.buildInputEditor(result.nickName);
   result.age.editor = UIUtil.buildInputEditor(result.age);
   result.address.editor = UIUtil.buildInputEditor(result.address);
   result.isMale.editor = UIUtil.buildInputEditor(result.isMale);
-  result.avatar.editor = UIUtil.buildInputEditor(result.avatar);
+  result.avatarUrl.editor = UIUtil.buildInputEditor(result.avatarUrl);
   result.email.editor = UIUtil.buildInputEditor(result.email);
   result.createTime.editor = UIUtil.buildTimeStampEditor(result.createTime, TIMESTAMP_FORMAT);
   result.updateTime.editor = UIUtil.buildTimeStampEditor(result.updateTime, TIMESTAMP_FORMAT);

@@ -16,8 +16,6 @@ export enum UserFields {
   userId = 'userId',
   /** username */
   username = 'username',
-  /** password */
-  password = 'password',
   /** roleType */
   roleType = 'roleType',
   /** name */
@@ -30,8 +28,8 @@ export enum UserFields {
   address = 'address',
   /** isMale */
   isMale = 'isMale',
-  /** avatar */
-  avatar = 'avatar',
+  /** avatarUrl */
+  avatarUrl = 'avatarUrl',
   /** email */
   email = 'email',
   /** createTime */
@@ -53,9 +51,6 @@ export default interface User extends Bean {
   /** 用户名 */
   username?: string;
 
-  /** 密码，测试，明文 */
-  password?: string;
-
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER */
   roleType?: RoleType;
 
@@ -74,8 +69,8 @@ export default interface User extends Bean {
   /** isMale */
   isMale?: boolean;
 
-  /** avatar */
-  avatar?: string;
+  /** avatarUrl */
+  avatarUrl?: string;
 
   /** 邮箱 */
   email?: string;

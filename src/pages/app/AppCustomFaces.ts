@@ -25,7 +25,7 @@ export const appCustomState = {
   permission: <Permission>{
     visit: [],
   },
-  dashboardMenu: <Menu>{},
+  homeMenu: <Menu>{},
   menuPopoverVisible: false,
   siderFold: JSON.parse(window.localStorage.getItem(`${prefix}siderFold`)) === 'true',
   darkTheme: JSON.parse(window.localStorage.getItem(`${prefix}darkTheme`)) === 'true',
@@ -36,7 +36,7 @@ export const appCustomState = {
 }
 
 export interface AppCustomSubscriptions extends Subscriptions {
-
+  setupHistory,
 }
 
 export interface AppCustomEffects extends Effects {

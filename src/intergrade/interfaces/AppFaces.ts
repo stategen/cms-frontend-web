@@ -4,7 +4,7 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
 import {appCustomState,AppCustomSubscriptions , AppCustomEffects, AppCustomReducers} from '@pages/app/AppCustomFaces'
 import Menu from "../beans/Menu";
 import SimpleResponse from "../beans/SimpleResponse";
@@ -58,6 +58,8 @@ export interface AppModel extends IModel<AppState, AppReducers, AppEffects> {
   reducers?: AppReducers;
   effects?: AppEffects;
   subscriptions?: AppSubscriptions;
+  getAllMenusInitParamsFn?: SetupParamsFun;
+  getCookieUserInitParamsFn?: SetupParamsFun;
 }
 
 export interface AppProps extends BaseProps {
@@ -93,6 +95,7 @@ appInitModel.state.menuArea = {
   doQuery: false,
   type: null,
 };
+appInitModel.state=mergeObjects(appInitModel.state,appCustomState);
 
 /***把 namespace 带过来，以便生成路径*/
 export const appEffects = modelPathsProxy<AppEffects>(appInitModel);
@@ -110,17 +113,17 @@ export class AppDispatch {
     }
     return routerRedux.push(pushRoute);
   }
+
   static setup_effect(
-    getAllMenusParams?: {params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState},
-    getCookieUserParams?: {params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState},
-    params?: {},
-  ) {
+              getAllMenusInitParams?: {params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState},
+              getCookieUserInitParams?: {params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState},
+               params?: {}) {
     return {
       type: appInitModel.namespace + '/setup',
       payload: {
         ...params,
-        getAllMenusParams,
-        getCookieUserParams,
+        getAllMenusInitParams,
+        getCookieUserInitParams,
       }
     }
   }

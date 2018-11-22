@@ -22,7 +22,6 @@ export class LoginCommand {
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
-
   };
 
   /**   成功后 更新状态*/

@@ -13,16 +13,16 @@ const bodyStyle = {
   },
 }
 
-function Dashboard ({ dashboard, loading }) {
+function Dashboard ({ home, loading }) {
   const {
     weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user,
-  } = dashboard
+  } = home
   const numberCards = numbers.map((item, key) => (<Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>))
 
   return (
-    <Page loading={loading.models.dashboard && sales.length === 0} className={styles.dashboard}>
+    <Page loading={loading.models.home && sales.length === 0} className={styles.dashboard}>
       <Row gutter={24}>
         {numberCards}
         <Col lg={18} md={24}>
@@ -45,7 +45,7 @@ function Dashboard ({ dashboard, loading }) {
                   background: color.blue,
                 }}
               >
-                <Weather {...weather} loading={loading.effects['dashboard/queryWeather']} />
+                <Weather {...weather} loading={loading.effects['home/queryWeather']} />
               </Card>
             </Col>
             <Col lg={24} md={12}>
@@ -103,4 +103,4 @@ function Dashboard ({ dashboard, loading }) {
 
 
 
-export default connect(({ dashboard, loading }) => ({ dashboard, loading }))(Dashboard)
+export default connect(({ home, loading }) => ({ home, loading }))(Dashboard)

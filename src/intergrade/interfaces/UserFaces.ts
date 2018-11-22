@@ -4,9 +4,10 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
+import {PaginationProps} from "antd/lib/pagination";
 import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
@@ -14,7 +15,6 @@ import queryString from 'query-string';
 
 export interface UserInitState extends BaseState {
   userArea?: AreaState<User>;
-  stringArea?: AreaState<string>;
 }
 
 export type UserState = UserInitState & typeof userCustomState;
@@ -66,6 +66,7 @@ export interface UserModel extends IModel<UserState, UserReducers, UserEffects> 
   reducers?: UserReducers;
   effects?: UserEffects;
   subscriptions?: UserSubscriptions;
+  getUserPageListByDefaultQueryInitParamsFn?: SetupParamsFun;
 }
 
 export interface UserProps extends BaseProps {
@@ -91,16 +92,7 @@ userInitModel.state.userArea = {
   doQuery: false,
   type: null,
 };
-userInitModel.state.stringArea = {
-  areaName: 'stringArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
-};
+userInitModel.state=mergeObjects(userInitModel.state,userCustomState);
 
 /***把 namespace 带过来，以便生成路径*/
 export const userEffects = modelPathsProxy<UserEffects>(userInitModel);
@@ -118,7 +110,8 @@ export class UserDispatch {
     }
     return routerRedux.push(pushRoute);
   }
-  static setup_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+
+  static setup_effect(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/setup',
       payload: {
@@ -154,7 +147,7 @@ export class UserDispatch {
   };
 
   /** 批量删除用户 */
-  static deleteByUserIds_effect(params: { userIds?: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static deleteByUserIds_effect(params: { userIds?: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/deleteByUserIds',
       payload: {
@@ -166,7 +159,7 @@ export class UserDispatch {
   };
 
   /** 用户列表 */
-  static getUserPageListByDefaultQuery_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static getUserPageListByDefaultQuery_effect(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/getUserPageListByDefaultQuery',
       payload: {

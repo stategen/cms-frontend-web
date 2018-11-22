@@ -34,7 +34,7 @@ let lastHref
 
 const App = ({children, dispatch, appState, loading, location}: AppProps & ConnectionPros) => {
 
-  const {siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, dashboardMenu, permission}:AppState = appState;
+  const {siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, homeMenu, permission}:AppState = appState;
   const user: User = appState.userArea.list[0] || {};
   const menus = appState.menuArea.list;
 
@@ -104,7 +104,7 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
     </div>)
   }
 
-  const activeRoute = current ? current.route : dashboardMenu.route;
+  const activeRoute = current ? current.route : homeMenu.route;
   const opendOrders = appState.routeOrders;
   const hasOpenedMenus = menus.filter((menu) => menu.route && opendOrders[menu.route]);
   let TabsPage = null;
@@ -119,7 +119,7 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
       const panelPros: DvaTabPaneProps = {
         tab: UIUtil.buildLink(menu),
         key: menu.route,
-        closable: menu.menuId != dashboardMenu.menuId,
+        closable: menu.menuId != homeMenu.menuId,
       };
       return <TabPane {...panelPros}></TabPane>;
     });
@@ -130,7 +130,7 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
         const preMaxRoute = RouteUtil.checkAndGetPreOrder(appState.routeOrders, targetKey);
         const menuRouteMap = makeMap(menus, MenuFields.route);
         const preMenu: Menu = menuRouteMap[preMaxRoute];
-        const theMenu =preMenu|| dashboardMenu;
+        const theMenu =preMenu|| homeMenu;
         dispatch(routerRedux.push({
           pathname: theMenu.route,
         }));

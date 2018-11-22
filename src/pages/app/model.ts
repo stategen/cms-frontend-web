@@ -8,13 +8,13 @@ import RoleType from "@i/enums/RoleType"
 import SimpleResponse from "@i/beans/SimpleResponse";
 import AppApis from '@i/apis/AppApis';
 import {loginInitModel} from "@i/interfaces/LoginFaces";
-import {dashboardInitModel} from "@i/interfaces/DashboardFaces";
 import Menu from "@i/beans/Menu";
 import {BaseState, mergeObjects} from "@utils/DvaUtil";
 import {AppCommand, appDefaultModel} from "@i/models/AppDefaultModel";
 import {appCustomState, Permission} from "@pages/app/AppCustomFaces";
 import RouteUtil from "@utils/RouteUtil";
 import MenuUtil from "@utils/MenuUtil";
+import {homeInitModel} from "@i/interfaces/HomeFaces";
 
 const {prefix} = config;
 
@@ -73,7 +73,7 @@ appModel.effects.setup = function* ({payload,}, {call, put, select}) {
 
   // let menus: Menu[] = yield call(AppApis.getAllMenus,{});
   let menus = appState.menuArea.list;
-  const dashboardMenu = MenuUtil.filterMenuByPathname(dashboardInitModel.pathname, menus);
+  const homeMenu = MenuUtil.filterMenuByPathname(homeInitModel.pathname, menus);
 
   const permission = <Permission> {};
 
@@ -81,7 +81,7 @@ appModel.effects.setup = function* ({payload,}, {call, put, select}) {
     permission.visit = menus.map((menu: Menu) => menu.menuId)
   } else {
     menus = menus.filter((menu: Menu) => {
-      return (dashboardMenu === menu)
+      return (homeMenu === menu)
         || (permission.visit.includes(menu.menuId))
         || (menu.mpid ? permission.visit.includes(menu.mpid) || menu.mpid == -1 : true)
         || (menu.bpid ? permission.visit.includes(menu.bpid) : true);
@@ -93,10 +93,10 @@ appModel.effects.setup = function* ({payload,}, {call, put, select}) {
     payload: <AppState>{
       ...appState,
       routeOrders: {
-        [dashboardMenu.route]: 1,
+        [homeMenu.route]: 1,
       },
       permission,
-      dashboardMenu,
+      homeMenu,
       menuArea: {
         list: menus
       }
@@ -105,7 +105,7 @@ appModel.effects.setup = function* ({payload,}, {call, put, select}) {
 
   if (location.pathname === loginInitModel.pathname) {
     yield put(routerRedux.push({
-      pathname: dashboardInitModel.pathname,
+      pathname: homeInitModel.pathname,
     }))
   }
 };
@@ -141,7 +141,7 @@ appModel.reducers.removeRoute = (state: AppState, {payload}) => {
 appModel.effects.logout = function* ({payload,}, {call, put, select}) {
   const simpleResponse: SimpleResponse = yield call(AppApis.logout, parse(payload))
   if (simpleResponse.success) {
-    const dashboardMenu = yield select(_ => _.app.dashboardMenu);
+    const homeMenu = yield select(_ => _.app.homeMenu);
     yield put({
       type: appReducers.updateState,
       payload: <AppState>{
@@ -150,7 +150,7 @@ appModel.effects.logout = function* ({payload,}, {call, put, select}) {
         },
         permission: {visit: []},
         menuArea: {
-          list: [dashboardMenu],
+          list: [homeMenu],
         }
       }
     })

@@ -5,17 +5,17 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {LoginState} from "../interfaces/LoginFaces";
-import {DashboardState} from "../interfaces/DashboardFaces";
-import {AppState} from "../interfaces/AppFaces";
+import {HomeState} from "../interfaces/HomeFaces";
 import {UserState} from "../interfaces/UserFaces";
+import {User_$userIdState} from "../interfaces/User_$userIdFaces";
 import {RoleState} from "../interfaces/RoleFaces";
-import {User$userIdState} from "../interfaces/User$userIdFaces";
+import {AppState} from "../interfaces/AppFaces";
 
 export default interface StatesAlias {
   login: LoginState;
-  dashboard: DashboardState;
-  app: AppState;
+  home: HomeState;
   user: UserState;
+  user_$userId: User_$userIdState;
   role: RoleState;
-  user$userId: User$userIdState;
+  app: AppState;
 }
