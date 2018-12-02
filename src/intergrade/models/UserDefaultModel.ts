@@ -16,8 +16,8 @@ import User from "../beans/User";
 export class UserCommand {
   static * setup_effect({payload}, {call, put, select}) {
     let newPayload = {};
-    /** 用户列表 */
 
+    /** 用户列表 */
     const getUserPageListByDefaultQueryPayload = yield UserCommand.getUserPageListByDefaultQuery_effect({payload}, {call, put, select});
     newPayload = UserCommand.getUserPageListByDefaultQuery_success_reducer(<UserState>newPayload, getUserPageListByDefaultQueryPayload);
     return newPayload;
@@ -26,8 +26,8 @@ export class UserCommand {
   /** 创建用户 */
   static * createUser_effect({payload}, {call, put, select}) {
     const user: User = yield call(UserApis.createUser, payload);
-    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
-    const users = updateArray(oldUsers, user ? user : null, "userId");
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
@@ -38,6 +38,7 @@ export class UserCommand {
     };
     return newPayload;
   };
+
 
   /** 创建用户  成功后 更新状态*/
   static createUser_success_reducer = (state: UserState, payload): UserState => {
@@ -50,8 +51,8 @@ export class UserCommand {
   /** 删除用户 */
   static * delete_effect({payload}, {call, put, select}) {
     const result: string = yield call(UserApis.delete, payload);
-    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
-    const users = delateArray(oldUsers, result ? result : null, "userId");
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const users = delateArray(oldUserArea.list, result ? result : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
@@ -62,6 +63,7 @@ export class UserCommand {
     };
     return newPayload;
   };
+
 
   /** 删除用户  成功后 更新状态*/
   static delete_success_reducer = (state: UserState, payload): UserState => {
@@ -74,8 +76,8 @@ export class UserCommand {
   /** 批量删除用户 */
   static * deleteByUserIds_effect({payload}, {call, put, select}) {
     const result: string[] = yield call(UserApis.deleteByUserIds, payload);
-    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
-    const users = delateArray(oldUsers, result ? result : null, "userId");
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const users = delateArray(oldUserArea.list, result ? result : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
@@ -87,6 +89,7 @@ export class UserCommand {
     return newPayload;
   };
 
+
   /** 批量删除用户  成功后 更新状态*/
   static deleteByUserIds_success_reducer = (state: UserState, payload): UserState => {
     return mergeObjects(
@@ -97,10 +100,11 @@ export class UserCommand {
 
   /** 用户列表 */
   static * getUserPageListByDefaultQuery_effect({payload}, {call, put, select}) {
+    const oldUserArea = yield select((_) => _.user.userArea);
+    payload ={...oldUserArea.queryRule, ...payload};
     const userPageList: AntdPageList<User> = yield call(UserApis.getUserPageListByDefaultQuery, payload);
-    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
     const pagination = userPageList ? userPageList.pagination : null;
-    const users = updateArray(oldUsers, userPageList ? userPageList.list : null, "userId");
+    const users = updateArray(oldUserArea.list, userPageList ? userPageList.list : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
@@ -114,6 +118,19 @@ export class UserCommand {
     return newPayload;
   };
 
+  static * getUserPageListByDefaultQuery_next_effect({payload}, {call, put, select}) {
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const pagination = oldUserArea.pagination;
+    let page = pagination.current;
+    page = (page ? page : 0) + 1;
+    const totalPages = Math.trunc(pagination.total / (pagination.pageSize || 10)) + 1;
+    page = Math.min(page, totalPages)
+    payload = {...oldUserArea.queryRule, page};
+    const newPayload = yield UserCommand.getUserPageListByDefaultQuery_effect({payload}, {call, put, select});
+    return newPayload;
+  }
+
+
   /** 用户列表  成功后 更新状态*/
   static getUserPageListByDefaultQuery_success_reducer = (state: UserState, payload): UserState => {
     return mergeObjects(
@@ -125,8 +142,8 @@ export class UserCommand {
   /** 修改用户 */
   static * patchUser_effect({payload}, {call, put, select}) {
     const user: User = yield call(UserApis.patchUser, payload);
-    const oldUsers: User[] = yield select(({user: userState}) => userState.userArea.list);
-    const users = updateArray(oldUsers, user ? user : null, "userId");
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
@@ -137,6 +154,7 @@ export class UserCommand {
     };
     return newPayload;
   };
+
 
   /** 修改用户  成功后 更新状态*/
   static patchUser_success_reducer = (state: UserState, payload): UserState => {
@@ -151,13 +169,13 @@ export class UserCommand {
 export const userDefaultModel: UserModel = <UserModel>(mergeObjects(abstractModel, userInitModel));
 
 userDefaultModel.subscriptions.setup = ({dispatch, history}) => {
-  history.listen((location) => {
-    const pathname = location.pathname;
+  history.listen((listener) => {
+    const pathname = listener.pathname;
     const match = RouteUtil.getMatch(userDefaultModel.pathname, pathname);
     if (!match) {
       return;
     }
-    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(location)} ;
+    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(listener)} ;
     const getUserPageListByDefaultQueryParams = userDefaultModel.getUserPageListByDefaultQueryInitParamsFn ? userDefaultModel.getUserPageListByDefaultQueryInitParamsFn({pathname, match}) : null;
     payload = {...payload, ...getUserPageListByDefaultQueryParams}
     dispatch({
@@ -173,8 +191,17 @@ userDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
   if (!routeOpend) {
     return;
   }
-  const newPayload = yield UserCommand.setup_effect({payload}, {call, put, select});
 
+  if (userDefaultModel.getInitState){
+    const initState =userDefaultModel.getInitState();
+    yield put({
+        type: 'updateState',
+        payload: initState,
+      }
+    )
+  }
+
+  const newPayload = yield UserCommand.setup_effect({payload}, {call, put, select});
   yield put({
       type: 'setup_success',
       payload: newPayload,
@@ -234,6 +261,15 @@ userDefaultModel.reducers.deleteByUserIds_success = (state: UserState, {payload}
 /** 用户列表 */
 userDefaultModel.effects.getUserPageListByDefaultQuery = function* ({payload}, {call, put, select}) {
   const newPayload = yield UserCommand.getUserPageListByDefaultQuery_effect({payload}, {call, put, select});
+  yield put({
+      type: 'getUserPageListByDefaultQuery_success',
+      payload: newPayload,
+    }
+  )
+};
+
+userDefaultModel.effects.getUserPageListByDefaultQuery_next = function* ({payload}, {call, put, select}) {
+  const newPayload = yield UserCommand.getUserPageListByDefaultQuery_next_effect({payload}, {call, put, select});
   yield put({
       type: 'getUserPageListByDefaultQuery_success',
       payload: newPayload,

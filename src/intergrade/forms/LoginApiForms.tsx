@@ -6,22 +6,22 @@
  */
 import SimpleResponse from "../beans/SimpleResponse";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfigs,FormConfigs , ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT} from "@utils/DvaUtil";
+import {FormItemConfigs,FormConfigs , ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
 import moment from 'moment';
-import locale from 'antd/lib/date-picker/locale/zh_CN';
 
 export namespace LoginApiForms {
-  export interface loginFormConfigs extends FormConfigs {
+  export interface LoginFormConfigs extends FormConfigs {
   /** 用户名  */
   username?: FormItemConfigs,
   /** 密码  */
   password?: FormItemConfigs,
   }
 
-  export const loginFormConfigs = (queryRule: ObjectMap<any> = {}): loginFormConfigs => {
-    const result: loginFormConfigs = {
+  export const loginFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): LoginFormConfigs => {
+    const _ ={formPropsUtils: formPropsUtils, createFormItemProps: UIUtil.createFormItemProps};
     /** 用户名  */
-    username: {
+    const username: FormItemConfigs = {
+      ..._,
       name: 'username',
       label: "用户名",
       config: {
@@ -38,10 +38,11 @@ export namespace LoginApiForms {
           },
         ],
       }
-    },
+    };
 
     /** 密码  */
-    password: {
+    const password: FormItemConfigs = {
+      ..._,
       name: 'password',
       label: "密码",
       config: {
@@ -54,13 +55,14 @@ export namespace LoginApiForms {
           },
         ],
       }
-    },
+    };
 
+    username.editor = UIUtil.buildInputEditor;
+    password.editor = UIUtil.buildInputEditor;
+
+    return {
+      username,
+      password,
     }
-
-    result.username.editor = UIUtil.buildInputEditor(result.username);
-    result.password.editor = UIUtil.buildInputEditor(result.password);
-
-    return result;
   }
 }

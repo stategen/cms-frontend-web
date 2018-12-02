@@ -19,10 +19,12 @@ export class LoginCommand {
     }
 
     const newPayload: LoginState = {
+      ...payload,
       ...payload ? payload.stateExtraProps__ : null,
     };
     return newPayload;
   };
+
 
   /**   成功后 更新状态*/
   static login_success_reducer = (state: LoginState, payload): LoginState => {

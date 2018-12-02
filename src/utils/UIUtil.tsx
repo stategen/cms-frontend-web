@@ -10,13 +10,92 @@ import {DatePickerProps} from "antd/lib/date-picker/interface";
 import {TimePickerProps} from "antd/lib/time-picker";
 import {SelectProps} from "antd/lib/select";
 import {LinkProps} from "react-router-dom";
-import {FormConfigs} from "@utils/DvaUtil";
+import {FormConfigs, FormProps, FormPropsUtils} from "@utils/DvaUtil";
 import {default as FormItem, FormItemProps} from "antd/lib/form/FormItem";
-import {FormComponentProps} from "antd/lib/form";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 
-export default class UIUtil {
-  static makeSelectOptions(options: Options={}) {
+namespace UIUtil {
+
+  export const createFieldProps = (formItemConfigs: FormItemConfigs,formPropsUtils?) => {
+    formPropsUtils =formPropsUtils || formItemConfigs.formPropsUtils;
+    return formPropsUtils.getFieldProps(formItemConfigs.name, formItemConfigs.config);
+  }
+
+
+  export const buildInputEditor = (props) => {
+    console.log(props)
+    const {formItemConfigs, ...othersProps} = props;
+    return (
+      <InputItem
+        key={formItemConfigs.name}
+        {...othersProps}
+        {...UIUtil.createFieldProps(formItemConfigs)}
+      >
+      </InputItem>
+    )
+  }
+
+  export const buildTimeStampEditor = (props) => {
+    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
+    return (<DatePicker showTime locale={locale} format={formItemConfigs.format} {...props}/>)
+  }
+
+  export const buildTimePickerEditor = (props) => {
+    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
+    return (<TimePicker format={formItemConfigs.format} {...props}/>)
+  }
+
+  export const buildDatePickerEditor = (props) => {
+    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
+    return (<DatePicker locale={locale} format={formItemConfigs.format} {...props}/>)
+  }
+
+  export const buildEnumEditor = (props) => {
+    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
+    const muti = formItemConfigs.isArray ? {mode: "multiple"} : null;
+    return (
+      <Select {...muti} style={{width: 150}} {...props}>
+        {UIUtil.makeSelectOptions(formItemConfigs.options)}
+      </Select>
+    )
+  }
+
+  export const buildImageEditor = (props) => {
+    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
+    return (<InputItem {...props}/>)
+  }
+
+  export const buildFormItem = (formItemConfigs: FormItemConfigs, wrappedForm: WrappedFormUtils, formItemProps: FormItemProps) => {
+    return (
+      <FormItem {...formItemProps} key={formItemConfigs.name} label={formItemConfigs.label}>
+        {wrappedForm.getFieldDecorator(formItemConfigs.name, formItemConfigs.config)(formItemConfigs.editor)}
+      </FormItem>
+    )
+  }
+
+  export const buildFormItems = (formConfigs: FormConfigs, wrappedForm: WrappedFormUtils, formItemProps: FormItemProps) => {
+    let formItems = Object.keys(formConfigs).map((fieldName: string) => {
+      const formItemConfigs: FormItemConfigs = formConfigs[fieldName];
+      if (formItemConfigs.isId || formItemConfigs.hidden) {
+        return;
+      }
+      return UIUtil.buildFormItem(formItemConfigs, wrappedForm, formItemProps)
+
+    });
+    return formItems;
+  }
+
+  export const buildLink = (menu: Menu = {}, props: LinkProps = null) => {
+    let route = (menu.route || '#');
+    // props =props || {to:route};
+
+    return <Link to={route} style={{width: 10}} key={menu.route} {...props} >
+      <Icon type={menu.icon}/>
+      {menu.name}
+    </Link>
+  }
+
+  export const makeSelectOptions = (options: Options = {}) => {
     const result = Object.values(options).map((option, key) => {
       return (
         <Select.Option value={option.value} key={key}>{option.title || option.value}
@@ -27,64 +106,6 @@ export default class UIUtil {
   }
 
 
-  static buildInputEditor(formItemConfigs: FormItemConfigs=null,props:InputProps=null) {
-    return (<Input {...props}/>)
-  }
-
-  static buildTimeStampEditor(formItemConfigs: FormItemConfigs=null, format: string,props:DatePickerProps=null) {
-    return (<DatePicker showTime locale={locale} format={format} {...props}/>)
-  }
-
-  static buildTimePickerEditor(formItemConfigs: FormItemConfigs=null, format: string,props:TimePickerProps=null) {
-    return (<TimePicker format={format} {...props}/>)
-  }
-
-  static buildDatePickerEditor(formItemConfigs: FormItemConfigs=null, format: string,props:DatePickerProps=null) {
-
-    return (<DatePicker locale={locale} format={format} {...props}/>)
-  }
-
-  static buildEnumEditor(formItemConfigs: FormItemConfigs={}, options: Options,props:SelectProps=null) {
-    const muti = formItemConfigs.isArray ? {mode: "multiple"} : null;
-
-    return (
-      <Select {...muti} style={{width: 150}} {...props}>
-        {UIUtil.makeSelectOptions(options)}
-      </Select>
-    )
-  }
-
-  static buildImageEditor(formItemConfigs: FormItemConfigs={},props:InputProps=null) {
-    return (<Input {...props}/>)
-  }
-
-  static buildFormItem(formItemConfigs:FormItemConfigs, wrappedForm:WrappedFormUtils,formItemProps:FormItemProps){
-    return (
-      <FormItem {...formItemProps} key={formItemConfigs.name} label={formItemConfigs.label}>
-        {wrappedForm.getFieldDecorator(formItemConfigs.name, formItemConfigs.config)(formItemConfigs.editor)}
-      </FormItem>
-    )
-  }
-
-  static buildFormItems(formConfigs:FormConfigs,wrappedForm:WrappedFormUtils,formItemProps:FormItemProps){
-    let formItems = Object.keys(formConfigs).map((fieldName:string) => {
-      const formItemConfigs:FormItemConfigs = formConfigs[fieldName];
-      if (formItemConfigs.isId || formItemConfigs.hidden) {
-        return;
-      }
-      return this.buildFormItem(formItemConfigs,wrappedForm,formItemProps)
-
-    });
-    return formItems;
-  }
-
-  static buildLink(menu: Menu ={}, props:LinkProps = null) {
-    let route = (menu.route || '#');
-    // props =props || {to:route};
-
-    return <Link to={route} style={{width: 10}} key={menu.route} {...props} >
-      <Icon type={menu.icon}/>
-      {menu.name}
-    </Link>
-  }
 }
+
+export default UIUtil;

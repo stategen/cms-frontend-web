@@ -4,7 +4,8 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {homeCustomState,HomeCustomSubscriptions , HomeCustomEffects, HomeCustomReducers} from '@pages/home/HomeCustomFaces'
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
@@ -58,17 +59,16 @@ export const homeInitModel: HomeModel = <HomeModel>{
   effects: <HomeEffects>{},
 };
 
-homeInitModel.state.anyArea = {
+export const homeAnyAreaState = {
   areaName: 'anyArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-homeInitModel.state=mergeObjects(homeInitModel.state,homeCustomState);
+
+homeInitModel.getInitState = () => {
+  const initState = mergeObjects({anyArea: {...homeAnyAreaState, ...initAreaState}},homeCustomState);
+  return initState;
+}
+
+homeInitModel.state=homeInitModel.getInitState();
 
 /***把 namespace 带过来，以便生成路径*/
 export const homeEffects = modelPathsProxy<HomeEffects>(homeInitModel);
@@ -99,6 +99,7 @@ export class HomeDispatch {
     }
   };
 
+
   static updateState_reducer(homeState: HomeState) {
     return {
       type: homeInitModel.namespace + '/updateState',
@@ -107,4 +108,5 @@ export class HomeDispatch {
       }
     }
   }
+
 }

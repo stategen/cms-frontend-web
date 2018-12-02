@@ -21,6 +21,7 @@ export class HomeCommand {
     return newPayload;
   };
 
+
   /**   成功后 更新状态*/
   static getDashboard_success_reducer = (state: HomeState, payload): HomeState => {
     return mergeObjects(

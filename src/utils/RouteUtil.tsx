@@ -13,6 +13,11 @@ export default class RouteUtil {
     return match;
   }
 
+  static compileRoute(route:string,params:{}){
+    let toPathFn = pathToRegexp.compile(route || "");
+    return toPathFn(params);
+  }
+
   static isRouteOpend(routeOrders:RouteOrders, pathname: string): boolean {
     if (pathname) {
       pathname = this.getRealPathname(pathname);
@@ -67,8 +72,8 @@ export default class RouteUtil {
     return route;
   }
 
-  static getQuery(location){
-    const query =location.query;
+  static getQuery(listener){
+    const query =listener.query;
     if (query && query instanceof  Object){
       for (let i in query) {
         return query;

@@ -4,7 +4,8 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {appCustomState,AppCustomSubscriptions , AppCustomEffects, AppCustomReducers} from '@pages/app/AppCustomFaces'
 import Menu from "../beans/Menu";
 import SimpleResponse from "../beans/SimpleResponse";
@@ -60,6 +61,7 @@ export interface AppModel extends IModel<AppState, AppReducers, AppEffects> {
   subscriptions?: AppSubscriptions;
   getAllMenusInitParamsFn?: SetupParamsFun;
   getCookieUserInitParamsFn?: SetupParamsFun;
+  getInitState?: () => AppState;
 }
 
 export interface AppProps extends BaseProps {
@@ -75,27 +77,20 @@ export const appInitModel: AppModel = <AppModel>{
   effects: <AppEffects>{},
 };
 
-appInitModel.state.userArea = {
+export const appUserAreaState = {
   areaName: 'userArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-appInitModel.state.menuArea = {
+
+export const appMenuAreaState = {
   areaName: 'menuArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-appInitModel.state=mergeObjects(appInitModel.state,appCustomState);
+
+appInitModel.getInitState = () => {
+  const initState = mergeObjects({userArea: {...appUserAreaState, ...initAreaState}, menuArea: {...appMenuAreaState, ...initAreaState}},appCustomState);
+  return initState;
+}
+
+appInitModel.state=appInitModel.getInitState();
 
 /***把 namespace 带过来，以便生成路径*/
 export const appEffects = modelPathsProxy<AppEffects>(appInitModel);
@@ -140,6 +135,7 @@ export class AppDispatch {
     }
   };
 
+
   /**  */
   static getCookieUser_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
     return {
@@ -151,6 +147,7 @@ export class AppDispatch {
       }
     }
   };
+
 
   /**  */
   static logout_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
@@ -164,6 +161,7 @@ export class AppDispatch {
     }
   };
 
+
   static updateState_reducer(appState: AppState) {
     return {
       type: appInitModel.namespace + '/updateState',
@@ -172,4 +170,5 @@ export class AppDispatch {
       }
     }
   }
+
 }

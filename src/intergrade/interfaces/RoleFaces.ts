@@ -4,7 +4,8 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {roleCustomState,RoleCustomSubscriptions , RoleCustomEffects, RoleCustomReducers} from '@pages/role/RoleCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
@@ -33,6 +34,7 @@ export interface RoleInitEffects extends Effects {
   deleteByRoleIds?: Effect,
   /** 角色分页列表,多条件 */
   getRolePageListByDefaultQuery?: Effect,
+  getRolePageListByDefaultQuery_next?: Effect,
   /** 创建角色 */
   insert?: Effect,
   /** 更新角色 */
@@ -71,6 +73,7 @@ export interface RoleModel extends IModel<RoleState, RoleReducers, RoleEffects> 
   effects?: RoleEffects;
   subscriptions?: RoleSubscriptions;
   getRolePageListByDefaultQueryInitParamsFn?: SetupParamsFun;
+  getInitState?: () => RoleState;
 }
 
 export interface RoleProps extends BaseProps {
@@ -86,17 +89,16 @@ export const roleInitModel: RoleModel = <RoleModel>{
   effects: <RoleEffects>{},
 };
 
-roleInitModel.state.roleArea = {
+export const roleRoleAreaState = {
   areaName: 'roleArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-roleInitModel.state=mergeObjects(roleInitModel.state,roleCustomState);
+
+roleInitModel.getInitState = () => {
+  const initState = mergeObjects({roleArea: {...roleRoleAreaState, ...initAreaState}},roleCustomState);
+  return initState;
+}
+
+roleInitModel.state=roleInitModel.getInitState();
 
 /***把 namespace 带过来，以便生成路径*/
 export const roleEffects = modelPathsProxy<RoleEffects>(roleInitModel);
@@ -138,8 +140,9 @@ export class RoleDispatch {
     }
   };
 
+
   /** 批量删除角色 */
-  static deleteByRoleIds_effect(params: { roleIds: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static deleteByRoleIds_effect(params: { roleIds?: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/deleteByRoleIds',
       payload: {
@@ -149,6 +152,7 @@ export class RoleDispatch {
       }
     }
   };
+
 
   /** 角色分页列表,多条件 */
   static getRolePageListByDefaultQuery_effect(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
@@ -162,6 +166,15 @@ export class RoleDispatch {
     }
   };
 
+  static getRolePageListByDefaultQuery_next_effect() {
+    return {
+      type: roleInitModel.namespace + '/getRolePageListByDefaultQuery_next',
+      payload: {
+      }
+    }
+  };
+
+
   static hideRoleModal_reducer(roleState: RoleState) {
     return {
       type: roleInitModel.namespace + '/hideRoleModal',
@@ -170,6 +183,7 @@ export class RoleDispatch {
       }
     }
   }
+
 
   /** 创建角色 */
   static insert_effect(params: { role?: Role }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
@@ -183,6 +197,7 @@ export class RoleDispatch {
     }
   };
 
+
   static showRoleModal_reducer(roleState: RoleState) {
     return {
       type: roleInitModel.namespace + '/showRoleModal',
@@ -191,6 +206,7 @@ export class RoleDispatch {
       }
     }
   }
+
 
   /** 更新角色 */
   static update_effect(params: { role?: Role }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
@@ -204,6 +220,7 @@ export class RoleDispatch {
     }
   };
 
+
   static updateState_reducer(roleState: RoleState) {
     return {
       type: roleInitModel.namespace + '/updateState',
@@ -212,4 +229,5 @@ export class RoleDispatch {
       }
     }
   }
+
 }

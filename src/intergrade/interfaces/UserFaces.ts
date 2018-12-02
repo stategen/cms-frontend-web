@@ -4,7 +4,8 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
@@ -35,6 +36,7 @@ export interface UserInitEffects extends Effects {
   deleteByUserIds?: Effect,
   /** 用户列表 */
   getUserPageListByDefaultQuery?: Effect,
+  getUserPageListByDefaultQuery_next?: Effect,
   /** 修改用户 */
   patchUser?: Effect,
 }
@@ -67,6 +69,7 @@ export interface UserModel extends IModel<UserState, UserReducers, UserEffects> 
   effects?: UserEffects;
   subscriptions?: UserSubscriptions;
   getUserPageListByDefaultQueryInitParamsFn?: SetupParamsFun;
+  getInitState?: () => UserState;
 }
 
 export interface UserProps extends BaseProps {
@@ -82,17 +85,16 @@ export const userInitModel: UserModel = <UserModel>{
   effects: <UserEffects>{},
 };
 
-userInitModel.state.userArea = {
+export const userUserAreaState = {
   areaName: 'userArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-userInitModel.state=mergeObjects(userInitModel.state,userCustomState);
+
+userInitModel.getInitState = () => {
+  const initState = mergeObjects({userArea: {...userUserAreaState, ...initAreaState}},userCustomState);
+  return initState;
+}
+
+userInitModel.state=userInitModel.getInitState();
 
 /***把 namespace 带过来，以便生成路径*/
 export const userEffects = modelPathsProxy<UserEffects>(userInitModel);
@@ -134,8 +136,9 @@ export class UserDispatch {
     }
   };
 
+
   /** 删除用户 */
-  static delete_effect(params: { userId: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static delete_effect(params: { userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/delete',
       payload: {
@@ -145,6 +148,7 @@ export class UserDispatch {
       }
     }
   };
+
 
   /** 批量删除用户 */
   static deleteByUserIds_effect(params: { userIds?: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
@@ -158,6 +162,7 @@ export class UserDispatch {
     }
   };
 
+
   /** 用户列表 */
   static getUserPageListByDefaultQuery_effect(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
@@ -169,6 +174,15 @@ export class UserDispatch {
       }
     }
   };
+
+  static getUserPageListByDefaultQuery_next_effect() {
+    return {
+      type: userInitModel.namespace + '/getUserPageListByDefaultQuery_next',
+      payload: {
+      }
+    }
+  };
+
 
   /** 修改用户 */
   static patchUser_effect(user: User, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
@@ -182,6 +196,7 @@ export class UserDispatch {
     }
   };
 
+
   static updateState_reducer(userState: UserState) {
     return {
       type: userInitModel.namespace + '/updateState',
@@ -190,4 +205,5 @@ export class UserDispatch {
       }
     }
   }
+
 }

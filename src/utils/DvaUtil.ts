@@ -1,12 +1,11 @@
 import {PaginationProps} from "antd/lib/pagination/Pagination";
-import {History} from "history";
-import {call as Call, put as Put, SelectEffect} from 'redux-saga/effects';
+import {call as Call, put as Put} from 'redux-saga/effects';
 import * as React from 'react';
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
-import {SelectionBoxProps} from "antd/lib/table";
 import {OptionProps} from "antd/lib/select";
 import {ReactElement} from "react";
-import {TabPaneProps} from "antd/lib/tabs";
+import {WrappedFormUtils} from "antd/lib/form/Form";
+import {History} from "history";
 
 
 export const TIME_FORMAT = "HH:mm:ss";
@@ -21,8 +20,8 @@ export interface Action {
   [propName: string]: any,
 }
 
-export interface RouteOrders{
-  [route:string]:number
+export interface RouteOrders {
+  [route: string]: number
 }
 
 export interface Options {
@@ -56,14 +55,13 @@ export interface SagaCommands {
 }
 
 export interface BaseState {
-  /*  [areaName: string]: AreaState<any>;*/
-}
 
+}
 
 export interface AreaState<T> {
   areaName?: string,
-  item?: T,
   list?: T[],
+  index?:number,
   pagination?: PaginationProps;
   selectedRowKeys?: any[],
   doEdit?: boolean;
@@ -73,19 +71,28 @@ export interface AreaState<T> {
   cancelState?: AreaState<T>,
 }
 
+export const initAreaState :AreaState<any>=  {
+  list: [],
+  pagination: {},
+  selectedRowKeys: [],
+  doEdit: false,
+  doQuery: false,
+  type: null,
+  index:null,
+}
+
 /*interfaces*/
 export interface Payload {
   areaExtraProps__?: AreaState<any>;
   stateExtraProps__?: BaseState;
-  aaa: SelectionBoxProps
 
   [propName: string]: any,
 }
 
+export interface Bean {
+}
 
 export interface Reducers<S> {
-  /*  showModal?: Reducer<S>,
-    hideModal?: Reducer<S>,*/
   updateState?: Reducer<S>,
 }
 
@@ -99,11 +106,20 @@ export interface Effects {
 
 export interface SubscriptionPros {
   dispatch?: Dispatch,
-  history?: History
+  history?: History,
 }
 
 export interface Subscription {
   ({dispatch, history}: SubscriptionPros): any;
+}
+
+export interface SetupProps {
+  pathname: string,
+  match: RegExpExecArray;
+}
+
+export interface SetupParamsFun {
+  ({pathname, match}: SetupProps): any;
 }
 
 export interface Subscriptions {
@@ -117,7 +133,7 @@ export interface DvaModel {
   subscriptions?: Subscriptions;
   reducers?: Reducers<any>;
   effects?: Effects;
-  lockPathsCache?: () => any;
+  getInitState?: () => any;
 }
 
 export interface IModel<S, R extends Reducers<S>, E extends Effects> extends DvaModel {
@@ -132,7 +148,7 @@ export interface RouterReduxPushPros {
 }
 
 export const modelPathsProxy = function <T>(dvaModel: DvaModel): T {
-  let proxyObj: DvaModel = <DvaModel> {namespace:dvaModel.namespace};
+  let proxyObj: DvaModel = <DvaModel> {namespace: dvaModel.namespace};
   let namespace = proxyObj.namespace;
   const handleGet = {
     get: function (reducersOrEffects, propertyName, proxyed) {
@@ -151,19 +167,6 @@ export const modelPathsProxy = function <T>(dvaModel: DvaModel): T {
 }
 
 export const abstractModel: IModel<any, Reducers<any>, Effects> = {
-  state: <BaseState>{
-    selectedRowKeys: [],
-    list: [],
-    pagination: {
-      showSizeChanger: true,
-      showQuickJumper: true,
-      showTotal: total => `Total ${total} Items`,
-      current: 1,
-      total: 0,
-      pageSize: 10,
-    },
-  },
-
   reducers: {
     updateState(state: BaseState, {payload}) {
       return mergeObjects(
@@ -171,42 +174,13 @@ export const abstractModel: IModel<any, Reducers<any>, Effects> = {
         payload,
       )
     },
-
-    querySuccess(state: BaseState, {payload}) {
-      const {list, pagination} = payload
-      return {
-        ...state,
-        list,
-        pagination: {
-          ...state.pagination,
-          ...pagination,
-        },
-      }
-    },
   },
 }
 
-abstractModel.reducers.showModal = (state, {payload}) => {
-  return {...state, ...payload, modalVisible: true};
-}
-
-abstractModel.reducers.hideModal = (state, {payload}) => {
-  return {...state, modalVisible: false};
-}
-
-
-export interface LocationEx extends Location {
-  query: {},
-}
 
 export interface DvaLocation extends Location {
   key?: string,
   query?: {};
-}
-
-export interface DvaTabPaneProps extends TabPaneProps {
-  key?: string,
-  opened?: boolean,
 }
 
 export interface DvaPageElement {
@@ -240,15 +214,13 @@ export interface FormItemConfigs {
   format?: string,
   options?: Options;
   config?: GetFieldDecoratorOptions,
-  editor?: React.ReactNode,
+  editor?: (props)=>React.ReactNode,
+  formPropsUtils?: FormPropsUtils;
+  createFormItemProps? :Function,
 }
 
 export interface FormConfigs {
   [itemname: string]: FormItemConfigs;
-}
-
-export interface Bean {
-
 }
 
 export interface ObjectMap<T extends {}> {
@@ -354,7 +326,7 @@ export const mergeObjects = (...sources) => {
       for (let key in dest) {
         const destItem = dest[key];
         if (destItem != null) {
-          if (!(destItem instanceof Array)) {
+          if (!(destItem instanceof Array)){
             const sourceItem = result[key];
             if (sourceItem && sourceItem instanceof Object) {
               if (destItem instanceof Object) {
@@ -378,4 +350,10 @@ export const cleanSelectRowsProps: AreaState<any> = {
   selectedRowKeys: [],
 };
 
+export interface FormPropsUtils extends WrappedFormUtils {
+  getFieldProps?(field: string, getFieldDecoratorOptions: GetFieldDecoratorOptions);
+}
 
+export interface FormProps {
+  form?: FormPropsUtils;
+}

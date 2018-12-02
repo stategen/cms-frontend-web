@@ -4,7 +4,8 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription, Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {user_$userIdCustomState,User_$userIdCustomSubscriptions , User_$userIdCustomEffects, User_$userIdCustomReducers} from '@pages/user/$userId/User_$userIdCustomFaces'
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
@@ -59,17 +60,16 @@ export const user_$userIdInitModel: User_$userIdModel = <User_$userIdModel>{
   effects: <User_$userIdEffects>{},
 };
 
-user_$userIdInitModel.state.userArea = {
+export const user_$userIdUserAreaState = {
   areaName: 'userArea',
-  item: null,
-  list: [],
-  pagination: null,
-  selectedRowKeys: [],
-  doEdit: false,
-  doQuery: false,
-  type: null,
 };
-user_$userIdInitModel.state=mergeObjects(user_$userIdInitModel.state,user_$userIdCustomState);
+
+user_$userIdInitModel.getInitState = () => {
+  const initState = mergeObjects({userArea: {...user_$userIdUserAreaState, ...initAreaState}},user_$userIdCustomState);
+  return initState;
+}
+
+user_$userIdInitModel.state=user_$userIdInitModel.getInitState();
 
 /***把 namespace 带过来，以便生成路径*/
 export const user_$userIdEffects = modelPathsProxy<User_$userIdEffects>(user_$userIdInitModel);
@@ -89,7 +89,7 @@ export class User_$userIdDispatch {
   }
 
   /** 获取用户详情 */
-  static getUserById_effect(params: { userId: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: User_$userIdState) {
+  static getUserById_effect(params: { userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: User_$userIdState) {
     return {
       type: user_$userIdInitModel.namespace + '/getUserById',
       payload: {
@@ -100,6 +100,7 @@ export class User_$userIdDispatch {
     }
   };
 
+
   static updateState_reducer(user_$userIdState: User_$userIdState) {
     return {
       type: user_$userIdInitModel.namespace + '/updateState',
@@ -108,4 +109,5 @@ export class User_$userIdDispatch {
       }
     }
   }
+
 }

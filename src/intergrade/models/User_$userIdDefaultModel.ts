@@ -14,8 +14,8 @@ export class User_$userIdCommand {
   /** 获取用户详情 */
   static * getUserById_effect({payload}, {call, put, select}) {
     const user: User = yield call(User_$userIdApis.getUserById, payload);
-    const oldUsers: User[] = yield select(({user_$userId: user_$userIdState}) => user_$userIdState.userArea.list);
-    const users = updateArray(oldUsers, user ? user : null, "userId");
+    const oldUserArea = yield select((_) => _.user_$userId.userArea);
+    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
 
     const newPayload: User_$userIdState = {
       userArea: {
@@ -26,6 +26,7 @@ export class User_$userIdCommand {
     };
     return newPayload;
   };
+
 
   /** 获取用户详情  成功后 更新状态*/
   static getUserById_success_reducer = (state: User_$userIdState, payload): User_$userIdState => {
