@@ -4,7 +4,7 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
         Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {homeCustomState,HomeCustomSubscriptions , HomeCustomEffects, HomeCustomReducers} from '@pages/home/HomeCustomFaces'
 import {routerRedux} from 'dva/router';
@@ -46,7 +46,7 @@ export interface HomeModel extends IModel<HomeState, HomeReducers, HomeEffects> 
   subscriptions?: HomeSubscriptions;
 }
 
-export interface HomeProps extends BaseProps {
+export interface HomeProps extends ConnectionPros {
   homeState?: HomeState,
 }
 

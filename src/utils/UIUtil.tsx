@@ -1,7 +1,7 @@
 import React from 'react'
 import {Input, DatePicker, TimePicker, Select} from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
-import {Options, FormItemConfigs} from "./DvaUtil";
+import {Options, FormItemConfig} from "./DvaUtil";
 import Menu from "@i/beans/Menu";
 import Icon from "antd/lib/icon";
 import Link from "umi/link";
@@ -16,70 +16,70 @@ import {WrappedFormUtils} from "antd/lib/form/Form";
 
 namespace UIUtil {
 
-  export const createFieldProps = (formItemConfigs: FormItemConfigs,formPropsUtils?) => {
-    formPropsUtils =formPropsUtils || formItemConfigs.formPropsUtils;
-    return formPropsUtils.getFieldProps(formItemConfigs.name, formItemConfigs.config);
+  export const createFieldProps = (formItemConfig: FormItemConfig,formPropsUtils?) => {
+    formPropsUtils =formPropsUtils || formItemConfig.formPropsUtils;
+    return formPropsUtils.getFieldProps(formItemConfig.name, formItemConfig.config);
   }
 
 
   export const buildInputEditor = (props) => {
     console.log(props)
-    const {formItemConfigs, ...othersProps} = props;
+    const {formItemConfig, ...othersProps} = props;
     return (
-      <InputItem
-        key={formItemConfigs.name}
+      <Input
+        key={formItemConfig.name}
         {...othersProps}
-        {...UIUtil.createFieldProps(formItemConfigs)}
+        {...UIUtil.createFieldProps(formItemConfig)}
       >
-      </InputItem>
+      </Input>
     )
   }
 
   export const buildTimeStampEditor = (props) => {
-    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
-    return (<DatePicker showTime locale={locale} format={formItemConfigs.format} {...props}/>)
+    const formItemConfig: FormItemConfig = this.formItemConfig;
+    return (<DatePicker showTime locale={locale} format={formItemConfig.format} {...props}/>)
   }
 
   export const buildTimePickerEditor = (props) => {
-    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
-    return (<TimePicker format={formItemConfigs.format} {...props}/>)
+    const formItemConfig: FormItemConfig = this.formItemConfig;
+    return (<TimePicker format={formItemConfig.format} {...props}/>)
   }
 
   export const buildDatePickerEditor = (props) => {
-    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
-    return (<DatePicker locale={locale} format={formItemConfigs.format} {...props}/>)
+    const formItemConfig: FormItemConfig = this.formItemConfig;
+    return (<DatePicker locale={locale} format={formItemConfig.format} {...props}/>)
   }
 
   export const buildEnumEditor = (props) => {
-    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
-    const muti = formItemConfigs.isArray ? {mode: "multiple"} : null;
+    const formItemConfig: FormItemConfig = this.formItemConfig;
+    const muti = formItemConfig.isArray ? {mode: "multiple"} : null;
     return (
       <Select {...muti} style={{width: 150}} {...props}>
-        {UIUtil.makeSelectOptions(formItemConfigs.options)}
+        {UIUtil.makeSelectOptions(formItemConfig.options)}
       </Select>
     )
   }
 
   export const buildImageEditor = (props) => {
-    const formItemConfigs: FormItemConfigs = this.formItemConfigs;
-    return (<InputItem {...props}/>)
+    const formItemConfig: FormItemConfig = this.formItemConfig;
+    return (<Input {...props}/>)
   }
 
-  export const buildFormItem = (formItemConfigs: FormItemConfigs, wrappedForm: WrappedFormUtils, formItemProps: FormItemProps) => {
+  export const buildFormItem = (formItemConfig: FormItemConfig, wrappedForm: WrappedFormUtils, formItemProps: FormItemProps) => {
     return (
-      <FormItem {...formItemProps} key={formItemConfigs.name} label={formItemConfigs.label}>
-        {wrappedForm.getFieldDecorator(formItemConfigs.name, formItemConfigs.config)(formItemConfigs.editor)}
+      <FormItem {...formItemProps} key={formItemConfig.name} label={formItemConfig.label}>
+        {wrappedForm.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig.editor)}
       </FormItem>
     )
   }
 
   export const buildFormItems = (formConfigs: FormConfigs, wrappedForm: WrappedFormUtils, formItemProps: FormItemProps) => {
     let formItems = Object.keys(formConfigs).map((fieldName: string) => {
-      const formItemConfigs: FormItemConfigs = formConfigs[fieldName];
-      if (formItemConfigs.isId || formItemConfigs.hidden) {
+      const formItemConfig: FormItemConfig = formConfigs[fieldName];
+      if (formItemConfig.isId || formItemConfig.hidden) {
         return;
       }
-      return UIUtil.buildFormItem(formItemConfigs, wrappedForm, formItemProps)
+      return UIUtil.buildFormItem(formItemConfig, wrappedForm, formItemProps)
 
     });
     return formItems;

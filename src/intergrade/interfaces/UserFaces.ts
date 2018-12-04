@@ -4,7 +4,7 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Reducer, AreaState, Subscription,
+import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
         Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
@@ -72,7 +72,7 @@ export interface UserModel extends IModel<UserState, UserReducers, UserEffects> 
   getInitState?: () => UserState;
 }
 
-export interface UserProps extends BaseProps {
+export interface UserProps extends ConnectionPros {
   userState?: UserState,
 }
 

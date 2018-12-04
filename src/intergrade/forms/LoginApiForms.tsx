@@ -6,63 +6,85 @@
  */
 import SimpleResponse from "../beans/SimpleResponse";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfigs,FormConfigs , ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
 import moment from 'moment';
+
+/** 用户名  */
+const login_username = {
+  name: 'username',
+  label: "用户名",
+  type: "",
+  editor: UIUtil.buildInputEditor,
+  value: null,
+  formPropsUtils: null,
+  config: {
+    initialValue: null,
+    rules: [
+      {
+        required: true,
+        message: "{javax.validation.constraints.NotNull.message}",
+      },
+      {
+        required: true,
+        max: 64,
+        message: "{javax.validation.constraints.Max.message}",
+      },
+    ],
+  }
+};
+login_username.editor =
+  (props: UIUtil.InputEditorProps) => {
+    props ={...props, formItemConfig: login_username};
+    return UIUtil.buildInputEditor(props);
+  }
+
+/** 密码  */
+const login_password = {
+  name: 'password',
+  label: "密码",
+  type: "password",
+  editor: UIUtil.buildPasswordEditor,
+  value: null,
+  formPropsUtils: null,
+  config: {
+    initialValue: null,
+    rules: [
+      {
+        required: true,
+        max: 64,
+        message: "{javax.validation.constraints.Max.message}",
+      },
+    ],
+  }
+};
+login_password.editor =
+  (props: UIUtil.PasswordEditorProps) => {
+    props ={...props, formItemConfig: login_password};
+    return UIUtil.buildPasswordEditor(props);
+  }
+
 
 export namespace LoginApiForms {
   export interface LoginFormConfigs extends FormConfigs {
-  /** 用户名  */
-  username?: FormItemConfigs,
-  /** 密码  */
-  password?: FormItemConfigs,
+    /** 用户名  */
+    username?: typeof login_username & FormItemConfig,
+    /** 密码  */
+    password?: typeof login_password & FormItemConfig,
   }
 
-  export const loginFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): LoginFormConfigs => {
-    const _ ={formPropsUtils: formPropsUtils, createFormItemProps: UIUtil.createFormItemProps};
+  export const getLoginFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): LoginFormConfigs => {
     /** 用户名  */
-    const username: FormItemConfigs = {
-      ..._,
-      name: 'username',
-      label: "用户名",
-      config: {
-        initialValue: queryRule.username,
-        rules: [
-          {
-            required: true,
-            message: "{javax.validation.constraints.NotNull.message}",
-          },
-          {
-            required: true,
-            max: 64,
-            message: "{javax.validation.constraints.Max.message}",
-          },
-        ],
-      }
-    };
-
+    login_username.formPropsUtils = formPropsUtils;
+    login_username.config.initialValue = queryRule.username;
+    login_username.value = queryRule.username;
     /** 密码  */
-    const password: FormItemConfigs = {
-      ..._,
-      name: 'password',
-      label: "密码",
-      config: {
-        initialValue: queryRule.password,
-        rules: [
-          {
-            required: true,
-            max: 64,
-            message: "{javax.validation.constraints.Max.message}",
-          },
-        ],
-      }
-    };
-
-    username.editor = UIUtil.buildInputEditor;
-    password.editor = UIUtil.buildInputEditor;
+    login_password.formPropsUtils = formPropsUtils;
+    login_password.config.initialValue = queryRule.password;
+    login_password.value = queryRule.password;
 
     return {
-      username,
-      password,
+      username: login_username,
+      password: login_password,
     }
   }
 }
