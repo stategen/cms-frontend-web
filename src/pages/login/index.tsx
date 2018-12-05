@@ -3,15 +3,21 @@ import { connect } from 'dva'
 import { Button, Row, Form } from 'antd'
 import { config } from '@utils/index'
 import styles from './index.less'
-import {ConnectionPros} from "@utils/DvaUtil";
+import {ConnectionPros, FormProps} from "@utils/DvaUtil";
 import {FormComponentProps} from "antd/lib/form/Form";
-import {LoginDispatch} from "@i/interfaces/LoginFaces";
+import {LoginDispatch, LoginProps} from "@i/interfaces/LoginFaces";
 import UIUtil from "@utils/UIUtil";
 import {LoginApiForms} from "@i/forms/LoginApiForms";
+import {AppProps} from "@i/interfaces/AppFaces";
+import StatesAlias from "@i/configs/tradeCms-statesAlias";
 
 // const FormItem = Form.Item
 
-const loginPage = ({ loading,  dispatch,  form} : ConnectionPros & FormComponentProps) => {
+type LoginPageProps =AppProps & LoginProps & FormProps;
+
+const loginPage = (props: LoginPageProps) => {
+  const form = props.form;
+  const dispatch = props.dispatch;
   function handleOk () {
     form.validateFieldsAndScroll((errors, values) => {
       if (errors) {
@@ -21,7 +27,7 @@ const loginPage = ({ loading,  dispatch,  form} : ConnectionPros & FormComponent
       // dispatch({ type: 'login/login', payload: values })
     })
   }
-  const loginFormConfigs = LoginApiForms.loginFormConfigs();
+  const loginFormConfigs = LoginApiForms.getLoginFormConfigs({},form);
   loginFormConfigs.password.editor =UIUtil.buildInputEditor(null,{type:'password'});
   const formItems = UIUtil.buildFormItems(loginFormConfigs,form,null);
 
@@ -49,4 +55,16 @@ const loginPage = ({ loading,  dispatch,  form} : ConnectionPros & FormComponent
 }
 
 
-export default connect(({ loading }:ConnectionPros) => ({ loading }))(Form.create()(loginPage))
+
+const mapStateToProps = (states: StatesAlias & ConnectionPros) : LoginPageProps =>{
+  let result: LoginPageProps = {
+    appState: states.app,
+    loginState: states.login,
+    loading: states.loading,
+  }
+  return result;
+}
+
+const LoginPage = connect(mapStateToProps)(Form.create()(loginPage));
+
+export default LoginPage;

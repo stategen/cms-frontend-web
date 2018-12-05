@@ -35,15 +35,6 @@ export interface Options {
   [enumName: string]: OptionProps;
 }
 
-export const getOptionProps = (options: Options) => {
-  const result = Object.values(options).map(
-    (option, key) => {
-      return {label: option.title, value: option.value};
-    }
-  )
-  return result;
-};
-
 export type Reducer<S> = (state: S, action: Action) => S;
 
 /*export interface Dispatch<A extends Action = AnyAction> {
@@ -228,16 +219,16 @@ export interface FormItemConfig {
   isArray?: boolean,
   format?: string,
   options?: Options,
-  value?: any,
+  data?: any,
   temporalType?: string,
   config?: GetFieldDecoratorOptions,
-  /*editor?: (props) => any,*/
-  formPropsUtils?: FormPropsUtils,
+  /*Editor?: (props) => any,*/
+  form?: FormPropsUtils,
   type?: string,
 }
 
 
-export interface FormConfigs {
+export interface FormItemConfigs {
   [itemname: string]: FormItemConfig;
 }
 
@@ -380,7 +371,6 @@ export const cleanSelectRowsProps: AreaState<any> = {
 };
 
 export interface FormPropsUtils extends WrappedFormUtils {
-  getFieldProps?(field: string, getFieldDecoratorOptions: GetFieldDecoratorOptions);
 }
 
 export interface FormProps {

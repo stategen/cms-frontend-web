@@ -11,7 +11,7 @@ import {roleDefaultColumns} from "@i/columns/RoleColumns";
 import {Table, Modal, Col, Button, Popconfirm} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
-import {getRoleFormConfigs} from "@i/forms/RoleFormConfigs";
+import {getRoleFormItemConfigs} from "@i/forms/RoleFormConfigs";
 import {ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
@@ -25,6 +25,7 @@ const {confirm} = Modal;
 type RolePageProps =AppProps & RoleProps;
 
 const rolePage = (props: RolePageProps) => {
+  const loading = props.loading;
   const dispatch = props.dispatch;
   const pathname = props.location;
   const roleArea = props.roleState.roleArea;
@@ -91,7 +92,7 @@ const rolePage = (props: RolePageProps) => {
     const isCreate = roleArea.type === `${roleEffects.insert}`;
     const title = isCreate ? 'Create' : 'Update';
     const currentRole: Role = isCreate ? {} : roleArea.item;
-    let roleFormConfigs = getRoleFormConfigs(currentRole);
+    let roleFormConfigs = getRoleFormItemConfigs(currentRole);
     RoleEditorModalPage = createModelPage(true, title, roleArea, roleFormConfigs, Role_ID, dispatch);
   }
 
@@ -112,7 +113,7 @@ const rolePage = (props: RolePageProps) => {
   let RoleQueryForm = null;
   if (roleArea.doQuery) {
     const title = 'Query';
-    const filtersFormConfigs = RoleApiForms.getGetRolePageListByDefaultQueryFormConfigs(roleArea.queryRule ? roleArea.queryRule : {});
+    const filtersFormConfigs = RoleApiForms.getGetRolePageListByDefaultQueryFormItemConfigs(roleArea.queryRule ? roleArea.queryRule : {});
     RoleQueryForm = createModelPage(false, title, roleArea, filtersFormConfigs, "", dispatch);
   }
 

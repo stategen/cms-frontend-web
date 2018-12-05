@@ -6,7 +6,7 @@
  */
 import Role from "../beans/Role"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -15,10 +15,9 @@ const role_roleId = {
   name: 'roleId',
   isId: true,
   label: "角色ID",
-  type: "",
   Editor: UIUtil.BuildInputEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -30,7 +29,7 @@ const role_roleId = {
   }
 };
 role_roleId.Editor =
-  (props: UIUtil.InputEditorProps) => {
+  (props?: UIUtil.InputEditorProps) => {
     props = {...props, formItemConfig: role_roleId};
     return UIUtil.BuildInputEditor(props);
   }
@@ -39,10 +38,9 @@ role_roleId.Editor =
 const role_roleName = {
   name: 'roleName',
   label: "角色名称",
-  type: "",
   Editor: UIUtil.BuildInputEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -58,7 +56,7 @@ const role_roleName = {
   }
 };
 role_roleName.Editor =
-  (props: UIUtil.InputEditorProps) => {
+  (props?: UIUtil.InputEditorProps) => {
     props = {...props, formItemConfig: role_roleName};
     return UIUtil.BuildInputEditor(props);
   }
@@ -67,10 +65,9 @@ role_roleName.Editor =
 const role_description = {
   name: 'description',
   label: "描述",
-  type: "",
   Editor: UIUtil.BuildInputEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -86,7 +83,7 @@ const role_description = {
   }
 };
 role_description.Editor =
-  (props: UIUtil.InputEditorProps) => {
+  (props?: UIUtil.InputEditorProps) => {
     props = {...props, formItemConfig: role_description};
     return UIUtil.BuildInputEditor(props);
   }
@@ -98,16 +95,15 @@ const role_createTime = {
   temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
-  type: "",
   Editor: UIUtil.BuildTimeStampEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
   }
 };
 role_createTime.Editor =
-  (props: UIUtil.TimeStampEditorProps) => {
+  (props?: UIUtil.TimeStampEditorProps) => {
     props = {...props, formItemConfig: role_createTime};
     return UIUtil.BuildTimeStampEditor(props);
   }
@@ -119,16 +115,15 @@ const role_updateTime = {
   temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
-  type: "",
   Editor: UIUtil.BuildTimeStampEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
   }
 };
 role_updateTime.Editor =
-  (props: UIUtil.TimeStampEditorProps) => {
+  (props?: UIUtil.TimeStampEditorProps) => {
     props = {...props, formItemConfig: role_updateTime};
     return UIUtil.BuildTimeStampEditor(props);
   }
@@ -139,71 +134,70 @@ const role_roleType = {
   isEnum: true,
   options: roleTypeOptions,
   label: "roleType",
-  type: "",
   Editor: UIUtil.BuildEnumEditor,
-  value: null,
-  formPropsUtils: null,
+  data: null,
+  form: null,
   config: {
     initialValue: null,
   }
 };
 role_roleType.Editor =
-  (props: UIUtil.EnumEditorProps) => {
+  (props?: UIUtil.EnumEditorProps) => {
     props = {...props, formItemConfig: role_roleType};
     return UIUtil.BuildEnumEditor(props);
   }
 
-export interface RoleFormConfigs extends FormConfigs {
+export interface RoleFormItemConfigs extends FormItemConfigs {
   /** 角色ID  */
-  RoleId?: typeof role_roleId & FormItemConfig,
+  RoleId?: typeof role_roleId & Partial<FormItemConfig>,
 
   /** 角色名称  */
-  RoleName?: typeof role_roleName & FormItemConfig,
+  RoleName?: typeof role_roleName & Partial<FormItemConfig>,
 
   /** 描述  */
-  Description?: typeof role_description & FormItemConfig,
+  Description?: typeof role_description & Partial<FormItemConfig>,
 
   /** 创建时间  TIMESTAMP*/
-  CreateTime?: typeof role_createTime & FormItemConfig,
+  CreateTime?: typeof role_createTime & Partial<FormItemConfig>,
 
   /** 更新时间  TIMESTAMP*/
-  UpdateTime?: typeof role_updateTime & FormItemConfig,
+  UpdateTime?: typeof role_updateTime & Partial<FormItemConfig>,
 
   /** roleType  */
-  RoleType?: typeof role_roleType & FormItemConfig,
+  RoleType?: typeof role_roleType & Partial<FormItemConfig>,
 
 }
-export const getRoleFormConfigs = (role: Role, formPropsUtils?: FormPropsUtils): RoleFormConfigs => {
+export const getRoleFormItemConfigs = (role: Role, form?: FormPropsUtils): RoleFormItemConfigs => {
   /** 角色ID */
-  role_roleId.formPropsUtils = formPropsUtils;
+  role_roleId.form = form;
   const role_roleIdValue =role.roleId;
   role_roleId.config.initialValue = role_roleIdValue;
-  role_roleId.value = role_roleIdValue;
+  role_roleId.data = role_roleIdValue;
   /** 角色名称 */
-  role_roleName.formPropsUtils = formPropsUtils;
+  role_roleName.form = form;
   const role_roleNameValue =role.roleName;
   role_roleName.config.initialValue = role_roleNameValue;
-  role_roleName.value = role_roleNameValue;
+  role_roleName.data = role_roleNameValue;
   /** 描述 */
-  role_description.formPropsUtils = formPropsUtils;
+  role_description.form = form;
   const role_descriptionValue =role.description;
   role_description.config.initialValue = role_descriptionValue;
-  role_description.value = role_descriptionValue;
+  role_description.data = role_descriptionValue;
   /** 创建时间 TIMESTAMP*/
-  role_createTime.formPropsUtils = formPropsUtils;
+  role_createTime.form = form;
   const role_createTimeValue =role.createTime ? moment(role.createTime) : null;
   role_createTime.config.initialValue = role_createTimeValue;
-  role_createTime.value = role_createTimeValue;
+  role_createTime.data = role_createTimeValue;
   /** 更新时间 TIMESTAMP*/
-  role_updateTime.formPropsUtils = formPropsUtils;
+  role_updateTime.form = form;
   const role_updateTimeValue =role.updateTime ? moment(role.updateTime) : null;
   role_updateTime.config.initialValue = role_updateTimeValue;
-  role_updateTime.value = role_updateTimeValue;
+  role_updateTime.data = role_updateTimeValue;
   /** roleType */
-  role_roleType.formPropsUtils = formPropsUtils;
+  role_roleType.form = form;
   const role_roleTypeValue =role.roleType;
   role_roleType.config.initialValue = role_roleTypeValue;
-  role_roleType.value = role_roleTypeValue;
+  role_roleType.data = role_roleTypeValue;
 
   return {
     RoleId: role_roleId,

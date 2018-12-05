@@ -1,6 +1,6 @@
 import {Table, Form, Modal, Col, Button, Popconfirm,} from "antd";
 import {
-  BaseState, Bean, optimizeFieldPostValues, Dispatch, FormConfigs,
+  BaseState, Bean, optimizeFieldPostValues, Dispatch, FormItemConfigs,
   AreaState, Payload, FormItemConfig
 } from "@utils/DvaUtil";
 import {ModalFuncProps} from "antd/lib/modal";
@@ -24,19 +24,19 @@ const formItemLayout: FormItemProps = {
   },
 };
 
-export const createModelPage = <T extends Bean, F extends FormConfigs>
-(isEditor: boolean, title: string, areaState: AreaState<T>, formConfigs: F, idkey: String | any, dispatch: Dispatch) => {
-  const modalPage = (formComponentProps: FormComponentProps) => {
-    let formItems=UIUtil.buildFormItems(formConfigs,formComponentProps.form,formItemLayout)
-    // let formItems = Object.keys(formConfigs).map((fieldName:string) => {
-    //   const formItemConfig:FormItemConfig = formConfigs[fieldName];
+export const createModelPage = <T extends Bean, F extends FormItemConfigs>
+(isEditor: boolean, title: string, areaState: AreaState<T>, formItemConfigs: F, idkey: String | any, dispatch: Dispatch) => {
+  const modalPage = (props: FormProps) => {
+    let formItems=UIUtil.buildFormItems(formItemConfigs,props.form,formItemLayout)
+    // let formItems = Object.keys(formItemConfigs).map((fieldName:string) => {
+    //   const formItemConfig:FormItemConfig = formItemConfigs[fieldName];
     //   if (formItemConfig.isId || formItemConfig.hidden) {
     //     return;
     //   }
     //
     //   return (
     //     <FormItem {...formItemLayout} key={fieldName} label={formItemConfig.label}>
-    //       {formComponentProps.form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig.editor)}
+    //       {props.form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig.editor)}
     //     </FormItem>
     //   )
     // });
@@ -50,11 +50,11 @@ export const createModelPage = <T extends Bean, F extends FormConfigs>
       /*wrapClassName: 'vertical-center-modal',*/
       onOk: (e) => {
         e.preventDefault();
-        formComponentProps.form.validateFields((errors, fieldsValue) => {
+        props.form.validateFields((errors, fieldsValue) => {
           if (errors) {
             return;
           }
-          const dest = formComponentProps.form.getFieldsValue();
+          const dest = props.form.getFieldsValue();
           const areaExtraProps: AreaState<T> = {}
           optimizeFieldPostValues(dest);
           if (isEditor) {

@@ -6,7 +6,7 @@ export  default class MenuUtil {
     pathname = RouteUtil.getRealPathname(pathname);
     for (let i = 0; i < menus.length; i++) {
       const menu = menus[i];
-      if (RouteUtil.isRoutMatchPathname(menu.route, pathname)) {
+      if (RouteUtil.getMatch(menu.route, pathname)) {
         return menu;
       }
     }
