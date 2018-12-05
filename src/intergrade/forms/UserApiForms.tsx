@@ -9,66 +9,66 @@ import {PaginationProps} from "antd/lib/pagination";
 import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
-/** 用户IDs  */
+/** 用户IDs */
 const getUserPageListByDefaultQuery_userIds = {
   name: 'userIds',
   isArray: true,
   label: "用户IDs",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_userIds.editor =
+getUserPageListByDefaultQuery_userIds.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_userIds};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_userIds};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 用户名Like  */
+/** 用户名Like */
 const getUserPageListByDefaultQuery_usernameLike = {
   name: 'usernameLike',
   label: "用户名Like",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_usernameLike.editor =
+getUserPageListByDefaultQuery_usernameLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_usernameLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_usernameLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 密码Like  */
+/** 密码Like */
 const getUserPageListByDefaultQuery_passwordLike = {
   name: 'passwordLike',
   label: "密码Like",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_passwordLike.editor =
+getUserPageListByDefaultQuery_passwordLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_passwordLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_passwordLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 用户角色s  */
+/** 用户角色s */
 const getUserPageListByDefaultQuery_roleTypes = {
   name: 'roleTypes',
   isEnum: true,
@@ -76,334 +76,353 @@ const getUserPageListByDefaultQuery_roleTypes = {
   isArray: true,
   label: "用户角色s",
   type: "",
-  editor: UIUtil.buildEnumEditor,
+  Editor: UIUtil.BuildEnumEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_roleTypes.editor =
+getUserPageListByDefaultQuery_roleTypes.Editor =
   (props: UIUtil.EnumEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_roleTypes};
-    return UIUtil.buildEnumEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_roleTypes};
+    return UIUtil.BuildEnumEditor(props);
   }
 
-/** 用户名nameLike  */
+/** 用户名nameLike */
 const getUserPageListByDefaultQuery_nameLike = {
   name: 'nameLike',
   label: "用户名nameLike",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_nameLike.editor =
+getUserPageListByDefaultQuery_nameLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_nameLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_nameLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** nickNameLike  */
+/** nickNameLike */
 const getUserPageListByDefaultQuery_nickNameLike = {
   name: 'nickNameLike',
   label: "nickNameLike",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_nickNameLike.editor =
+getUserPageListByDefaultQuery_nickNameLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_nickNameLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_nickNameLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** ageMin  */
+/** ageMin */
 const getUserPageListByDefaultQuery_ageMin = {
   name: 'ageMin',
   label: "ageMin",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_ageMin.editor =
+getUserPageListByDefaultQuery_ageMin.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_ageMin};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_ageMin};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** ageMax  */
+/** ageMax */
 const getUserPageListByDefaultQuery_ageMax = {
   name: 'ageMax',
   label: "ageMax",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_ageMax.editor =
+getUserPageListByDefaultQuery_ageMax.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_ageMax};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_ageMax};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** addressLike  */
+/** addressLike */
 const getUserPageListByDefaultQuery_addressLike = {
   name: 'addressLike',
   label: "addressLike",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_addressLike.editor =
+getUserPageListByDefaultQuery_addressLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_addressLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_addressLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** avatarLike  */
+/** avatarLike */
 const getUserPageListByDefaultQuery_avatarLike = {
   name: 'avatarLike',
   label: "avatarLike",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_avatarLike.editor =
+getUserPageListByDefaultQuery_avatarLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_avatarLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_avatarLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 邮箱Like  */
+/** 邮箱Like */
 const getUserPageListByDefaultQuery_emailLike = {
   name: 'emailLike',
   label: "邮箱Like",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_emailLike.editor =
+getUserPageListByDefaultQuery_emailLike.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_emailLike};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_emailLike};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 创建时间Min  TIMESTAMP*/
+/** 创建时间Min TIMESTAMP*/
 const getUserPageListByDefaultQuery_createTimeMin = {
   name: 'createTimeMin',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间Min",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_createTimeMin.editor =
+getUserPageListByDefaultQuery_createTimeMin.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMin};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMin};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 创建时间Max  TIMESTAMP*/
+/** 创建时间Max TIMESTAMP*/
 const getUserPageListByDefaultQuery_createTimeMax = {
   name: 'createTimeMax',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间Max",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_createTimeMax.editor =
+getUserPageListByDefaultQuery_createTimeMax.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMax};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMax};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 更新时间Min  TIMESTAMP*/
+/** 更新时间Min TIMESTAMP*/
 const getUserPageListByDefaultQuery_updateTimeMin = {
   name: 'updateTimeMin',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间Min",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_updateTimeMin.editor =
+getUserPageListByDefaultQuery_updateTimeMin.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMin};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMin};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 更新时间Max  TIMESTAMP*/
+/** 更新时间Max TIMESTAMP*/
 const getUserPageListByDefaultQuery_updateTimeMax = {
   name: 'updateTimeMax',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间Max",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-getUserPageListByDefaultQuery_updateTimeMax.editor =
+getUserPageListByDefaultQuery_updateTimeMax.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMax};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMax};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
 
 export namespace UserApiForms {
-  export interface GetUserPageListByDefaultQueryFormConfigs extends FormConfigs {
+  export interface UserApiGetUserPageListByDefaultQueryFormConfigs extends FormConfigs {
     /** 用户IDs  */
-    userIds?: typeof getUserPageListByDefaultQuery_userIds & FormItemConfig,
+    UserIds?: typeof getUserPageListByDefaultQuery_userIds & FormItemConfig,
     /** 用户名Like  */
-    usernameLike?: typeof getUserPageListByDefaultQuery_usernameLike & FormItemConfig,
+    UsernameLike?: typeof getUserPageListByDefaultQuery_usernameLike & FormItemConfig,
     /** 密码Like  */
-    passwordLike?: typeof getUserPageListByDefaultQuery_passwordLike & FormItemConfig,
+    PasswordLike?: typeof getUserPageListByDefaultQuery_passwordLike & FormItemConfig,
     /** 用户角色s  */
-    roleTypes?: typeof getUserPageListByDefaultQuery_roleTypes & FormItemConfig,
+    RoleTypes?: typeof getUserPageListByDefaultQuery_roleTypes & FormItemConfig,
     /** 用户名nameLike  */
-    nameLike?: typeof getUserPageListByDefaultQuery_nameLike & FormItemConfig,
+    NameLike?: typeof getUserPageListByDefaultQuery_nameLike & FormItemConfig,
     /** nickNameLike  */
-    nickNameLike?: typeof getUserPageListByDefaultQuery_nickNameLike & FormItemConfig,
+    NickNameLike?: typeof getUserPageListByDefaultQuery_nickNameLike & FormItemConfig,
     /** ageMin  */
-    ageMin?: typeof getUserPageListByDefaultQuery_ageMin & FormItemConfig,
+    AgeMin?: typeof getUserPageListByDefaultQuery_ageMin & FormItemConfig,
     /** ageMax  */
-    ageMax?: typeof getUserPageListByDefaultQuery_ageMax & FormItemConfig,
+    AgeMax?: typeof getUserPageListByDefaultQuery_ageMax & FormItemConfig,
     /** addressLike  */
-    addressLike?: typeof getUserPageListByDefaultQuery_addressLike & FormItemConfig,
+    AddressLike?: typeof getUserPageListByDefaultQuery_addressLike & FormItemConfig,
     /** avatarLike  */
-    avatarLike?: typeof getUserPageListByDefaultQuery_avatarLike & FormItemConfig,
+    AvatarLike?: typeof getUserPageListByDefaultQuery_avatarLike & FormItemConfig,
     /** 邮箱Like  */
-    emailLike?: typeof getUserPageListByDefaultQuery_emailLike & FormItemConfig,
+    EmailLike?: typeof getUserPageListByDefaultQuery_emailLike & FormItemConfig,
     /** 创建时间Min  TIMESTAMP*/
-    createTimeMin?: typeof getUserPageListByDefaultQuery_createTimeMin & FormItemConfig,
+    CreateTimeMin?: typeof getUserPageListByDefaultQuery_createTimeMin & FormItemConfig,
     /** 创建时间Max  TIMESTAMP*/
-    createTimeMax?: typeof getUserPageListByDefaultQuery_createTimeMax & FormItemConfig,
+    CreateTimeMax?: typeof getUserPageListByDefaultQuery_createTimeMax & FormItemConfig,
     /** 更新时间Min  TIMESTAMP*/
-    updateTimeMin?: typeof getUserPageListByDefaultQuery_updateTimeMin & FormItemConfig,
+    UpdateTimeMin?: typeof getUserPageListByDefaultQuery_updateTimeMin & FormItemConfig,
     /** 更新时间Max  TIMESTAMP*/
-    updateTimeMax?: typeof getUserPageListByDefaultQuery_updateTimeMax & FormItemConfig,
+    UpdateTimeMax?: typeof getUserPageListByDefaultQuery_updateTimeMax & FormItemConfig,
   }
 
-  export const getGetUserPageListByDefaultQueryFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): GetUserPageListByDefaultQueryFormConfigs => {
-    /** 用户IDs  */
+  export const getGetUserPageListByDefaultQueryFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): UserApiGetUserPageListByDefaultQueryFormConfigs => {
+    /** 用户IDs */
     getUserPageListByDefaultQuery_userIds.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_userIds.config.initialValue = queryRule.userIds;
-    getUserPageListByDefaultQuery_userIds.value = queryRule.userIds;
-    /** 用户名Like  */
+    const getUserPageListByDefaultQuery_userIdsValue =queryRule.userIds;
+    getUserPageListByDefaultQuery_userIds.config.initialValue = getUserPageListByDefaultQuery_userIdsValue;
+    getUserPageListByDefaultQuery_userIds.value = getUserPageListByDefaultQuery_userIdsValue;
+    /** 用户名Like */
     getUserPageListByDefaultQuery_usernameLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_usernameLike.config.initialValue = queryRule.usernameLike;
-    getUserPageListByDefaultQuery_usernameLike.value = queryRule.usernameLike;
-    /** 密码Like  */
+    const getUserPageListByDefaultQuery_usernameLikeValue =queryRule.usernameLike;
+    getUserPageListByDefaultQuery_usernameLike.config.initialValue = getUserPageListByDefaultQuery_usernameLikeValue;
+    getUserPageListByDefaultQuery_usernameLike.value = getUserPageListByDefaultQuery_usernameLikeValue;
+    /** 密码Like */
     getUserPageListByDefaultQuery_passwordLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_passwordLike.config.initialValue = queryRule.passwordLike;
-    getUserPageListByDefaultQuery_passwordLike.value = queryRule.passwordLike;
-    /** 用户角色s  */
+    const getUserPageListByDefaultQuery_passwordLikeValue =queryRule.passwordLike;
+    getUserPageListByDefaultQuery_passwordLike.config.initialValue = getUserPageListByDefaultQuery_passwordLikeValue;
+    getUserPageListByDefaultQuery_passwordLike.value = getUserPageListByDefaultQuery_passwordLikeValue;
+    /** 用户角色s */
     getUserPageListByDefaultQuery_roleTypes.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_roleTypes.config.initialValue = queryRule.roleTypes;
-    getUserPageListByDefaultQuery_roleTypes.value = queryRule.roleTypes;
-    /** 用户名nameLike  */
+    const getUserPageListByDefaultQuery_roleTypesValue =queryRule.roleTypes;
+    getUserPageListByDefaultQuery_roleTypes.config.initialValue = getUserPageListByDefaultQuery_roleTypesValue;
+    getUserPageListByDefaultQuery_roleTypes.value = getUserPageListByDefaultQuery_roleTypesValue;
+    /** 用户名nameLike */
     getUserPageListByDefaultQuery_nameLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_nameLike.config.initialValue = queryRule.nameLike;
-    getUserPageListByDefaultQuery_nameLike.value = queryRule.nameLike;
-    /** nickNameLike  */
+    const getUserPageListByDefaultQuery_nameLikeValue =queryRule.nameLike;
+    getUserPageListByDefaultQuery_nameLike.config.initialValue = getUserPageListByDefaultQuery_nameLikeValue;
+    getUserPageListByDefaultQuery_nameLike.value = getUserPageListByDefaultQuery_nameLikeValue;
+    /** nickNameLike */
     getUserPageListByDefaultQuery_nickNameLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_nickNameLike.config.initialValue = queryRule.nickNameLike;
-    getUserPageListByDefaultQuery_nickNameLike.value = queryRule.nickNameLike;
-    /** ageMin  */
+    const getUserPageListByDefaultQuery_nickNameLikeValue =queryRule.nickNameLike;
+    getUserPageListByDefaultQuery_nickNameLike.config.initialValue = getUserPageListByDefaultQuery_nickNameLikeValue;
+    getUserPageListByDefaultQuery_nickNameLike.value = getUserPageListByDefaultQuery_nickNameLikeValue;
+    /** ageMin */
     getUserPageListByDefaultQuery_ageMin.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_ageMin.config.initialValue = queryRule.ageMin;
-    getUserPageListByDefaultQuery_ageMin.value = queryRule.ageMin;
-    /** ageMax  */
+    const getUserPageListByDefaultQuery_ageMinValue =queryRule.ageMin;
+    getUserPageListByDefaultQuery_ageMin.config.initialValue = getUserPageListByDefaultQuery_ageMinValue;
+    getUserPageListByDefaultQuery_ageMin.value = getUserPageListByDefaultQuery_ageMinValue;
+    /** ageMax */
     getUserPageListByDefaultQuery_ageMax.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_ageMax.config.initialValue = queryRule.ageMax;
-    getUserPageListByDefaultQuery_ageMax.value = queryRule.ageMax;
-    /** addressLike  */
+    const getUserPageListByDefaultQuery_ageMaxValue =queryRule.ageMax;
+    getUserPageListByDefaultQuery_ageMax.config.initialValue = getUserPageListByDefaultQuery_ageMaxValue;
+    getUserPageListByDefaultQuery_ageMax.value = getUserPageListByDefaultQuery_ageMaxValue;
+    /** addressLike */
     getUserPageListByDefaultQuery_addressLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_addressLike.config.initialValue = queryRule.addressLike;
-    getUserPageListByDefaultQuery_addressLike.value = queryRule.addressLike;
-    /** avatarLike  */
+    const getUserPageListByDefaultQuery_addressLikeValue =queryRule.addressLike;
+    getUserPageListByDefaultQuery_addressLike.config.initialValue = getUserPageListByDefaultQuery_addressLikeValue;
+    getUserPageListByDefaultQuery_addressLike.value = getUserPageListByDefaultQuery_addressLikeValue;
+    /** avatarLike */
     getUserPageListByDefaultQuery_avatarLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_avatarLike.config.initialValue = queryRule.avatarLike;
-    getUserPageListByDefaultQuery_avatarLike.value = queryRule.avatarLike;
-    /** 邮箱Like  */
+    const getUserPageListByDefaultQuery_avatarLikeValue =queryRule.avatarLike;
+    getUserPageListByDefaultQuery_avatarLike.config.initialValue = getUserPageListByDefaultQuery_avatarLikeValue;
+    getUserPageListByDefaultQuery_avatarLike.value = getUserPageListByDefaultQuery_avatarLikeValue;
+    /** 邮箱Like */
     getUserPageListByDefaultQuery_emailLike.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_emailLike.config.initialValue = queryRule.emailLike;
-    getUserPageListByDefaultQuery_emailLike.value = queryRule.emailLike;
-    /** 创建时间Min  TIMESTAMP*/
+    const getUserPageListByDefaultQuery_emailLikeValue =queryRule.emailLike;
+    getUserPageListByDefaultQuery_emailLike.config.initialValue = getUserPageListByDefaultQuery_emailLikeValue;
+    getUserPageListByDefaultQuery_emailLike.value = getUserPageListByDefaultQuery_emailLikeValue;
+    /** 创建时间Min TIMESTAMP*/
     getUserPageListByDefaultQuery_createTimeMin.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_createTimeMin.config.initialValue = queryRule.createTimeMin ? moment(queryRule.createTimeMin) : null;
-    getUserPageListByDefaultQuery_createTimeMin.value = queryRule.createTimeMin ? moment(queryRule.createTimeMin) : null;
-    /** 创建时间Max  TIMESTAMP*/
+    const getUserPageListByDefaultQuery_createTimeMinValue =queryRule.createTimeMin ? moment(queryRule.createTimeMin) : null;
+    getUserPageListByDefaultQuery_createTimeMin.config.initialValue = getUserPageListByDefaultQuery_createTimeMinValue;
+    getUserPageListByDefaultQuery_createTimeMin.value = getUserPageListByDefaultQuery_createTimeMinValue;
+    /** 创建时间Max TIMESTAMP*/
     getUserPageListByDefaultQuery_createTimeMax.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_createTimeMax.config.initialValue = queryRule.createTimeMax ? moment(queryRule.createTimeMax) : null;
-    getUserPageListByDefaultQuery_createTimeMax.value = queryRule.createTimeMax ? moment(queryRule.createTimeMax) : null;
-    /** 更新时间Min  TIMESTAMP*/
+    const getUserPageListByDefaultQuery_createTimeMaxValue =queryRule.createTimeMax ? moment(queryRule.createTimeMax) : null;
+    getUserPageListByDefaultQuery_createTimeMax.config.initialValue = getUserPageListByDefaultQuery_createTimeMaxValue;
+    getUserPageListByDefaultQuery_createTimeMax.value = getUserPageListByDefaultQuery_createTimeMaxValue;
+    /** 更新时间Min TIMESTAMP*/
     getUserPageListByDefaultQuery_updateTimeMin.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_updateTimeMin.config.initialValue = queryRule.updateTimeMin ? moment(queryRule.updateTimeMin) : null;
-    getUserPageListByDefaultQuery_updateTimeMin.value = queryRule.updateTimeMin ? moment(queryRule.updateTimeMin) : null;
-    /** 更新时间Max  TIMESTAMP*/
+    const getUserPageListByDefaultQuery_updateTimeMinValue =queryRule.updateTimeMin ? moment(queryRule.updateTimeMin) : null;
+    getUserPageListByDefaultQuery_updateTimeMin.config.initialValue = getUserPageListByDefaultQuery_updateTimeMinValue;
+    getUserPageListByDefaultQuery_updateTimeMin.value = getUserPageListByDefaultQuery_updateTimeMinValue;
+    /** 更新时间Max TIMESTAMP*/
     getUserPageListByDefaultQuery_updateTimeMax.formPropsUtils = formPropsUtils;
-    getUserPageListByDefaultQuery_updateTimeMax.config.initialValue = queryRule.updateTimeMax ? moment(queryRule.updateTimeMax) : null;
-    getUserPageListByDefaultQuery_updateTimeMax.value = queryRule.updateTimeMax ? moment(queryRule.updateTimeMax) : null;
+    const getUserPageListByDefaultQuery_updateTimeMaxValue =queryRule.updateTimeMax ? moment(queryRule.updateTimeMax) : null;
+    getUserPageListByDefaultQuery_updateTimeMax.config.initialValue = getUserPageListByDefaultQuery_updateTimeMaxValue;
+    getUserPageListByDefaultQuery_updateTimeMax.value = getUserPageListByDefaultQuery_updateTimeMaxValue;
 
     return {
-      userIds: getUserPageListByDefaultQuery_userIds,
-      usernameLike: getUserPageListByDefaultQuery_usernameLike,
-      passwordLike: getUserPageListByDefaultQuery_passwordLike,
-      roleTypes: getUserPageListByDefaultQuery_roleTypes,
-      nameLike: getUserPageListByDefaultQuery_nameLike,
-      nickNameLike: getUserPageListByDefaultQuery_nickNameLike,
-      ageMin: getUserPageListByDefaultQuery_ageMin,
-      ageMax: getUserPageListByDefaultQuery_ageMax,
-      addressLike: getUserPageListByDefaultQuery_addressLike,
-      avatarLike: getUserPageListByDefaultQuery_avatarLike,
-      emailLike: getUserPageListByDefaultQuery_emailLike,
-      createTimeMin: getUserPageListByDefaultQuery_createTimeMin,
-      createTimeMax: getUserPageListByDefaultQuery_createTimeMax,
-      updateTimeMin: getUserPageListByDefaultQuery_updateTimeMin,
-      updateTimeMax: getUserPageListByDefaultQuery_updateTimeMax,
+      UserIds: getUserPageListByDefaultQuery_userIds,
+      UsernameLike: getUserPageListByDefaultQuery_usernameLike,
+      PasswordLike: getUserPageListByDefaultQuery_passwordLike,
+      RoleTypes: getUserPageListByDefaultQuery_roleTypes,
+      NameLike: getUserPageListByDefaultQuery_nameLike,
+      NickNameLike: getUserPageListByDefaultQuery_nickNameLike,
+      AgeMin: getUserPageListByDefaultQuery_ageMin,
+      AgeMax: getUserPageListByDefaultQuery_ageMax,
+      AddressLike: getUserPageListByDefaultQuery_addressLike,
+      AvatarLike: getUserPageListByDefaultQuery_avatarLike,
+      EmailLike: getUserPageListByDefaultQuery_emailLike,
+      CreateTimeMin: getUserPageListByDefaultQuery_createTimeMin,
+      CreateTimeMax: getUserPageListByDefaultQuery_createTimeMax,
+      UpdateTimeMin: getUserPageListByDefaultQuery_updateTimeMin,
+      UpdateTimeMax: getUserPageListByDefaultQuery_updateTimeMax,
     }
   }
 }

@@ -6,6 +6,7 @@ import {message} from 'antd';
 import {routerRedux} from 'dva/router'
 import Response from "@i/beans/Response";
 import fetch from "dva/fetch";
+import {optimizeFieldPostValues} from "@utils/DvaUtil";
 
 
 export enum Method {
@@ -39,10 +40,14 @@ function getFormData(jsonData: {}): FormData {
 }
 
 function getUrlData(jsonData: {}): string {
-  let result: string = Object.keys(jsonData).map(function (key) {
-    return encodeURIComponent(key) + '=' + encodeURIComponent(jsonData[key]);
-  }).join('&');
-  return result;
+  let paramsStr = Object.keys(jsonData).map(function (key) {
+    let paramValue =jsonData[key];
+    if (paramValue!=null) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(paramValue);
+    }
+    return null;
+  }).filter(value=>value!=null).join('&')
+  return paramsStr;
 }
 
 
@@ -56,6 +61,7 @@ const buildRequestProperties = (requestInitEx: RequestInitEx): RequestInitEx => 
   } = requestInitEx;
 
   const cloneData = data ? cloneDeep(data) : {};
+  optimizeFieldPostValues(cloneData);
 
   let domain = ''
   const urlMathStr = /[a-zA-z]+:\/\/[^/]*/;
@@ -64,8 +70,7 @@ const buildRequestProperties = (requestInitEx: RequestInitEx): RequestInitEx => 
     url = url.slice(domain.length)
   }
   const match: Token[] = pathToRegexp.parse(url);
-  url = pathToRegexp.compile(url)(data);
-  let item: Token;
+  url = pathToRegexp.compile(url)(cloneData);
   for (let item of match) {
     if (item instanceof Object) {
       let key: Key = <Key>item;

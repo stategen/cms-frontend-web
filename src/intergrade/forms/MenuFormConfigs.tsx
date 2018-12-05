@@ -6,108 +6,108 @@
  */
 import Menu from "../beans/Menu"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {visitCheckTypeOptions} from '../enums/VisitCheckType';
 import {visitTypeOptions} from '../enums/VisitType';
 
-/** roleId  */
-const Menu_roleId = {
+/** roleId */
+const menu_roleId = {
   name: 'roleId',
   label: "roleId",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_roleId.editor =
+menu_roleId.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_roleId};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_roleId};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** checked  */
-const Menu_checked = {
+/** checked */
+const menu_checked = {
   name: 'checked',
   label: "checked",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_checked.editor =
+menu_checked.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_checked};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_checked};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 菜单ID  */
-const Menu_menuId = {
+/** 菜单ID */
+const menu_menuId = {
   name: 'menuId',
   isId: true,
   label: "菜单ID",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_menuId.editor =
+menu_menuId.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_menuId};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_menuId};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 面包屑父ID menuId与bpid组成树图  */
-const Menu_bpid = {
+/** 面包屑父ID menuId与bpid组成树图 */
+const menu_bpid = {
   name: 'bpid',
   label: "面包屑父ID",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_bpid.editor =
+menu_bpid.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_bpid};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_bpid};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1  */
-const Menu_mpid = {
+/** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1 */
+const menu_mpid = {
   name: 'mpid',
   label: "菜单父ID",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_mpid.editor =
+menu_mpid.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_mpid};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_mpid};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 对应的项目id  */
-const Menu_projectName = {
+/** 对应的项目id */
+const menu_projectName = {
   name: 'projectName',
   label: "对应的项目id",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -120,18 +120,18 @@ const Menu_projectName = {
     ],
   }
 };
-Menu_projectName.editor =
+menu_projectName.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_projectName};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_projectName};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 对应后台系统controlle名称  */
-const Menu_controllerName = {
+/** 对应后台系统controlle名称 */
+const menu_controllerName = {
   name: 'controllerName',
   label: "对应后台系统controlle名称",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -144,18 +144,18 @@ const Menu_controllerName = {
     ],
   }
 };
-Menu_controllerName.editor =
+menu_controllerName.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_controllerName};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_controllerName};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 对应后台系统method名称  */
-const Menu_methodName = {
+/** 对应后台系统method名称 */
+const menu_methodName = {
   name: 'methodName',
   label: "对应后台系统method名称",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -168,18 +168,18 @@ const Menu_methodName = {
     ],
   }
 };
-Menu_methodName.editor =
+menu_methodName.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_methodName};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_methodName};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 对应的api路径  */
-const Menu_url = {
+/** 对应的api路径 */
+const menu_url = {
   name: 'url',
   label: "对应的api路径",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -192,19 +192,19 @@ const Menu_url = {
     ],
   }
 };
-Menu_url.editor =
+menu_url.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_url};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_url};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** icon  */
-const Menu_icon = {
+/** icon */
+const menu_icon = {
   name: 'icon',
   isImage: true,
   label: "icon",
   type: "",
-  editor: UIUtil.buildImageEditor,
+  Editor: UIUtil.BuildImageEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -217,18 +217,18 @@ const Menu_icon = {
     ],
   }
 };
-Menu_icon.editor =
+menu_icon.Editor =
   (props: UIUtil.ImageEditorProps) => {
-    props ={...props, formItemConfig: Menu_icon};
-    return UIUtil.buildImageEditor(props);
+    props = {...props, formItemConfig: menu_icon};
+    return UIUtil.BuildImageEditor(props);
   }
 
-/** 名称  */
-const Menu_name = {
+/** 名称 */
+const menu_name = {
   name: 'name',
   label: "名称",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -241,18 +241,18 @@ const Menu_name = {
     ],
   }
 };
-Menu_name.editor =
+menu_name.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_name};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_name};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 路由路径  */
-const Menu_route = {
+/** 路由路径 */
+const menu_route = {
   name: 'route',
   label: "路由路径",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -265,277 +265,296 @@ const Menu_route = {
     ],
   }
 };
-Menu_route.editor =
+menu_route.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_route};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_route};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** visitType  */
-const Menu_visitType = {
+/** visitType */
+const menu_visitType = {
   name: 'visitType',
   isEnum: true,
   options: visitTypeOptions,
   label: "visitType",
   type: "",
-  editor: UIUtil.buildEnumEditor,
+  Editor: UIUtil.BuildEnumEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_visitType.editor =
+menu_visitType.Editor =
   (props: UIUtil.EnumEditorProps) => {
-    props ={...props, formItemConfig: Menu_visitType};
-    return UIUtil.buildEnumEditor(props);
+    props = {...props, formItemConfig: menu_visitType};
+    return UIUtil.BuildEnumEditor(props);
   }
 
-/** checkType  */
-const Menu_checkType = {
+/** checkType */
+const menu_checkType = {
   name: 'checkType',
   isEnum: true,
   options: visitCheckTypeOptions,
   label: "checkType",
   type: "",
-  editor: UIUtil.buildEnumEditor,
+  Editor: UIUtil.BuildEnumEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_checkType.editor =
+menu_checkType.Editor =
   (props: UIUtil.EnumEditorProps) => {
-    props ={...props, formItemConfig: Menu_checkType};
-    return UIUtil.buildEnumEditor(props);
+    props = {...props, formItemConfig: menu_checkType};
+    return UIUtil.BuildEnumEditor(props);
   }
 
-/** 创建时间  TIMESTAMP*/
-const Menu_createTime = {
+/** 创建时间 TIMESTAMP*/
+const menu_createTime = {
   name: 'createTime',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_createTime.editor =
+menu_createTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: Menu_createTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: menu_createTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 更新时间  TIMESTAMP*/
-const Menu_updateTime = {
+/** 更新时间 TIMESTAMP*/
+const menu_updateTime = {
   name: 'updateTime',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_updateTime.editor =
+menu_updateTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: Menu_updateTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: menu_updateTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** id,和MenuId相同，为了生成树  */
-const Menu_id = {
+/** id,和MenuId相同，为了生成树 */
+const menu_id = {
   name: 'id',
   label: "id",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_id.editor =
+menu_id.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_id};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_id};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 打开顺序，前端model存储用  */
-const Menu_opendOrder = {
+/** 打开顺序，前端model存储用 */
+const menu_opendOrder = {
   name: 'opendOrder',
   hidden: true,
   label: "打开顺序",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Menu_opendOrder.editor =
+menu_opendOrder.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Menu_opendOrder};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: menu_opendOrder};
+    return UIUtil.BuildInputEditor(props);
   }
 
 export interface MenuFormConfigs extends FormConfigs {
   /** roleId  */
-  roleId?: typeof Menu_roleId & FormItemConfig,
+  RoleId?: typeof menu_roleId & FormItemConfig,
 
   /** checked  */
-  checked?: typeof Menu_checked & FormItemConfig,
+  Checked?: typeof menu_checked & FormItemConfig,
 
   /** 菜单ID  */
-  menuId?: typeof Menu_menuId & FormItemConfig,
+  MenuId?: typeof menu_menuId & FormItemConfig,
 
   /** 面包屑父ID menuId与bpid组成树图  */
-  bpid?: typeof Menu_bpid & FormItemConfig,
+  Bpid?: typeof menu_bpid & FormItemConfig,
 
   /** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1  */
-  mpid?: typeof Menu_mpid & FormItemConfig,
+  Mpid?: typeof menu_mpid & FormItemConfig,
 
   /** 对应的项目id  */
-  projectName?: typeof Menu_projectName & FormItemConfig,
+  ProjectName?: typeof menu_projectName & FormItemConfig,
 
   /** 对应后台系统controlle名称  */
-  controllerName?: typeof Menu_controllerName & FormItemConfig,
+  ControllerName?: typeof menu_controllerName & FormItemConfig,
 
   /** 对应后台系统method名称  */
-  methodName?: typeof Menu_methodName & FormItemConfig,
+  MethodName?: typeof menu_methodName & FormItemConfig,
 
   /** 对应的api路径  */
-  url?: typeof Menu_url & FormItemConfig,
+  Url?: typeof menu_url & FormItemConfig,
 
   /** icon  */
-  icon?: typeof Menu_icon & FormItemConfig,
+  Icon?: typeof menu_icon & FormItemConfig,
 
   /** 名称  */
-  name?: typeof Menu_name & FormItemConfig,
+  Name?: typeof menu_name & FormItemConfig,
 
   /** 路由路径  */
-  route?: typeof Menu_route & FormItemConfig,
+  Route?: typeof menu_route & FormItemConfig,
 
   /** visitType  */
-  visitType?: typeof Menu_visitType & FormItemConfig,
+  VisitType?: typeof menu_visitType & FormItemConfig,
 
   /** checkType  */
-  checkType?: typeof Menu_checkType & FormItemConfig,
+  CheckType?: typeof menu_checkType & FormItemConfig,
 
   /** 创建时间  TIMESTAMP*/
-  createTime?: typeof Menu_createTime & FormItemConfig,
+  CreateTime?: typeof menu_createTime & FormItemConfig,
 
   /** 更新时间  TIMESTAMP*/
-  updateTime?: typeof Menu_updateTime & FormItemConfig,
+  UpdateTime?: typeof menu_updateTime & FormItemConfig,
 
   /** id,和MenuId相同，为了生成树  */
-  id?: typeof Menu_id & FormItemConfig,
+  Id?: typeof menu_id & FormItemConfig,
 
   /** 打开顺序，前端model存储用  */
-  opendOrder?: typeof Menu_opendOrder & FormItemConfig,
+  OpendOrder?: typeof menu_opendOrder & FormItemConfig,
 
-  [columnName: string]: FormItemConfig,
 }
 export const getMenuFormConfigs = (menu: Menu, formPropsUtils?: FormPropsUtils): MenuFormConfigs => {
-  /** roleId  */
-  Menu_roleId.formPropsUtils = formPropsUtils;
-  Menu_roleId.config.initialValue = menu.roleId;
-  Menu_roleId.value = menu.roleId;
-  /** checked  */
-  Menu_checked.formPropsUtils = formPropsUtils;
-  Menu_checked.config.initialValue = menu.checked;
-  Menu_checked.value = menu.checked;
-  /** 菜单ID  */
-  Menu_menuId.formPropsUtils = formPropsUtils;
-  Menu_menuId.config.initialValue = menu.menuId;
-  Menu_menuId.value = menu.menuId;
-  /** 面包屑父ID menuId与bpid组成树图  */
-  Menu_bpid.formPropsUtils = formPropsUtils;
-  Menu_bpid.config.initialValue = menu.bpid;
-  Menu_bpid.value = menu.bpid;
-  /** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1  */
-  Menu_mpid.formPropsUtils = formPropsUtils;
-  Menu_mpid.config.initialValue = menu.mpid;
-  Menu_mpid.value = menu.mpid;
-  /** 对应的项目id  */
-  Menu_projectName.formPropsUtils = formPropsUtils;
-  Menu_projectName.config.initialValue = menu.projectName;
-  Menu_projectName.value = menu.projectName;
-  /** 对应后台系统controlle名称  */
-  Menu_controllerName.formPropsUtils = formPropsUtils;
-  Menu_controllerName.config.initialValue = menu.controllerName;
-  Menu_controllerName.value = menu.controllerName;
-  /** 对应后台系统method名称  */
-  Menu_methodName.formPropsUtils = formPropsUtils;
-  Menu_methodName.config.initialValue = menu.methodName;
-  Menu_methodName.value = menu.methodName;
-  /** 对应的api路径  */
-  Menu_url.formPropsUtils = formPropsUtils;
-  Menu_url.config.initialValue = menu.url;
-  Menu_url.value = menu.url;
-  /** icon  */
-  Menu_icon.formPropsUtils = formPropsUtils;
-  Menu_icon.config.initialValue = menu.icon;
-  Menu_icon.value = menu.icon;
-  /** 名称  */
-  Menu_name.formPropsUtils = formPropsUtils;
-  Menu_name.config.initialValue = menu.name;
-  Menu_name.value = menu.name;
-  /** 路由路径  */
-  Menu_route.formPropsUtils = formPropsUtils;
-  Menu_route.config.initialValue = menu.route;
-  Menu_route.value = menu.route;
-  /** visitType  */
-  Menu_visitType.formPropsUtils = formPropsUtils;
-  Menu_visitType.config.initialValue = menu.visitType;
-  Menu_visitType.value = menu.visitType;
-  /** checkType  */
-  Menu_checkType.formPropsUtils = formPropsUtils;
-  Menu_checkType.config.initialValue = menu.checkType;
-  Menu_checkType.value = menu.checkType;
-  /** 创建时间  TIMESTAMP*/
-  Menu_createTime.formPropsUtils = formPropsUtils;
-  Menu_createTime.config.initialValue = menu.createTime ? moment(menu.createTime) : null;
-  Menu_createTime.value = menu.createTime ? moment(menu.createTime) : null;
-  /** 更新时间  TIMESTAMP*/
-  Menu_updateTime.formPropsUtils = formPropsUtils;
-  Menu_updateTime.config.initialValue = menu.updateTime ? moment(menu.updateTime) : null;
-  Menu_updateTime.value = menu.updateTime ? moment(menu.updateTime) : null;
-  /** id,和MenuId相同，为了生成树  */
-  Menu_id.formPropsUtils = formPropsUtils;
-  Menu_id.config.initialValue = menu.id;
-  Menu_id.value = menu.id;
-  /** 打开顺序，前端model存储用  */
-  Menu_opendOrder.formPropsUtils = formPropsUtils;
-  Menu_opendOrder.config.initialValue = menu.opendOrder;
-  Menu_opendOrder.value = menu.opendOrder;
+  /** roleId */
+  menu_roleId.formPropsUtils = formPropsUtils;
+  const menu_roleIdValue =menu.roleId;
+  menu_roleId.config.initialValue = menu_roleIdValue;
+  menu_roleId.value = menu_roleIdValue;
+  /** checked */
+  menu_checked.formPropsUtils = formPropsUtils;
+  const menu_checkedValue =menu.checked;
+  menu_checked.config.initialValue = menu_checkedValue;
+  menu_checked.value = menu_checkedValue;
+  /** 菜单ID */
+  menu_menuId.formPropsUtils = formPropsUtils;
+  const menu_menuIdValue =menu.menuId;
+  menu_menuId.config.initialValue = menu_menuIdValue;
+  menu_menuId.value = menu_menuIdValue;
+  /** 面包屑父ID menuId与bpid组成树图 */
+  menu_bpid.formPropsUtils = formPropsUtils;
+  const menu_bpidValue =menu.bpid;
+  menu_bpid.config.initialValue = menu_bpidValue;
+  menu_bpid.value = menu_bpidValue;
+  /** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1 */
+  menu_mpid.formPropsUtils = formPropsUtils;
+  const menu_mpidValue =menu.mpid;
+  menu_mpid.config.initialValue = menu_mpidValue;
+  menu_mpid.value = menu_mpidValue;
+  /** 对应的项目id */
+  menu_projectName.formPropsUtils = formPropsUtils;
+  const menu_projectNameValue =menu.projectName;
+  menu_projectName.config.initialValue = menu_projectNameValue;
+  menu_projectName.value = menu_projectNameValue;
+  /** 对应后台系统controlle名称 */
+  menu_controllerName.formPropsUtils = formPropsUtils;
+  const menu_controllerNameValue =menu.controllerName;
+  menu_controllerName.config.initialValue = menu_controllerNameValue;
+  menu_controllerName.value = menu_controllerNameValue;
+  /** 对应后台系统method名称 */
+  menu_methodName.formPropsUtils = formPropsUtils;
+  const menu_methodNameValue =menu.methodName;
+  menu_methodName.config.initialValue = menu_methodNameValue;
+  menu_methodName.value = menu_methodNameValue;
+  /** 对应的api路径 */
+  menu_url.formPropsUtils = formPropsUtils;
+  const menu_urlValue =menu.url;
+  menu_url.config.initialValue = menu_urlValue;
+  menu_url.value = menu_urlValue;
+  /** icon */
+  menu_icon.formPropsUtils = formPropsUtils;
+  const menu_iconValue =menu.icon;
+  menu_icon.config.initialValue = menu_iconValue;
+  menu_icon.value = menu_iconValue;
+  /** 名称 */
+  menu_name.formPropsUtils = formPropsUtils;
+  const menu_nameValue =menu.name;
+  menu_name.config.initialValue = menu_nameValue;
+  menu_name.value = menu_nameValue;
+  /** 路由路径 */
+  menu_route.formPropsUtils = formPropsUtils;
+  const menu_routeValue =menu.route;
+  menu_route.config.initialValue = menu_routeValue;
+  menu_route.value = menu_routeValue;
+  /** visitType */
+  menu_visitType.formPropsUtils = formPropsUtils;
+  const menu_visitTypeValue =menu.visitType;
+  menu_visitType.config.initialValue = menu_visitTypeValue;
+  menu_visitType.value = menu_visitTypeValue;
+  /** checkType */
+  menu_checkType.formPropsUtils = formPropsUtils;
+  const menu_checkTypeValue =menu.checkType;
+  menu_checkType.config.initialValue = menu_checkTypeValue;
+  menu_checkType.value = menu_checkTypeValue;
+  /** 创建时间 TIMESTAMP*/
+  menu_createTime.formPropsUtils = formPropsUtils;
+  const menu_createTimeValue =menu.createTime ? moment(menu.createTime) : null;
+  menu_createTime.config.initialValue = menu_createTimeValue;
+  menu_createTime.value = menu_createTimeValue;
+  /** 更新时间 TIMESTAMP*/
+  menu_updateTime.formPropsUtils = formPropsUtils;
+  const menu_updateTimeValue =menu.updateTime ? moment(menu.updateTime) : null;
+  menu_updateTime.config.initialValue = menu_updateTimeValue;
+  menu_updateTime.value = menu_updateTimeValue;
+  /** id,和MenuId相同，为了生成树 */
+  menu_id.formPropsUtils = formPropsUtils;
+  const menu_idValue =menu.id;
+  menu_id.config.initialValue = menu_idValue;
+  menu_id.value = menu_idValue;
+  /** 打开顺序，前端model存储用 */
+  menu_opendOrder.formPropsUtils = formPropsUtils;
+  const menu_opendOrderValue =menu.opendOrder;
+  menu_opendOrder.config.initialValue = menu_opendOrderValue;
+  menu_opendOrder.value = menu_opendOrderValue;
 
   return {
-    roleId: Menu_roleId,
-    checked: Menu_checked,
-    menuId: Menu_menuId,
-    bpid: Menu_bpid,
-    mpid: Menu_mpid,
-    projectName: Menu_projectName,
-    controllerName: Menu_controllerName,
-    methodName: Menu_methodName,
-    url: Menu_url,
-    icon: Menu_icon,
-    name: Menu_name,
-    route: Menu_route,
-    visitType: Menu_visitType,
-    checkType: Menu_checkType,
-    createTime: Menu_createTime,
-    updateTime: Menu_updateTime,
-    id: Menu_id,
-    opendOrder: Menu_opendOrder,
+    RoleId: menu_roleId,
+    Checked: menu_checked,
+    MenuId: menu_menuId,
+    Bpid: menu_bpid,
+    Mpid: menu_mpid,
+    ProjectName: menu_projectName,
+    ControllerName: menu_controllerName,
+    MethodName: menu_methodName,
+    Url: menu_url,
+    Icon: menu_icon,
+    Name: menu_name,
+    Route: menu_route,
+    VisitType: menu_visitType,
+    CheckType: menu_checkType,
+    CreateTime: menu_createTime,
+    UpdateTime: menu_updateTime,
+    Id: menu_id,
+    OpendOrder: menu_opendOrder,
   }
 }
 

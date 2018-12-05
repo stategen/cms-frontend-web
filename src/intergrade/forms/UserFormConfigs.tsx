@@ -6,17 +6,17 @@
  */
 import User from "../beans/User"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
-/** 用户ID  */
-const User_userId = {
+/** 用户ID */
+const user_userId = {
   name: 'userId',
   isId: true,
   label: "用户ID",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -29,18 +29,18 @@ const User_userId = {
     ],
   }
 };
-User_userId.editor =
+user_userId.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_userId};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_userId};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 用户名  */
-const User_username = {
+/** 用户名 */
+const user_username = {
   name: 'username',
   label: "用户名",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -57,38 +57,38 @@ const User_username = {
     ],
   }
 };
-User_username.editor =
+user_username.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_username};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_username};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
-const User_roleType = {
+/** 用户角色 ADMIN,DEFAULT,DEVELOPER */
+const user_roleType = {
   name: 'roleType',
   isEnum: true,
   options: roleTypeOptions,
   label: "用户角色",
   type: "",
-  editor: UIUtil.buildEnumEditor,
+  Editor: UIUtil.BuildEnumEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-User_roleType.editor =
+user_roleType.Editor =
   (props: UIUtil.EnumEditorProps) => {
-    props ={...props, formItemConfig: User_roleType};
-    return UIUtil.buildEnumEditor(props);
+    props = {...props, formItemConfig: user_roleType};
+    return UIUtil.BuildEnumEditor(props);
   }
 
-/** name  */
-const User_name = {
+/** name */
+const user_name = {
   name: 'name',
   label: "name",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -101,18 +101,18 @@ const User_name = {
     ],
   }
 };
-User_name.editor =
+user_name.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_name};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_name};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** nickName  */
-const User_nickName = {
+/** nickName */
+const user_nickName = {
   name: 'nickName',
   label: "nickName",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -125,36 +125,36 @@ const User_nickName = {
     ],
   }
 };
-User_nickName.editor =
+user_nickName.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_nickName};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_nickName};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** age  */
-const User_age = {
+/** age */
+const user_age = {
   name: 'age',
   label: "age",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-User_age.editor =
+user_age.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_age};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_age};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** address  */
-const User_address = {
+/** address */
+const user_address = {
   name: 'address',
   label: "address",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -167,36 +167,36 @@ const User_address = {
     ],
   }
 };
-User_address.editor =
+user_address.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_address};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_address};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** isMale  */
-const User_isMale = {
+/** isMale */
+const user_isMale = {
   name: 'isMale',
   label: "isMale",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-User_isMale.editor =
+user_isMale.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_isMale};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_isMale};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** avatarUrl  */
-const User_avatarUrl = {
+/** avatarUrl */
+const user_avatarUrl = {
   name: 'avatarUrl',
   label: "avatarUrl",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -209,18 +209,18 @@ const User_avatarUrl = {
     ],
   }
 };
-User_avatarUrl.editor =
+user_avatarUrl.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_avatarUrl};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_avatarUrl};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 邮箱  */
-const User_email = {
+/** 邮箱 */
+const user_email = {
   name: 'email',
   label: "邮箱",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -241,152 +241,165 @@ const User_email = {
     ],
   }
 };
-User_email.editor =
+user_email.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: User_email};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: user_email};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 创建时间  TIMESTAMP*/
-const User_createTime = {
+/** 创建时间 TIMESTAMP*/
+const user_createTime = {
   name: 'createTime',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-User_createTime.editor =
+user_createTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: User_createTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: user_createTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 更新时间  TIMESTAMP*/
-const User_updateTime = {
+/** 更新时间 TIMESTAMP*/
+const user_updateTime = {
   name: 'updateTime',
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-User_updateTime.editor =
+user_updateTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: User_updateTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: user_updateTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
 export interface UserFormConfigs extends FormConfigs {
   /** 用户ID  */
-  userId?: typeof User_userId & FormItemConfig,
+  UserId?: typeof user_userId & FormItemConfig,
 
   /** 用户名  */
-  username?: typeof User_username & FormItemConfig,
+  Username?: typeof user_username & FormItemConfig,
 
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
-  roleType?: typeof User_roleType & FormItemConfig,
+  RoleType?: typeof user_roleType & FormItemConfig,
 
   /** name  */
-  name?: typeof User_name & FormItemConfig,
+  Name?: typeof user_name & FormItemConfig,
 
   /** nickName  */
-  nickName?: typeof User_nickName & FormItemConfig,
+  NickName?: typeof user_nickName & FormItemConfig,
 
   /** age  */
-  age?: typeof User_age & FormItemConfig,
+  Age?: typeof user_age & FormItemConfig,
 
   /** address  */
-  address?: typeof User_address & FormItemConfig,
+  Address?: typeof user_address & FormItemConfig,
 
   /** isMale  */
-  isMale?: typeof User_isMale & FormItemConfig,
+  IsMale?: typeof user_isMale & FormItemConfig,
 
   /** avatarUrl  */
-  avatarUrl?: typeof User_avatarUrl & FormItemConfig,
+  AvatarUrl?: typeof user_avatarUrl & FormItemConfig,
 
   /** 邮箱  */
-  email?: typeof User_email & FormItemConfig,
+  Email?: typeof user_email & FormItemConfig,
 
   /** 创建时间  TIMESTAMP*/
-  createTime?: typeof User_createTime & FormItemConfig,
+  CreateTime?: typeof user_createTime & FormItemConfig,
 
   /** 更新时间  TIMESTAMP*/
-  updateTime?: typeof User_updateTime & FormItemConfig,
+  UpdateTime?: typeof user_updateTime & FormItemConfig,
 
-  [columnName: string]: FormItemConfig,
 }
 export const getUserFormConfigs = (user: User, formPropsUtils?: FormPropsUtils): UserFormConfigs => {
-  /** 用户ID  */
-  User_userId.formPropsUtils = formPropsUtils;
-  User_userId.config.initialValue = user.userId;
-  User_userId.value = user.userId;
-  /** 用户名  */
-  User_username.formPropsUtils = formPropsUtils;
-  User_username.config.initialValue = user.username;
-  User_username.value = user.username;
-  /** 用户角色 ADMIN,DEFAULT,DEVELOPER  */
-  User_roleType.formPropsUtils = formPropsUtils;
-  User_roleType.config.initialValue = user.roleType;
-  User_roleType.value = user.roleType;
-  /** name  */
-  User_name.formPropsUtils = formPropsUtils;
-  User_name.config.initialValue = user.name;
-  User_name.value = user.name;
-  /** nickName  */
-  User_nickName.formPropsUtils = formPropsUtils;
-  User_nickName.config.initialValue = user.nickName;
-  User_nickName.value = user.nickName;
-  /** age  */
-  User_age.formPropsUtils = formPropsUtils;
-  User_age.config.initialValue = user.age;
-  User_age.value = user.age;
-  /** address  */
-  User_address.formPropsUtils = formPropsUtils;
-  User_address.config.initialValue = user.address;
-  User_address.value = user.address;
-  /** isMale  */
-  User_isMale.formPropsUtils = formPropsUtils;
-  User_isMale.config.initialValue = user.isMale;
-  User_isMale.value = user.isMale;
-  /** avatarUrl  */
-  User_avatarUrl.formPropsUtils = formPropsUtils;
-  User_avatarUrl.config.initialValue = user.avatarUrl;
-  User_avatarUrl.value = user.avatarUrl;
-  /** 邮箱  */
-  User_email.formPropsUtils = formPropsUtils;
-  User_email.config.initialValue = user.email;
-  User_email.value = user.email;
-  /** 创建时间  TIMESTAMP*/
-  User_createTime.formPropsUtils = formPropsUtils;
-  User_createTime.config.initialValue = user.createTime ? moment(user.createTime) : null;
-  User_createTime.value = user.createTime ? moment(user.createTime) : null;
-  /** 更新时间  TIMESTAMP*/
-  User_updateTime.formPropsUtils = formPropsUtils;
-  User_updateTime.config.initialValue = user.updateTime ? moment(user.updateTime) : null;
-  User_updateTime.value = user.updateTime ? moment(user.updateTime) : null;
+  /** 用户ID */
+  user_userId.formPropsUtils = formPropsUtils;
+  const user_userIdValue =user.userId;
+  user_userId.config.initialValue = user_userIdValue;
+  user_userId.value = user_userIdValue;
+  /** 用户名 */
+  user_username.formPropsUtils = formPropsUtils;
+  const user_usernameValue =user.username;
+  user_username.config.initialValue = user_usernameValue;
+  user_username.value = user_usernameValue;
+  /** 用户角色 ADMIN,DEFAULT,DEVELOPER */
+  user_roleType.formPropsUtils = formPropsUtils;
+  const user_roleTypeValue =user.roleType;
+  user_roleType.config.initialValue = user_roleTypeValue;
+  user_roleType.value = user_roleTypeValue;
+  /** name */
+  user_name.formPropsUtils = formPropsUtils;
+  const user_nameValue =user.name;
+  user_name.config.initialValue = user_nameValue;
+  user_name.value = user_nameValue;
+  /** nickName */
+  user_nickName.formPropsUtils = formPropsUtils;
+  const user_nickNameValue =user.nickName;
+  user_nickName.config.initialValue = user_nickNameValue;
+  user_nickName.value = user_nickNameValue;
+  /** age */
+  user_age.formPropsUtils = formPropsUtils;
+  const user_ageValue =user.age;
+  user_age.config.initialValue = user_ageValue;
+  user_age.value = user_ageValue;
+  /** address */
+  user_address.formPropsUtils = formPropsUtils;
+  const user_addressValue =user.address;
+  user_address.config.initialValue = user_addressValue;
+  user_address.value = user_addressValue;
+  /** isMale */
+  user_isMale.formPropsUtils = formPropsUtils;
+  const user_isMaleValue =user.isMale;
+  user_isMale.config.initialValue = user_isMaleValue;
+  user_isMale.value = user_isMaleValue;
+  /** avatarUrl */
+  user_avatarUrl.formPropsUtils = formPropsUtils;
+  const user_avatarUrlValue =user.avatarUrl;
+  user_avatarUrl.config.initialValue = user_avatarUrlValue;
+  user_avatarUrl.value = user_avatarUrlValue;
+  /** 邮箱 */
+  user_email.formPropsUtils = formPropsUtils;
+  const user_emailValue =user.email;
+  user_email.config.initialValue = user_emailValue;
+  user_email.value = user_emailValue;
+  /** 创建时间 TIMESTAMP*/
+  user_createTime.formPropsUtils = formPropsUtils;
+  const user_createTimeValue =user.createTime ? moment(user.createTime) : null;
+  user_createTime.config.initialValue = user_createTimeValue;
+  user_createTime.value = user_createTimeValue;
+  /** 更新时间 TIMESTAMP*/
+  user_updateTime.formPropsUtils = formPropsUtils;
+  const user_updateTimeValue =user.updateTime ? moment(user.updateTime) : null;
+  user_updateTime.config.initialValue = user_updateTimeValue;
+  user_updateTime.value = user_updateTimeValue;
 
   return {
-    userId: User_userId,
-    username: User_username,
-    roleType: User_roleType,
-    name: User_name,
-    nickName: User_nickName,
-    age: User_age,
-    address: User_address,
-    isMale: User_isMale,
-    avatarUrl: User_avatarUrl,
-    email: User_email,
-    createTime: User_createTime,
-    updateTime: User_updateTime,
+    UserId: user_userId,
+    Username: user_username,
+    RoleType: user_roleType,
+    Name: user_name,
+    NickName: user_nickName,
+    Age: user_age,
+    Address: user_address,
+    IsMale: user_isMale,
+    AvatarUrl: user_avatarUrl,
+    Email: user_email,
+    CreateTime: user_createTime,
+    UpdateTime: user_updateTime,
   }
 }
 

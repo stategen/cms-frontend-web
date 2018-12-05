@@ -6,15 +6,15 @@
  */
 import SimpleResponse from "../beans/SimpleResponse";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 
-/** 用户名  */
+/** 用户名 */
 const login_username = {
   name: 'username',
   label: "用户名",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -32,18 +32,18 @@ const login_username = {
     ],
   }
 };
-login_username.editor =
+login_username.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: login_username};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: login_username};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 密码  */
+/** 密码 */
 const login_password = {
   name: 'password',
   label: "密码",
   type: "password",
-  editor: UIUtil.buildPasswordEditor,
+  Editor: UIUtil.BuildPasswordEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -57,34 +57,36 @@ const login_password = {
     ],
   }
 };
-login_password.editor =
+login_password.Editor =
   (props: UIUtil.PasswordEditorProps) => {
-    props ={...props, formItemConfig: login_password};
-    return UIUtil.buildPasswordEditor(props);
+    props = {...props, formItemConfig: login_password};
+    return UIUtil.BuildPasswordEditor(props);
   }
 
 
 export namespace LoginApiForms {
-  export interface LoginFormConfigs extends FormConfigs {
+  export interface LoginApiLoginFormConfigs extends FormConfigs {
     /** 用户名  */
-    username?: typeof login_username & FormItemConfig,
+    Username?: typeof login_username & FormItemConfig,
     /** 密码  */
-    password?: typeof login_password & FormItemConfig,
+    Password?: typeof login_password & FormItemConfig,
   }
 
-  export const getLoginFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): LoginFormConfigs => {
-    /** 用户名  */
+  export const getLoginFormConfigs = (queryRule: ObjectMap<any> = {}, formPropsUtils?: FormPropsUtils): LoginApiLoginFormConfigs => {
+    /** 用户名 */
     login_username.formPropsUtils = formPropsUtils;
-    login_username.config.initialValue = queryRule.username;
-    login_username.value = queryRule.username;
-    /** 密码  */
+    const login_usernameValue =queryRule.username;
+    login_username.config.initialValue = login_usernameValue;
+    login_username.value = login_usernameValue;
+    /** 密码 */
     login_password.formPropsUtils = formPropsUtils;
-    login_password.config.initialValue = queryRule.password;
-    login_password.value = queryRule.password;
+    const login_passwordValue =queryRule.password;
+    login_password.config.initialValue = login_passwordValue;
+    login_password.value = login_passwordValue;
 
     return {
-      username: login_username,
-      password: login_password,
+      Username: login_username,
+      Password: login_password,
     }
   }
 }

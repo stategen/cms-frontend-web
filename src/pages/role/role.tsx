@@ -12,7 +12,7 @@ import {Table, Modal, Col, Button, Popconfirm} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
 import {getRoleFormConfigs} from "@i/forms/RoleFormConfigs";
-import {ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
+import {BaseProps, ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
@@ -112,7 +112,7 @@ const rolePage = (props: RolePageProps) => {
   let RoleQueryForm = null;
   if (roleArea.doQuery) {
     const title = 'Query';
-    const filtersFormConfigs = RoleApiForms.getGetRolePageListByDefaultQueryFormConfigs(roleArea.queryRule ? roleArea.queryRule : {});
+    const filtersFormConfigs = RoleApiForms.getRolePageListByDefaultQueryFormConfigs(roleArea.queryRule ? roleArea.queryRule : {});
     RoleQueryForm = createModelPage(false, title, roleArea, filtersFormConfigs, "", dispatch);
   }
 
@@ -176,15 +176,10 @@ const rolePage = (props: RolePageProps) => {
   )
 };
 
-const mapStateToProps = (states: StatesAlias & ConnectionPros) : RolePageProps =>{
-  let result: RolePageProps = {
-    appState: states.app,
-    roleState: states.role,
-    loading: states.loading,
-  }
-  return result;
-}
-
-const RolePage = connect(mapStateToProps)(rolePage);
+const RolePage = connect(({role: roleState, app: appState, loading}: StatesAlias & ConnectionPros) => ({
+  roleState,
+  appState,
+  loading
+}))(rolePage);
 
 export default RolePage;

@@ -14,8 +14,8 @@ import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface AppInitState extends BaseState {
-  userArea?: AreaState<User>;
   menuArea?: AreaState<Menu>;
+  userArea?: AreaState<User>;
 }
 
 export type AppState = AppInitState & typeof appCustomState;
@@ -77,16 +77,16 @@ export const appInitModel: AppModel = <AppModel>{
   effects: <AppEffects>{},
 };
 
-export const appUserAreaState = {
-  areaName: 'userArea',
-};
-
 export const appMenuAreaState = {
   areaName: 'menuArea',
 };
 
+export const appUserAreaState = {
+  areaName: 'userArea',
+};
+
 appInitModel.getInitState = () => {
-  const initState = mergeObjects({userArea: {...appUserAreaState, ...initAreaState}, menuArea: {...appMenuAreaState, ...initAreaState}},appCustomState);
+  const initState = mergeObjects({menuArea: {...appMenuAreaState, ...initAreaState}, userArea: {...appUserAreaState, ...initAreaState}},appCustomState);
   return initState;
 }
 

@@ -10,9 +10,15 @@ import {DatePickerProps} from "antd/lib/date-picker/interface";
 import {TimePickerProps} from "antd/lib/time-picker";
 import {SelectProps} from "antd/lib/select";
 import {LinkProps} from "react-router-dom";
-import {FormConfigs, FormProps, FormPropsUtils} from "@utils/DvaUtil";
-import {default as FormItem, FormItemProps} from "antd/lib/form/FormItem";
-import {WrappedFormUtils} from "antd/lib/form/Form";
+import {
+  FormConfigs, FormItemEditorProps, FormProps, FormPropsUtils, getMomentDate,
+  getOptionProps
+} from "@utils/DvaUtil";
+import {default as FormItem, FormItemProps} from "antd/es/form/FormItem";
+import {WrappedFormUtils} from "antd/es/form/Form";
+import {TextAreaProps} from 'antd/es/input/TextArea';
+
+const { TextArea } = Input;
 
 namespace UIUtil {
 
@@ -21,20 +27,20 @@ namespace UIUtil {
     return formPropsUtils.getFieldProps(formItemConfig.name, formItemConfig.config);
   }
 
-  export interface InputEditorProps extends Partial<InputItemProps>, FormItemEditorProps {
+  export interface InputEditorProps extends Partial<InputProps>, FormItemEditorProps {
   }
 
   export const BuildInputEditor = (props?: InputEditorProps) => {
     const {formItemConfig, ...customs} = props;
     return (
-      <InputItem
+      <Input
         key={formItemConfig.name}
+        value={formItemConfig.value}
         {...customs}
         {...UIUtil.createFieldProps(formItemConfig)}
-        value={formItemConfig.value}
       >
         {props.children || formItemConfig.label}
-      </InputItem>
+      </Input>
     )
   }
 
@@ -52,34 +58,34 @@ namespace UIUtil {
   export const BuildHiddenEditor = (props?: HiddenEditorProps) => {
     const {formItemConfig, ...customs} = props;
     return (
-      <InputItem
+      <Input
         type="hidden"
         key={formItemConfig.name}
+        value={formItemConfig.value}
         {...customs}
         {...UIUtil.createFieldProps(formItemConfig)}
-        value={formItemConfig.value}
       >
-      </InputItem>
+      </Input>
     )
   }
 
-  export interface TextAreaEditorProps extends Partial<TextareaItemProps>, FormItemEditorProps {
+  export interface TextareaEditorProps extends Partial<TextAreaProps>, FormItemEditorProps {
 
   }
 
-  export const BuildTextAreaEditor = (props?: TextAreaEditorProps) => {
+  export const BuildTextareaEditor = (props?: TextareaEditorProps) => {
     const {formItemConfig, ...customs} = props;
     return (
-      <TextareaItem
+      <TextArea
         title={formItemConfig.label}
         key={formItemConfig.name}
         autoHeight
+        value={formItemConfig.value}
         {...customs}
         {...UIUtil.createFieldProps(formItemConfig)}
-        value={formItemConfig.value}
       >
         {props.children || formItemConfig.label}
-      </TextareaItem>
+      </TextArea>
     )
   }
 
@@ -92,11 +98,17 @@ namespace UIUtil {
     const {formItemConfig, ...customs} = props;
     return (
       <DatePicker
-        showTime
-        locale={locale}
+        clear
+        title={formItemConfig.label}
+        mode="datetime"
         format={formItemConfig.format}
+        locale={locale}
+        value={formItemConfig.value}
         {...customs}
-      />
+        {...UIUtil.createFieldProps(formItemConfig)}
+      >
+        {props.children || <List.Item arrow="down">{formItemConfig.label}</List.Item>}
+      </DatePicker>
     )
   }
 
@@ -104,8 +116,13 @@ namespace UIUtil {
   }
 
   export const BuildDatePickerEditor = (props?: DatePickerEditorProps) => {
-    const formItemConfig: FormItemConfig = this.formItemConfig;
-    return (<DatePicker locale={locale} format={formItemConfig.format} {...props}/>)
+    return (
+      <BuildTimeStampEditor
+        mode="date"
+        {...props}
+      >
+      </BuildTimeStampEditor>
+    )
   }
 
   export interface TimePickerEditorProps extends FormItemEditorProps {
@@ -134,9 +151,9 @@ namespace UIUtil {
         data={optionProps}
         title={formItemConfig.label}
         extra="请选择"
+        value={formItemConfig.value}
         {...customs}
         {...UIUtil.createFieldProps(formItemConfig)}
-        value={formItemConfig.value}
       >
         {props.children || <List.Item arrow="down">{formItemConfig.label}</List.Item>}
       </Picker>

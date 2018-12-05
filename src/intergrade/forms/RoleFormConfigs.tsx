@@ -6,17 +6,17 @@
  */
 import Role from "../beans/Role"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils} from "@utils/DvaUtil";
+import {FormItemConfig, FormConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
-/** 角色ID  */
-const Role_roleId = {
+/** 角色ID */
+const role_roleId = {
   name: 'roleId',
   isId: true,
   label: "角色ID",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -29,18 +29,18 @@ const Role_roleId = {
     ],
   }
 };
-Role_roleId.editor =
+role_roleId.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Role_roleId};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: role_roleId};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 角色名称  */
-const Role_roleName = {
+/** 角色名称 */
+const role_roleName = {
   name: 'roleName',
   label: "角色名称",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -57,18 +57,18 @@ const Role_roleName = {
     ],
   }
 };
-Role_roleName.editor =
+role_roleName.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Role_roleName};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: role_roleName};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 描述  */
-const Role_description = {
+/** 描述 */
+const role_description = {
   name: 'description',
   label: "描述",
   type: "",
-  editor: UIUtil.buildInputEditor,
+  Editor: UIUtil.BuildInputEditor,
   value: null,
   formPropsUtils: null,
   config: {
@@ -85,126 +85,133 @@ const Role_description = {
     ],
   }
 };
-Role_description.editor =
+role_description.Editor =
   (props: UIUtil.InputEditorProps) => {
-    props ={...props, formItemConfig: Role_description};
-    return UIUtil.buildInputEditor(props);
+    props = {...props, formItemConfig: role_description};
+    return UIUtil.BuildInputEditor(props);
   }
 
-/** 创建时间  TIMESTAMP*/
-const Role_createTime = {
+/** 创建时间 TIMESTAMP*/
+const role_createTime = {
   name: 'createTime',
   hidden: true,
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Role_createTime.editor =
+role_createTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: Role_createTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: role_createTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** 更新时间  TIMESTAMP*/
-const Role_updateTime = {
+/** 更新时间 TIMESTAMP*/
+const role_updateTime = {
   name: 'updateTime',
   hidden: true,
+  temporalType : TemporalType.TIMESTAMP,
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   type: "",
-  editor: UIUtil.buildTimeStampEditor,
+  Editor: UIUtil.BuildTimeStampEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Role_updateTime.editor =
+role_updateTime.Editor =
   (props: UIUtil.TimeStampEditorProps) => {
-    props ={...props, formItemConfig: Role_updateTime};
-    return UIUtil.buildTimeStampEditor(props);
+    props = {...props, formItemConfig: role_updateTime};
+    return UIUtil.BuildTimeStampEditor(props);
   }
 
-/** roleType  */
-const Role_roleType = {
+/** roleType */
+const role_roleType = {
   name: 'roleType',
   isEnum: true,
   options: roleTypeOptions,
   label: "roleType",
   type: "",
-  editor: UIUtil.buildEnumEditor,
+  Editor: UIUtil.BuildEnumEditor,
   value: null,
   formPropsUtils: null,
   config: {
     initialValue: null,
   }
 };
-Role_roleType.editor =
+role_roleType.Editor =
   (props: UIUtil.EnumEditorProps) => {
-    props ={...props, formItemConfig: Role_roleType};
-    return UIUtil.buildEnumEditor(props);
+    props = {...props, formItemConfig: role_roleType};
+    return UIUtil.BuildEnumEditor(props);
   }
 
 export interface RoleFormConfigs extends FormConfigs {
   /** 角色ID  */
-  roleId?: typeof Role_roleId & FormItemConfig,
+  RoleId?: typeof role_roleId & FormItemConfig,
 
   /** 角色名称  */
-  roleName?: typeof Role_roleName & FormItemConfig,
+  RoleName?: typeof role_roleName & FormItemConfig,
 
   /** 描述  */
-  description?: typeof Role_description & FormItemConfig,
+  Description?: typeof role_description & FormItemConfig,
 
   /** 创建时间  TIMESTAMP*/
-  createTime?: typeof Role_createTime & FormItemConfig,
+  CreateTime?: typeof role_createTime & FormItemConfig,
 
   /** 更新时间  TIMESTAMP*/
-  updateTime?: typeof Role_updateTime & FormItemConfig,
+  UpdateTime?: typeof role_updateTime & FormItemConfig,
 
   /** roleType  */
-  roleType?: typeof Role_roleType & FormItemConfig,
+  RoleType?: typeof role_roleType & FormItemConfig,
 
-  [columnName: string]: FormItemConfig,
 }
 export const getRoleFormConfigs = (role: Role, formPropsUtils?: FormPropsUtils): RoleFormConfigs => {
-  /** 角色ID  */
-  Role_roleId.formPropsUtils = formPropsUtils;
-  Role_roleId.config.initialValue = role.roleId;
-  Role_roleId.value = role.roleId;
-  /** 角色名称  */
-  Role_roleName.formPropsUtils = formPropsUtils;
-  Role_roleName.config.initialValue = role.roleName;
-  Role_roleName.value = role.roleName;
-  /** 描述  */
-  Role_description.formPropsUtils = formPropsUtils;
-  Role_description.config.initialValue = role.description;
-  Role_description.value = role.description;
-  /** 创建时间  TIMESTAMP*/
-  Role_createTime.formPropsUtils = formPropsUtils;
-  Role_createTime.config.initialValue = role.createTime ? moment(role.createTime) : null;
-  Role_createTime.value = role.createTime ? moment(role.createTime) : null;
-  /** 更新时间  TIMESTAMP*/
-  Role_updateTime.formPropsUtils = formPropsUtils;
-  Role_updateTime.config.initialValue = role.updateTime ? moment(role.updateTime) : null;
-  Role_updateTime.value = role.updateTime ? moment(role.updateTime) : null;
-  /** roleType  */
-  Role_roleType.formPropsUtils = formPropsUtils;
-  Role_roleType.config.initialValue = role.roleType;
-  Role_roleType.value = role.roleType;
+  /** 角色ID */
+  role_roleId.formPropsUtils = formPropsUtils;
+  const role_roleIdValue =role.roleId;
+  role_roleId.config.initialValue = role_roleIdValue;
+  role_roleId.value = role_roleIdValue;
+  /** 角色名称 */
+  role_roleName.formPropsUtils = formPropsUtils;
+  const role_roleNameValue =role.roleName;
+  role_roleName.config.initialValue = role_roleNameValue;
+  role_roleName.value = role_roleNameValue;
+  /** 描述 */
+  role_description.formPropsUtils = formPropsUtils;
+  const role_descriptionValue =role.description;
+  role_description.config.initialValue = role_descriptionValue;
+  role_description.value = role_descriptionValue;
+  /** 创建时间 TIMESTAMP*/
+  role_createTime.formPropsUtils = formPropsUtils;
+  const role_createTimeValue =role.createTime ? moment(role.createTime) : null;
+  role_createTime.config.initialValue = role_createTimeValue;
+  role_createTime.value = role_createTimeValue;
+  /** 更新时间 TIMESTAMP*/
+  role_updateTime.formPropsUtils = formPropsUtils;
+  const role_updateTimeValue =role.updateTime ? moment(role.updateTime) : null;
+  role_updateTime.config.initialValue = role_updateTimeValue;
+  role_updateTime.value = role_updateTimeValue;
+  /** roleType */
+  role_roleType.formPropsUtils = formPropsUtils;
+  const role_roleTypeValue =role.roleType;
+  role_roleType.config.initialValue = role_roleTypeValue;
+  role_roleType.value = role_roleTypeValue;
 
   return {
-    roleId: Role_roleId,
-    roleName: Role_roleName,
-    description: Role_description,
-    createTime: Role_createTime,
-    updateTime: Role_updateTime,
-    roleType: Role_roleType,
+    RoleId: role_roleId,
+    RoleName: role_roleName,
+    Description: role_description,
+    CreateTime: role_createTime,
+    UpdateTime: role_updateTime,
+    RoleType: role_roleType,
   }
 }
 

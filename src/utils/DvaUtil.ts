@@ -6,11 +6,18 @@ import {OptionProps} from "antd/lib/select";
 import {ReactElement} from "react";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import {History} from "history";
-
+import {Debugger} from "inspector";
 
 export const TIME_FORMAT = "HH:mm:ss";
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const TIMESTAMP_FORMAT = "YYYY-MM-DD HH:mm:ss";
+import moment from 'moment';
+
+export enum TemporalType {
+  TIME ="TIME",
+  DATE ="",
+  TIMESTAMP ="TIMESTAMP",
+}
 
 export interface Action {
   type: any,
@@ -27,6 +34,15 @@ export interface RouteOrders {
 export interface Options {
   [enumName: string]: OptionProps;
 }
+
+export const getOptionProps = (options: Options) => {
+  const result = Object.values(options).map(
+    (option, key) => {
+      return {label: option.title, value: option.value};
+    }
+  )
+  return result;
+};
 
 export type Reducer<S> = (state: S, action: Action) => S;
 
@@ -61,7 +77,7 @@ export interface BaseState {
 export interface AreaState<T> {
   areaName?: string,
   list?: T[],
-  index?:number,
+  index?: number,
   pagination?: PaginationProps;
   selectedRowKeys?: any[],
   doEdit?: boolean;
@@ -71,14 +87,14 @@ export interface AreaState<T> {
   cancelState?: AreaState<T>,
 }
 
-export const initAreaState :AreaState<any>=  {
+export const initAreaState: AreaState<any> = {
   list: [],
   pagination: {},
   selectedRowKeys: [],
   doEdit: false,
   doQuery: false,
   type: null,
-  index:null,
+  index: null,
 }
 
 /*interfaces*/
@@ -188,19 +204,18 @@ export interface DvaPageElement {
   children?: ReactElement<any>[];
 }
 
-export interface DvaChild extends ReactElement<any> {
-  props: DvaPageElement;
-}
 
 export interface ConnectionPros {
   location?: DvaLocation,
   dispatch?: Dispatch,
   loading?
-  children?: DvaChild,
+  children?: React.ReactNode,
 }
 
-export interface BaseProps extends ConnectionPros {
-  children?,
+
+export interface FormItemEditorProps {
+  formItemConfig?: FormItemConfig,
+  children?: React.ReactNode,
 }
 
 export interface FormItemConfig {
@@ -212,12 +227,15 @@ export interface FormItemConfig {
   label?: string,
   isArray?: boolean,
   format?: string,
-  options?: Options;
+  options?: Options,
+  value?: any,
+  temporalType?: string,
   config?: GetFieldDecoratorOptions,
-  editor?: (props)=>React.ReactNode,
-  formPropsUtils?: FormPropsUtils;
-  createFormItemProps? :Function,
+  /*editor?: (props) => any,*/
+  formPropsUtils?: FormPropsUtils,
+  type?: string,
 }
+
 
 export interface FormConfigs {
   [itemname: string]: FormItemConfig;
@@ -300,12 +318,23 @@ export const delateArray = (sources: {}[], dest: string | string[] | {}, idKeyNa
   return result;
 }
 
+export const getMomentDate = (value) => {
+  if (value == null) {
+    return value;
+  } else if (value._isAMomentObject) {
+    return moment(value).toDate();
+  }
+  return value;
+}
+
 export const optimizeFieldPostValues = (dest: {}) => {
   Object.keys(dest).forEach((key) => {
     let item = dest[key];
     if (item == null) {
       delete dest[key];
     } else if (item._isAMomentObject) {
+      dest[key] = item.valueOf();
+    } else if (item instanceof Date){
       dest[key] = item.valueOf();
     }
   });
@@ -326,7 +355,7 @@ export const mergeObjects = (...sources) => {
       for (let key in dest) {
         const destItem = dest[key];
         if (destItem != null) {
-          if (!(destItem instanceof Array)){
+          if (!(destItem instanceof Array)) {
             const sourceItem = result[key];
             if (sourceItem && sourceItem instanceof Object) {
               if (destItem instanceof Object) {
@@ -357,3 +386,5 @@ export interface FormPropsUtils extends WrappedFormUtils {
 export interface FormProps {
   form?: FormPropsUtils;
 }
+
+
