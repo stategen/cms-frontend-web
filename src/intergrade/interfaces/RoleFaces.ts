@@ -117,7 +117,7 @@ export class RoleDispatch {
     return routerRedux.push(pushRoute);
   }
 
-  static setup_effect(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static setup_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/setup',
       payload: {
@@ -142,7 +142,7 @@ export class RoleDispatch {
 
 
   /** 批量删除角色 */
-  static deleteByRoleIds_effect(params: { roleIds?: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static deleteByRoleIds_effect(params: { roleIds?: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/deleteByRoleIds',
       payload: {
@@ -155,7 +155,7 @@ export class RoleDispatch {
 
 
   /** 角色分页列表,多条件 */
-  static getRolePageListByDefaultQuery_effect(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static getRolePageListByDefaultQuery_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/getRolePageListByDefaultQuery',
       payload: {

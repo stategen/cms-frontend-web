@@ -16,7 +16,7 @@ export default class AppApis {
    * GET /api/app/getAllMenus
    * 获所所有菜单
    */
-  static getAllMenus(params?: {}): [] {
+  static getAllMenus(params?: {}): Menu[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/app/getAllMenus';

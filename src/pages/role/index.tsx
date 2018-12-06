@@ -22,7 +22,11 @@ import StatesAlias from "@i/configs/tradeCms-statesAlias";
 
 const {confirm} = Modal;
 
-type RolePageProps =AppProps & RoleProps;
+type RolePageProps = AppProps & RoleProps;
+
+interface HandleMenuClick {
+  (e, record: Role, index: number): any;
+}
 
 const rolePage = (props: RolePageProps) => {
   const loading = props.loading;
@@ -35,7 +39,7 @@ const rolePage = (props: RolePageProps) => {
     const roleState: RoleState = {
       roleArea: {
         type: roleEffects.insert,
-        item: {},
+        index: -1,
         doEdit: true,
         cancelState: {
           type: roleReducers.updateState,
@@ -46,52 +50,58 @@ const rolePage = (props: RolePageProps) => {
     dispatch(RoleDispatch.updateState_reducer(roleState));
   };
 
-  const onDeleteItem = (roleId) => {
-    dispatch(RoleDispatch.delete_effect({roleId}, cleanSelectRowsProps))
+  const onDeleteItem = (index) => {
+    const role = props.roleState.roleArea.list[index];
+    if (role) {
+      dispatch(RoleDispatch.delete_effect({roleId: role.roleId}, cleanSelectRowsProps))
+    }
   };
 
 
-  const onEditItem = (role) => {
+  const onEditItem = (index) => {
     dispatch(RoleDispatch.updateState_reducer({
       roleArea: {
         type: roleEffects.update,
-        item: role,
+        index,
         doEdit: true,
         cancelState: {
           type: roleReducers.updateState,
           doEdit: false,
+          index: -1,
         }
       }
     }))
   };
 
-  const handleMenuClick = (record, e) => {
+  const handleMenuClick = function (e, record: Role, index: number) {
+    console.log(e, record, index)
     if (e.key === 'Update') {
-      onEditItem(record);
+      onEditItem(index);
     } else if (e.key === 'Delete') {
       confirm({
         title: 'Are you sure delete this record?',
         onOk: () => {
-          onDeleteItem(record.roleId)
+          onDeleteItem(index)
         },
       })
     }
-  }
+  } as HandleMenuClick;
 
   roleColumns.push({
     title: 'Operation',
     key: 'operation',
     width: 100,
-    render: (text, record: Role) => {
-      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={operateOptions}/>
+    render: function (text, record: Role, index: number) {
+      return <DropOption  key ={index} onMenuClick={e => handleMenuClick(e, record, index)} menuOptions={operateOptions}/>
     },
   });
 
   let RoleEditorModalPage = null;
   if (roleArea.doEdit) {
-    const isCreate = roleArea.type === `${roleEffects.insert}`;
+    const index = roleArea.index;
+    const isCreate = index < 0;
     const title = isCreate ? 'Create' : 'Update';
-    const currentRole: Role = isCreate ? {} : roleArea.item;
+    const currentRole: Role = isCreate ? {} : roleArea.list[index];
     let roleFormConfigs = getRoleFormItemConfigs(currentRole);
     RoleEditorModalPage = createModelPage(true, title, roleArea, roleFormConfigs, Role_ID, dispatch);
   }
@@ -177,7 +187,7 @@ const rolePage = (props: RolePageProps) => {
   )
 };
 
-const mapStateToProps = (states: StatesAlias & ConnectionPros) : RolePageProps =>{
+const mapStateToProps = (states: StatesAlias & ConnectionPros): RolePageProps => {
   let result: RolePageProps = {
     appState: states.app,
     roleState: states.role,

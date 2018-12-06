@@ -9,22 +9,6 @@ import {Bean} from "@utils/DvaUtil";
 
 /** roleId */
 export const Role_ID: string = 'roleId';
-export enum RoleFields {
-  /** roleId */
-  roleId = 'roleId',
-  /** roleName */
-  roleName = 'roleName',
-  /** description */
-  description = 'description',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-  /** roleType */
-  roleType = 'roleType',
-}
 
 export default interface Role extends Bean {
 

@@ -31,7 +31,7 @@ export default class RoleApis {
    * POST /api/role/deleteByRoleIds
    * 批量删除角色
    */
-  static deleteByRoleIds(params: { roleIds: [] }): [] {
+  static deleteByRoleIds(params: { roleIds: string[] }): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/deleteByRoleIds';
@@ -45,7 +45,7 @@ export default class RoleApis {
    * POST /api/role/getRolePageListByDefaultQuery
    * 角色分页列表,多条件
    */
-  static getRolePageListByDefaultQuery(params: { roleIds?: [], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: [], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Role> {
+  static getRolePageListByDefaultQuery(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Role> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/getRolePageListByDefaultQuery';

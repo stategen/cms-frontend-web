@@ -1,5 +1,5 @@
 import React from 'react'
-import {Input, DatePicker, TimePicker, Select,Form} from 'antd';
+import {Input, DatePicker, TimePicker, Select, Form} from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import {Options, FormItemConfig} from "./DvaUtil";
 import Menu from "@i/beans/Menu";
@@ -17,7 +17,7 @@ import {TimePickerProps} from 'antd/es/time-picker';
 
 
 const {TextArea} = Input;
-const FormItem =Form.Item;
+const FormItem = Form.Item;
 
 namespace UIUtil {
 
@@ -105,7 +105,7 @@ namespace UIUtil {
     )
   }
 
-  export interface TimePickerEditorProps extends Partial<TimePickerProps> , FormItemEditorProps  {
+  export interface TimePickerEditorProps extends Partial<TimePickerProps>, FormItemEditorProps {
   }
 
   export const BuildTimePickerEditor = (props?: TimePickerEditorProps) => {
@@ -146,14 +146,13 @@ namespace UIUtil {
   }
 
   export const buildFormItem = (formItemConfig: FormItemConfig, form: WrappedFormUtils, formItemProps: FormItemProps) => {
-    form =form || formItemConfig.form;
-
+    form = form || formItemConfig.form;
     return (
       <FormItem
         {...formItemProps}
         key={formItemConfig.name}
         label={formItemConfig.label}>
-        {form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig.Editor(formItemConfig))}
+        {form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))}
       </FormItem>
     )
   }
@@ -161,29 +160,37 @@ namespace UIUtil {
   export const buildFormItems = (formItemConfigs: FormItemConfigs, form: WrappedFormUtils, formItemProps: FormItemProps) => {
     let formItems = Object.keys(formItemConfigs).map((fieldName: string) => {
       const formItemConfig: FormItemConfig = formItemConfigs[fieldName];
-      if (formItemConfig.isId || formItemConfig.hidden) {
-        return;
-      }
       return UIUtil.buildFormItem(formItemConfig, form, formItemProps)
-
     });
     return formItems;
   }
 
-  export const buildLink = (menu: Menu = {}, props: LinkProps = null) => {
+  export interface LinkFixedProps extends Partial<LinkProps> {
+    to?: string;
+  }
+
+  export const buildLink = (menu: Menu = {}, props?: LinkFixedProps) => {
     let route = (menu.route || '#');
     // props =props || {to:route};
+    const width = {style: {width: 10}};
 
-    return <Link to={route} style={{width: 10}} key={menu.route} {...props} >
-      <Icon type={menu.icon}/>
-      {menu.name}
-    </Link>
+    return (
+      <Link
+        to={route}
+        key={menu.route}
+        {...width}
+        {...props}
+      >
+        <Icon type={menu.icon}/>
+        {menu.name}
+      </Link>
+    )
   }
 
   export const makeSelectOptions = (options: Options = {}) => {
     const result = Object.values(options).map((option, key) => {
       return (
-        <Select.Option value={option.value} >{option.title || option.value}
+        <Select.Option value={option.value} key={`${option.value}`}>{option.title || option.value}
         </Select.Option>
       )
     });

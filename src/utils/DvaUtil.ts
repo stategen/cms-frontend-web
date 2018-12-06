@@ -207,6 +207,7 @@ export interface ConnectionPros {
 export interface FormItemEditorProps {
   formItemConfig?: FormItemConfig,
   children?: React.ReactNode,
+  Editor?: (props) => any,
 }
 
 export interface FormItemConfig {

@@ -10,50 +10,6 @@ import {Bean} from "@utils/DvaUtil";
 
 /** menuId */
 export const Menu_ID: string = 'menuId';
-export enum MenuFields {
-  /** breadChildren */
-  breadChildren = 'breadChildren',
-  /** roleId */
-  roleId = 'roleId',
-  /** checked */
-  checked = 'checked',
-  /** menuId */
-  menuId = 'menuId',
-  /** bpid */
-  bpid = 'bpid',
-  /** mpid */
-  mpid = 'mpid',
-  /** projectName */
-  projectName = 'projectName',
-  /** controllerName */
-  controllerName = 'controllerName',
-  /** methodName */
-  methodName = 'methodName',
-  /** url */
-  url = 'url',
-  /** icon */
-  icon = 'icon',
-  /** name */
-  name = 'name',
-  /** route */
-  route = 'route',
-  /** visitType */
-  visitType = 'visitType',
-  /** checkType */
-  checkType = 'checkType',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-  /** id */
-  id = 'id',
-  /** menuChildren */
-  menuChildren = 'menuChildren',
-  /** opendOrder */
-  opendOrder = 'opendOrder',
-}
 
 export default interface Menu extends Bean {
 

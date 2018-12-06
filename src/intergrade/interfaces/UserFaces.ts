@@ -113,7 +113,7 @@ export class UserDispatch {
     return routerRedux.push(pushRoute);
   }
 
-  static setup_effect(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static setup_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/setup',
       payload: {
@@ -151,7 +151,7 @@ export class UserDispatch {
 
 
   /** 批量删除用户 */
-  static deleteByUserIds_effect(params: { userIds?: [] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static deleteByUserIds_effect(params: { userIds?: string[] }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/deleteByUserIds',
       payload: {
@@ -164,7 +164,7 @@ export class UserDispatch {
 
 
   /** 用户列表 */
-  static getUserPageListByDefaultQuery_effect(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static getUserPageListByDefaultQuery_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/getUserPageListByDefaultQuery',
       payload: {

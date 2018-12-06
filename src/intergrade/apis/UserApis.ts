@@ -44,7 +44,7 @@ export default class UserApis {
    * DELETE /api/user/deleteByUserIds
    * 批量删除用户
    */
-  static deleteByUserIds(params: { userIds?: [] }): [] {
+  static deleteByUserIds(params: { userIds?: string[] }): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/deleteByUserIds';
@@ -57,7 +57,7 @@ export default class UserApis {
    * GET /api/user/getUserPageListByDefaultQuery
    * 用户列表
    */
-  static getUserPageListByDefaultQuery(params: { userIds?: [], usernameLike?: string, passwordLike?: string, roleTypes?: [], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<User> {
+  static getUserPageListByDefaultQuery(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/getUserPageListByDefaultQuery';

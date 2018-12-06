@@ -9,36 +9,6 @@ import {Bean} from "@utils/DvaUtil";
 
 /** userId */
 export const User_ID: string = 'userId';
-export enum UserFields {
-  /** visitsIds */
-  visitsIds = 'visitsIds',
-  /** userId */
-  userId = 'userId',
-  /** username */
-  username = 'username',
-  /** roleType */
-  roleType = 'roleType',
-  /** name */
-  name = 'name',
-  /** nickName */
-  nickName = 'nickName',
-  /** age */
-  age = 'age',
-  /** address */
-  address = 'address',
-  /** isMale */
-  isMale = 'isMale',
-  /** avatarUrl */
-  avatarUrl = 'avatarUrl',
-  /** email */
-  email = 'email',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-}
 
 export default interface User extends Bean {
 

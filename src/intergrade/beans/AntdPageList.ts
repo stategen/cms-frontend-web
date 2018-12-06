@@ -7,12 +7,6 @@
 import {PaginationProps} from "antd/lib/pagination";
 import {Bean} from "@utils/DvaUtil";
 
-export enum AntdPageListFields {
-  /** pagination */
-  pagination = 'pagination',
-  /** list */
-  list = 'list',
-}
 
 export default interface AntdPageList<E> extends Bean {
 
