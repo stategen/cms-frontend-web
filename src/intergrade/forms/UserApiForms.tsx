@@ -9,7 +9,7 @@ import {PaginationProps} from "antd/lib/pagination";
 import RoleType from "../enums/RoleType";
 import User from "../beans/User";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -282,7 +282,7 @@ getUserPageListByDefaultQuery_updateTimeMax.Editor =
 
 
 export namespace UserApiForms {
-  export interface UserApiGetUserPageListByDefaultQueryFormItemConfigs extends FormItemConfigs {
+  export interface UserApiGetUserPageListByDefaultQueryFormItemConfigMap extends FormItemConfigMap {
     /** 用户IDs  */
     UserIds?: typeof getUserPageListByDefaultQuery_userIds & Partial<FormItemConfig>,
     /** 用户名Like  */
@@ -315,7 +315,7 @@ export namespace UserApiForms {
     UpdateTimeMax?: typeof getUserPageListByDefaultQuery_updateTimeMax & Partial<FormItemConfig>,
   }
 
-  export const getGetUserPageListByDefaultQueryFormItemConfigs = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): UserApiGetUserPageListByDefaultQueryFormItemConfigs => {
+  export const getGetUserPageListByDefaultQueryFormItemConfigMap = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): UserApiGetUserPageListByDefaultQueryFormItemConfigMap => {
     /** 用户IDs */
     getUserPageListByDefaultQuery_userIds.form = form;
     const getUserPageListByDefaultQuery_userIdsValue =queryRule.userIds;

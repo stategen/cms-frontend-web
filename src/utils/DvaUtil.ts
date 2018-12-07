@@ -1,12 +1,12 @@
 import {PaginationProps} from "antd/lib/pagination/Pagination";
 import {call as Call, put as Put} from 'redux-saga/effects';
-import * as React from 'react';
+import React from 'react';
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
 import {OptionProps} from "antd/lib/select";
 import {ReactElement} from "react";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import {History} from "history";
-import {Debugger} from "inspector";
+import {FormItemProps} from "antd/es/form/FormItem";
 
 export const TIME_FORMAT = "HH:mm:ss";
 export const DATE_FORMAT = "YYYY-MM-DD";
@@ -14,10 +14,19 @@ export const TIMESTAMP_FORMAT = "YYYY-MM-DD HH:mm:ss";
 import moment from 'moment';
 
 export enum TemporalType {
-  TIME ="TIME",
-  DATE ="",
-  TIMESTAMP ="TIMESTAMP",
+  TIME = "TIME",
+  DATE = "",
+  TIMESTAMP = "TIMESTAMP",
 }
+
+export type KeyValue<T,V> ={
+  [key in keyof T]?: V;
+}
+
+export interface KeyProps {
+  key?:string;
+}
+
 
 export interface Action {
   type: any,
@@ -223,14 +232,13 @@ export interface FormItemConfig {
   data?: any,
   temporalType?: string,
   config?: GetFieldDecoratorOptions,
-  /*Editor?: (props) => any,*/
+  Editor?: (props) => any,
   form?: FormPropsUtils,
   type?: string,
 }
 
 
-export interface FormItemConfigs {
-  [itemname: string]: FormItemConfig;
+export interface FormItemConfigMap extends KeyValue<FormItemConfigMap,FormItemConfig>{
 }
 
 export interface ObjectMap<T extends {}> {
@@ -326,7 +334,7 @@ export const optimizeFieldPostValues = (dest: {}) => {
       delete dest[key];
     } else if (item._isAMomentObject) {
       dest[key] = item.valueOf();
-    } else if (item instanceof Date){
+    } else if (item instanceof Date) {
       dest[key] = item.valueOf();
     }
   });
@@ -377,5 +385,23 @@ export interface FormPropsUtils extends WrappedFormUtils {
 export interface FormProps {
   form?: FormPropsUtils;
 }
+
+export const commonFormItemLayout: FormItemProps = {
+  labelCol: {
+    xs: {span: 48},
+    sm: {span: 12},
+  },
+
+  wrapperCol: {
+    xs: {span: 48},
+    sm: {span: 12},
+  },
+};
+
+
+
+
+
+
 
 

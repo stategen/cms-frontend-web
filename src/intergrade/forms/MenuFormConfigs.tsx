@@ -6,7 +6,7 @@
  */
 import Menu from "../beans/Menu"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {visitCheckTypeOptions} from '../enums/VisitCheckType';
 import {visitTypeOptions} from '../enums/VisitType';
@@ -370,7 +370,7 @@ menu_opendOrder.Editor =
     return UIUtil.BuildInputEditor(props);
   }
 
-export interface MenuFormItemConfigs extends FormItemConfigs {
+export interface MenuFormItemConfigMap extends FormItemConfigMap {
   /** roleId  */
   RoleId?: typeof menu_roleId & Partial<FormItemConfig>,
 
@@ -426,7 +426,7 @@ export interface MenuFormItemConfigs extends FormItemConfigs {
   OpendOrder?: typeof menu_opendOrder & Partial<FormItemConfig>,
 
 }
-export const getMenuFormItemConfigs = (menu: Menu, form?: FormPropsUtils): MenuFormItemConfigs => {
+export const getMenuFormItemConfigMap = (menu: Menu, form?: FormPropsUtils): MenuFormItemConfigMap => {
   /** roleId */
   menu_roleId.form = form;
   const menu_roleIdValue =menu.roleId;

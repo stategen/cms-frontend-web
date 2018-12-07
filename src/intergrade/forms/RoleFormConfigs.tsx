@@ -6,7 +6,7 @@
  */
 import Role from "../beans/Role"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -15,7 +15,8 @@ const role_roleId = {
   name: 'roleId',
   isId: true,
   label: "角色ID",
-  Editor: UIUtil.BuildInputEditor,
+  type: "hidden",
+  Editor: UIUtil.BuildHiddenEditor,
   data: null,
   form: null,
   config: {
@@ -29,9 +30,9 @@ const role_roleId = {
   }
 };
 role_roleId.Editor =
-  (props?: UIUtil.InputEditorProps) => {
+  (props?: UIUtil.HiddenEditorProps) => {
     props = {...props, formItemConfig: role_roleId};
-    return UIUtil.BuildInputEditor(props);
+    return UIUtil.BuildHiddenEditor(props);
   }
 
 /** 角色名称 */
@@ -147,7 +148,7 @@ role_roleType.Editor =
     return UIUtil.BuildEnumEditor(props);
   }
 
-export interface RoleFormItemConfigs extends FormItemConfigs {
+export interface RoleFormItemConfigMap extends FormItemConfigMap {
   /** 角色ID  */
   RoleId?: typeof role_roleId & Partial<FormItemConfig>,
 
@@ -167,7 +168,7 @@ export interface RoleFormItemConfigs extends FormItemConfigs {
   RoleType?: typeof role_roleType & Partial<FormItemConfig>,
 
 }
-export const getRoleFormItemConfigs = (role: Role, form?: FormPropsUtils): RoleFormItemConfigs => {
+export const getRoleFormItemConfigMap = (role: Role, form?: FormPropsUtils): RoleFormItemConfigMap => {
   /** 角色ID */
   role_roleId.form = form;
   const role_roleIdValue =role.roleId;

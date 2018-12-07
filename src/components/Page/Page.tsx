@@ -2,8 +2,14 @@ import React, { Component } from 'react'
 import classnames from 'classnames'
 import Loader from '../Loader/Loader'
 import styles from './Page.less'
+import {ConnectionPros} from "@utils/DvaUtil";
 
-export default class Page extends Component {
+interface PagePros extends ConnectionPros {
+  inner?:Boolean;
+  className?:string;
+}
+
+export default class Page extends Component<PagePros> {
   render () {
     const {
       className, children, loading = false, inner = false,

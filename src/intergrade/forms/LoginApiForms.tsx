@@ -6,7 +6,7 @@
  */
 import SimpleResponse from "../beans/SimpleResponse";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 
 /** 用户名 */
@@ -64,14 +64,14 @@ login_password.Editor =
 
 
 export namespace LoginApiForms {
-  export interface LoginApiLoginFormItemConfigs extends FormItemConfigs {
+  export interface LoginApiLoginFormItemConfigMap extends FormItemConfigMap {
     /** 用户名  */
     Username?: typeof login_username & Partial<FormItemConfig>,
     /** 密码  */
     Password?: typeof login_password & Partial<FormItemConfig>,
   }
 
-  export const getLoginFormItemConfigs = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): LoginApiLoginFormItemConfigs => {
+  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): LoginApiLoginFormItemConfigMap => {
     /** 用户名 */
     login_username.form = form;
     const login_usernameValue =queryRule.username;

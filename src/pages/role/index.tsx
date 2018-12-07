@@ -8,17 +8,24 @@ import {connect} from 'dva';
 import {RoleDispatch, roleEffects, RoleProps, roleReducers, RoleState} from '@i/interfaces/RoleFaces';
 import Role, {Role_ID} from "@i/beans/Role";
 import {roleDefaultColumns} from "@i/columns/RoleColumns";
-import {Table, Modal, Col, Button, Popconfirm} from "antd";
+import {Table, Modal, Col, Button, Popconfirm, Form} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
-import {getRoleFormItemConfigs} from "@i/forms/RoleFormConfigs";
-import {ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
+import {getRoleFormItemConfigMap, RoleFormItemConfigMap} from "@i/forms/RoleFormConfigs";
+import {
+  ConnectionPros, operateOptions, cleanSelectRowsProps, optimizeFieldPostValues,
+  FormItemConfigMap, Bean, AreaState, Dispatch, FormProps, BaseState, commonFormItemLayout, FormItemConfig, KeyValue,
+  CreateFun
+} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
-import {createModelPage} from "@components/QueryModal/QueryModal";
 import {RoleApiForms} from "@i/forms/RoleApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
+import UIUtil from "@utils/UIUtil";
+import FormItem,{FormItemProps} from "antd/es/form/FormItem";
+import {createModelPage} from "@components/QueryModal/QueryModal";
+
 
 const {confirm} = Modal;
 
@@ -31,7 +38,6 @@ interface HandleMenuClick {
 const rolePage = (props: RolePageProps) => {
   const loading = props.loading;
   const dispatch = props.dispatch;
-  const pathname = props.location;
   const roleArea = props.roleState.roleArea;
   const roleColumns = Object.values(roleDefaultColumns);
 
@@ -92,7 +98,7 @@ const rolePage = (props: RolePageProps) => {
     key: 'operation',
     width: 100,
     render: function (text, record: Role, index: number) {
-      return <DropOption  key ={index} onMenuClick={e => handleMenuClick(e, record, index)} menuOptions={operateOptions}/>
+      return <DropOption key={index} onMenuClick={e => handleMenuClick(e, record, index)} menuOptions={operateOptions}/>
     },
   });
 
@@ -102,8 +108,52 @@ const rolePage = (props: RolePageProps) => {
     const isCreate = index < 0;
     const title = isCreate ? 'Create' : 'Update';
     const currentRole: Role = isCreate ? {} : roleArea.list[index];
-    let roleFormConfigs = getRoleFormItemConfigs(currentRole);
-    RoleEditorModalPage = createModelPage(true, title, roleArea, roleFormConfigs, Role_ID, dispatch);
+    const roleFormConfigMap = getRoleFormItemConfigMap(currentRole);
+    // const roleFormConfigs = Object.values(roleFormConfigMap);
+    // const roleFormConfigs: FormItemConfig[] = [];
+    // roleFormConfigs.push(roleFormConfigMap.RoleName)
+    // roleFormConfigs.push(roleFormConfigMap.RoleId)
+    // roleFormConfigs.push(roleFormConfigMap.RoleType)
+    // RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigs, null);
+
+    const customBuildFormItem: UIUtil.CustomBuildFormItem<RoleFormItemConfigMap> = (formItemPropsMap: KeyValue<RoleFormItemConfigMap, FormItemProps>) => {
+      return (
+        <>
+          <FormItem
+            {...formItemPropsMap.RoleId}
+          >
+          </FormItem>
+
+          <Row>
+            <Col span={12}>
+              <FormItem
+                {...formItemPropsMap.RoleType}
+              >
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem
+                {...formItemPropsMap.RoleName}
+              >
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <FormItem
+                {...formItemPropsMap.Description}
+              >
+              </FormItem>
+            </Col>
+          </Row>
+        </>
+
+      )
+    }
+
+    RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigMap, customBuildFormItem);
   }
 
   const onFilter = () => {
@@ -123,8 +173,9 @@ const rolePage = (props: RolePageProps) => {
   let RoleQueryForm = null;
   if (roleArea.doQuery) {
     const title = 'Query';
-    const filtersFormConfigs = RoleApiForms.getGetRolePageListByDefaultQueryFormItemConfigs(roleArea.queryRule ? roleArea.queryRule : {});
-    RoleQueryForm = createModelPage(false, title, roleArea, filtersFormConfigs, "", dispatch);
+    const rolePageListByDefaultQueryFormItemConfigMap = RoleApiForms.getGetRolePageListByDefaultQueryFormItemConfigMap(roleArea.queryRule ? roleArea.queryRule : {});
+    const formItemConfigs = Object.values(rolePageListByDefaultQueryFormItemConfigMap);
+    RoleQueryForm = createModelPage(false, title, roleArea, dispatch, formItemConfigs);
   }
 
   const rowSelection: TableRowSelection<Role> = {
@@ -166,7 +217,8 @@ const rolePage = (props: RolePageProps) => {
 
 
   return (
-    <Page inner>
+    <Page
+      inner>
       <Row>
         <Col>
           <Button type="ghost" onClick={onAdd}>Create</Button>

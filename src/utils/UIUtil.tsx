@@ -9,19 +9,16 @@ import {InputProps} from "antd/lib/input";
 import {DatePickerProps} from "antd/lib/date-picker/interface";
 import {SelectProps} from "antd/lib/select";
 import {LinkProps} from "react-router-dom";
-import {FormItemConfigs, FormItemEditorProps} from "@utils/DvaUtil";
-import {FormItemProps} from "antd/es/form/FormItem";
+import {FormItemEditorProps,  KeyValue} from "@utils/DvaUtil";
+import FormItem,{FormItemProps} from "antd/es/form/FormItem";
 import {WrappedFormUtils} from "antd/es/form/Form";
 import {TextAreaProps} from 'antd/es/input/TextArea';
 import {TimePickerProps} from 'antd/es/time-picker';
 
 
 const {TextArea} = Input;
-const FormItem = Form.Item;
 
 namespace UIUtil {
-
-
   export interface InputEditorProps extends Partial<InputProps>, FormItemEditorProps {
   }
 
@@ -119,6 +116,15 @@ namespace UIUtil {
     )
   }
 
+  export const makeSelectOptions = (options: Options = {}) => {
+    const result = Object.values(options).map((option, key) => {
+      return (
+        <Select.Option value={option.value} key={`${option.value}`}>{option.title || option.value}
+        </Select.Option>
+      )
+    });
+    return result;
+  }
 
   export interface EnumEditorProps extends Partial<SelectProps>, FormItemEditorProps {
   }
@@ -145,24 +151,49 @@ namespace UIUtil {
     return (<Input {...customs}/>)
   }
 
-  export const buildFormItem = (formItemConfig: FormItemConfig, form: WrappedFormUtils, formItemProps: FormItemProps) => {
-    form = form || formItemConfig.form;
+
+  export function CreateFormItem(props: FormItemProps & FormItemConfig & FormItemEditorProps) {
+    const {formItemConfig, Editor, isArray, isId, isEnum, isImage, ...customs} = props;
     return (
       <FormItem
-        {...formItemProps}
-        key={formItemConfig.name}
-        label={formItemConfig.label}>
-        {form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))}
+        {...customs}
+      >
       </FormItem>
     )
   }
 
-  export const buildFormItems = (formItemConfigs: FormItemConfigs, form: WrappedFormUtils, formItemProps: FormItemProps) => {
-    let formItems = Object.keys(formItemConfigs).map((fieldName: string) => {
-      const formItemConfig: FormItemConfig = formItemConfigs[fieldName];
-      return UIUtil.buildFormItem(formItemConfig, form, formItemProps)
+  export type CreateFun<FormItemProps> = typeof CreateFormItem;
+
+  export function buildFormItems(formItemConfigs: FormItemConfig[], form: WrappedFormUtils, formItemProps: FormItemProps) {
+    const result = formItemConfigs.map((formItemConfig: FormItemConfig) => {
+      form = form || formItemConfig.form;
+      return (
+        <CreateFormItem
+          {...formItemProps}
+          key={formItemConfig.name}
+          label={formItemConfig.label}
+        >
+          {form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))}
+        </CreateFormItem>
+      )
     });
-    return formItems;
+    return result;
+  }
+
+  export type CustomBuildFormItem<T> = (formItemPropsMap: KeyValue<T, FormItemProps>) => any;
+
+  export function buildFormItemsCreatorMap<T>(FormItemConfigMap: KeyValue<T, FormItemConfig>, form: WrappedFormUtils, formItemProps: FormItemProps): KeyValue<T, FormItemProps> {
+    const result = {};
+    Object.keys(FormItemConfigMap).forEach((fieldName: string) => {
+      const formItemConfig: FormItemConfig = FormItemConfigMap[fieldName];
+      result[fieldName] = {
+        ...formItemProps,
+        key: formItemConfig.name,
+        label: formItemConfig.label,
+        children: form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))
+      }
+    });
+    return result;
   }
 
   export interface LinkFixedProps extends Partial<LinkProps> {
@@ -187,18 +218,8 @@ namespace UIUtil {
     )
   }
 
-  export const makeSelectOptions = (options: Options = {}) => {
-    const result = Object.values(options).map((option, key) => {
-      return (
-        <Select.Option value={option.value} key={`${option.value}`}>{option.title || option.value}
-        </Select.Option>
-      )
-    });
-    return result;
-  }
-
-
 }
+
 
 export default UIUtil;
 

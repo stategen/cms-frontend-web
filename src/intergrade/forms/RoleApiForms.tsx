@@ -9,7 +9,7 @@ import {PaginationProps} from "antd/lib/pagination";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -265,7 +265,7 @@ getRolePageListByDefaultQuery_showDateTimeMax.Editor =
 
 
 export namespace RoleApiForms {
-  export interface RoleApiGetRolePageListByDefaultQueryFormItemConfigs extends FormItemConfigs {
+  export interface RoleApiGetRolePageListByDefaultQueryFormItemConfigMap extends FormItemConfigMap {
     /** 角色IDs  */
     RoleIds?: typeof getRolePageListByDefaultQuery_roleIds & Partial<FormItemConfig>,
     /** 角色名称Like  */
@@ -296,7 +296,7 @@ export namespace RoleApiForms {
     ShowDateTimeMax?: typeof getRolePageListByDefaultQuery_showDateTimeMax & Partial<FormItemConfig>,
   }
 
-  export const getGetRolePageListByDefaultQueryFormItemConfigs = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): RoleApiGetRolePageListByDefaultQueryFormItemConfigs => {
+  export const getGetRolePageListByDefaultQueryFormItemConfigMap = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): RoleApiGetRolePageListByDefaultQueryFormItemConfigMap => {
     /** 角色IDs */
     getRolePageListByDefaultQuery_roleIds.form = form;
     const getRolePageListByDefaultQuery_roleIdsValue =queryRule.roleIds;

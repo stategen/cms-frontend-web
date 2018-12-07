@@ -6,7 +6,7 @@
  */
 import User from "../beans/User"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigs, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -275,7 +275,7 @@ user_updateTime.Editor =
     return UIUtil.BuildTimeStampEditor(props);
   }
 
-export interface UserFormItemConfigs extends FormItemConfigs {
+export interface UserFormItemConfigMap extends FormItemConfigMap {
   /** 用户ID  */
   UserId?: typeof user_userId & Partial<FormItemConfig>,
 
@@ -313,7 +313,7 @@ export interface UserFormItemConfigs extends FormItemConfigs {
   UpdateTime?: typeof user_updateTime & Partial<FormItemConfig>,
 
 }
-export const getUserFormItemConfigs = (user: User, form?: FormPropsUtils): UserFormItemConfigs => {
+export const getUserFormItemConfigMap = (user: User, form?: FormPropsUtils): UserFormItemConfigMap => {
   /** 用户ID */
   user_userId.form = form;
   const user_userIdValue =user.userId;
