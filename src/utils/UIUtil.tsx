@@ -19,8 +19,7 @@ import {TimePickerProps} from 'antd/es/time-picker';
 const {TextArea} = Input;
 
 namespace UIUtil {
-  export interface InputEditorProps extends Partial<InputProps>, FormItemEditorProps {
-  }
+  export type InputEditorProps = Partial<InputProps> & FormItemEditorProps
 
   export const BuildInputEditor = (props?: InputEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -33,16 +32,14 @@ namespace UIUtil {
     )
   }
 
-  export interface PasswordEditorProps extends InputEditorProps {
-  }
+  export type PasswordEditorProps = InputEditorProps;
 
   export const BuildPasswordEditor = (props?: PasswordEditorProps) => {
     props['type'] = 'password';
     return BuildInputEditor(props);
   }
 
-  export interface HiddenEditorProps extends InputEditorProps {
-  }
+  export type HiddenEditorProps = InputEditorProps;
 
   export const BuildHiddenEditor = (props?: HiddenEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -56,9 +53,7 @@ namespace UIUtil {
     )
   }
 
-  export interface TextareaEditorProps extends Partial<TextAreaProps>, FormItemEditorProps {
-
-  }
+  export type TextareaEditorProps = Partial<TextAreaProps> & FormItemEditorProps;
 
   export const BuildTextareaEditor = (props?: TextareaEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -72,9 +67,7 @@ namespace UIUtil {
     )
   }
 
-  export interface TimeStampEditorProps extends Partial<DatePickerProps>, FormItemEditorProps {
-
-  }
+  export type TimeStampEditorProps = Partial<DatePickerProps> & FormItemEditorProps;
 
 
   export const BuildTimeStampEditor = (props?: TimeStampEditorProps) => {
@@ -90,8 +83,7 @@ namespace UIUtil {
     )
   }
 
-  export interface DatePickerEditorProps extends DatePickerProps, FormItemEditorProps {
-  }
+  export type DatePickerEditorProps = Partial<DatePickerProps> &  FormItemEditorProps;
 
   export const BuildDatePickerEditor = (props?: DatePickerEditorProps) => {
     return (
@@ -102,8 +94,7 @@ namespace UIUtil {
     )
   }
 
-  export interface TimePickerEditorProps extends Partial<TimePickerProps>, FormItemEditorProps {
-  }
+  export type TimePickerEditorProps = Partial<TimePickerProps> & FormItemEditorProps
 
   export const BuildTimePickerEditor = (props?: TimePickerEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -126,8 +117,7 @@ namespace UIUtil {
     return result;
   }
 
-  export interface EnumEditorProps extends Partial<SelectProps>, FormItemEditorProps {
-  }
+  export type EnumEditorProps = Partial<SelectProps> & FormItemEditorProps;
 
   export const BuildEnumEditor = (props?: EnumEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -142,9 +132,7 @@ namespace UIUtil {
     )
   }
 
-  export interface ImageEditorProps extends FormItemEditorProps {
-
-  }
+  export type ImageEditorProps = FormItemEditorProps;
 
   export const BuildImageEditor = (props: ImageEditorProps) => {
     const {formItemConfig, Editor, ...customs} = props;
@@ -161,8 +149,6 @@ namespace UIUtil {
       </FormItem>
     )
   }
-
-  export type CreateFun<FormItemProps> = typeof CreateFormItem;
 
   export function buildFormItems(formItemConfigs: FormItemConfig[], form: WrappedFormUtils, formItemProps: FormItemProps) {
     const result = formItemConfigs.map((formItemConfig: FormItemConfig) => {

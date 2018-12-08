@@ -141,7 +141,7 @@ const rolePage = (props: RolePageProps) => {
             </Col>
           </Row>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <FormItem
                 {...formItemPropsMap.Description}
               >
@@ -240,7 +240,7 @@ const rolePage = (props: RolePageProps) => {
 };
 
 const mapStateToProps = (states: StatesAlias & ConnectionPros): RolePageProps => {
-  let result: RolePageProps = {
+  const result: RolePageProps = {
     appState: states.app,
     roleState: states.role,
     loading: states.loading,

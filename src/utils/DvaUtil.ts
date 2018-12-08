@@ -247,7 +247,7 @@ export interface ObjectMap<T extends {}> {
 
 export const makeMap = <T extends {}>(target: T[], idKeyName: string): ObjectMap<T> => {
   let map = {};
-  target.forEach((item, index) => {
+  target.forEach((item) => {
     let keyValue = item[idKeyName];
     map[keyValue] = item;
   });

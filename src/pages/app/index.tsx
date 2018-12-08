@@ -3,7 +3,6 @@
 import React from 'react'
 import NProgress from 'nprogress'
 import {connect} from 'dva'
-// import {Loader, MyLayout} from '@components/index'
 import MyLayout from '@components/MyLayout'
 import {BackTop, Layout} from 'antd'
 import {classnames, config} from '@utils/index'
@@ -13,8 +12,8 @@ import Error from '@pages/404'
 import 'themes/index.less'
 import './index.less'
 import {AppDispatch, appEffects, AppProps, appReducers, AppState} from "@i/interfaces/AppFaces";
-import {Tabs, Icon} from 'antd';
-import {ConnectionPros, DvaTabPaneProps, makeMap} from "@utils/DvaUtil";
+import {Tabs} from 'antd';
+import {ConnectionPros, makeMap} from "@utils/DvaUtil";
 import Menu, {MenuFields} from "@i/beans/Menu";
 import {TabsProps} from "antd/lib/tabs";
 import {routerRedux} from 'dva/router'
@@ -23,6 +22,8 @@ import RouteUtil from "@utils/RouteUtil";
 import UIUtil from "@utils/UIUtil";
 import MenuUtil from "@utils/MenuUtil";
 import Loader from "@components/Loader/Loader";
+import StatesAlias from "@i/configs/tradeCms-statesAlias";
+import {TabPaneProps} from "antd/es/tabs";
 
 const {Content, Footer, Sider} = Layout;
 const {Header, styles} = MyLayout;
@@ -30,9 +31,11 @@ const {prefix, openPages} = config;
 const TabPane = Tabs.TabPane;
 
 
-let lastHref
+let lastHref;
 
-const App = ({children, dispatch, appState, loading, location}: AppProps & ConnectionPros) => {
+type AppPagesProps = AppProps & ConnectionPros;
+
+const appPage = ({children, dispatch, appState, loading, location}: AppPagesProps) => {
 
   const {siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, homeMenu, permission}:AppState = appState;
   const user: User = appState.userArea.list[0] || {};
@@ -116,7 +119,7 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
     });
 
     const tabPanes = hasOpenedMenus.map((menu: Menu) => {
-      const panelPros: DvaTabPaneProps = {
+      const panelPros: TabPaneProps = {
         tab: UIUtil.buildLink(menu),
         key: menu.route,
         closable: menu.menuId != homeMenu.menuId,
@@ -193,5 +196,13 @@ const App = ({children, dispatch, appState, loading, location}: AppProps & Conne
   )
 }
 
+function mapStateToProps(states:StatesAlias & ConnectionPros){
+  const state :AppPagesProps={
+    appState :states.app,
+    loading:states.loading,
+  }
+  return state;
+}
 
-export default withRouter(connect(({app: appState, loading}) => ({appState, loading}))(App))
+
+export default withRouter(connect(mapStateToProps)(appPage))
