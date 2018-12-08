@@ -19,12 +19,12 @@ export enum TemporalType {
   TIMESTAMP = "TIMESTAMP",
 }
 
-export type KeyValue<T,V> ={
+export type KeyValue<T, V> = {
   [key in keyof T]?: V;
-}
+  }
 
 export interface KeyProps {
-  key?:string;
+  key?: string;
 }
 
 
@@ -204,11 +204,14 @@ export interface DvaPageElement {
   children?: ReactElement<any>[];
 }
 
+export interface LoadingProps {
+  effects?: any;
+}
 
 export interface ConnectionPros {
   location?: DvaLocation,
   dispatch?: Dispatch,
-  loading?
+  loading?: LoadingProps
   children?: React.ReactNode,
 }
 
@@ -238,7 +241,7 @@ export interface FormItemConfig {
 }
 
 
-export interface FormItemConfigMap extends KeyValue<FormItemConfigMap,FormItemConfig>{
+export interface FormItemConfigMap extends KeyValue<FormItemConfigMap, FormItemConfig> {
 }
 
 export interface ObjectMap<T extends {}> {

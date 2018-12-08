@@ -101,7 +101,7 @@ export class UserCommand {
   /** 用户列表 */
   static * getUserPageListByDefaultQuery_effect({payload}, {call, put, select}) {
     const oldUserArea = yield select((_) => _.user.userArea);
-    payload ={...oldUserArea.queryRule, ...payload};
+    payload = {...oldUserArea.queryRule, ...payload};
     const userPageList: AntdPageList<User> = yield call(UserApis.getUserPageListByDefaultQuery, payload);
     const pagination = userPageList ? userPageList.pagination : null;
     const users = updateArray(oldUserArea.list, userPageList ? userPageList.list : null, "userId");

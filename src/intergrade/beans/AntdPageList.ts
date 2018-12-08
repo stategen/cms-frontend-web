@@ -9,19 +9,19 @@ import {Bean} from "@utils/DvaUtil";
 
 
 export enum AntdPageListFields {
-  /** pagination */
-  pagination = 'pagination',
   /** list */
   list = 'list',
+  /** pagination */
+  pagination = 'pagination',
 }
 
 export default interface AntdPageList<E> extends Bean {
 
-  /** pagination */
-  pagination?: PaginationProps;
-
   /** list */
   list?: E[];
+
+  /** pagination */
+  pagination?: PaginationProps;
 
 }
 

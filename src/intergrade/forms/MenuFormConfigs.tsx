@@ -24,7 +24,9 @@ const menu_roleId = {
 };
 menu_roleId.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_roleId};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_roleId;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -41,7 +43,9 @@ const menu_checked = {
 };
 menu_checked.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_checked};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_checked;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -59,7 +63,9 @@ const menu_menuId = {
 };
 menu_menuId.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_menuId};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_menuId;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -76,7 +82,9 @@ const menu_bpid = {
 };
 menu_bpid.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_bpid};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_bpid;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -93,7 +101,9 @@ const menu_mpid = {
 };
 menu_mpid.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_mpid};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_mpid;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -116,7 +126,9 @@ const menu_projectName = {
 };
 menu_projectName.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_projectName};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_projectName;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -139,7 +151,9 @@ const menu_controllerName = {
 };
 menu_controllerName.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_controllerName};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_controllerName;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -162,7 +176,9 @@ const menu_methodName = {
 };
 menu_methodName.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_methodName};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_methodName;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -185,7 +201,9 @@ const menu_url = {
 };
 menu_url.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_url};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_url;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -209,7 +227,9 @@ const menu_icon = {
 };
 menu_icon.Editor =
   (props?: UIUtil.ImageEditorProps) => {
-    props = {...props, formItemConfig: menu_icon};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_icon;
+    props = {...props, formItemConfig};
     return UIUtil.BuildImageEditor(props);
   }
 
@@ -232,7 +252,9 @@ const menu_name = {
 };
 menu_name.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_name};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_name;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -255,7 +277,9 @@ const menu_route = {
 };
 menu_route.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_route};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_route;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -274,7 +298,9 @@ const menu_visitType = {
 };
 menu_visitType.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: menu_visitType};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_visitType;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 
@@ -293,7 +319,9 @@ const menu_checkType = {
 };
 menu_checkType.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: menu_checkType};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_checkType;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 
@@ -312,7 +340,9 @@ const menu_createTime = {
 };
 menu_createTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: menu_createTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_createTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -331,7 +361,9 @@ const menu_updateTime = {
 };
 menu_updateTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: menu_updateTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_updateTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -348,7 +380,9 @@ const menu_id = {
 };
 menu_id.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_id};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_id;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -366,7 +400,9 @@ const menu_opendOrder = {
 };
 menu_opendOrder.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: menu_opendOrder};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || menu_opendOrder;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 

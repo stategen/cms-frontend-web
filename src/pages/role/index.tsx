@@ -23,7 +23,7 @@ import Row from "antd/lib/grid/row";
 import {RoleApiForms} from "@i/forms/RoleApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
 import UIUtil from "@utils/UIUtil";
-import FormItem,{FormItemProps} from "antd/es/form/FormItem";
+import FormItem, {FormItemProps} from "antd/es/form/FormItem";
 import {createModelPage} from "@components/QueryModal/QueryModal";
 
 
@@ -80,7 +80,6 @@ const rolePage = (props: RolePageProps) => {
   };
 
   const handleMenuClick = function (e, record: Role, index: number) {
-    console.log(e, record, index)
     if (e.key === 'Update') {
       onEditItem(index);
     } else if (e.key === 'Delete') {
@@ -124,32 +123,19 @@ const rolePage = (props: RolePageProps) => {
           >
           </FormItem>
 
-          <Row>
-            <Col span={12}>
-              <FormItem
-                {...formItemPropsMap.RoleType}
-              >
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <FormItem
-                {...formItemPropsMap.RoleName}
-              >
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <FormItem
-                {...formItemPropsMap.Description}
-              >
-              </FormItem>
-            </Col>
-          </Row>
+          <FormItem
+            {...formItemPropsMap.RoleType}
+          >
+          </FormItem>
+          <FormItem
+            {...formItemPropsMap.RoleName}
+          >
+          </FormItem>
+          <FormItem
+            {...formItemPropsMap.Description}
+          >
+          </FormItem>
         </>
-
       )
     }
 

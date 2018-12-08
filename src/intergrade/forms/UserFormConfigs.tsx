@@ -30,7 +30,9 @@ const user_userId = {
 };
 user_userId.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_userId};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_userId;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -57,7 +59,9 @@ const user_username = {
 };
 user_username.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_username};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_username;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -76,7 +80,9 @@ const user_roleType = {
 };
 user_roleType.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: user_roleType};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_roleType;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 
@@ -99,7 +105,9 @@ const user_name = {
 };
 user_name.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_name};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_name;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -122,7 +130,9 @@ const user_nickName = {
 };
 user_nickName.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_nickName};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_nickName;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -139,7 +149,9 @@ const user_age = {
 };
 user_age.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_age};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_age;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -162,7 +174,9 @@ const user_address = {
 };
 user_address.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_address};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_address;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -179,7 +193,9 @@ const user_isMale = {
 };
 user_isMale.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_isMale};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_isMale;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -202,7 +218,9 @@ const user_avatarUrl = {
 };
 user_avatarUrl.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_avatarUrl};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_avatarUrl;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -233,7 +251,9 @@ const user_email = {
 };
 user_email.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: user_email};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_email;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -252,7 +272,9 @@ const user_createTime = {
 };
 user_createTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: user_createTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_createTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -271,7 +293,9 @@ const user_updateTime = {
 };
 user_updateTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: user_updateTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || user_updateTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 

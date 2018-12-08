@@ -38,6 +38,7 @@ export const createModelPage = <T extends Bean>
           if (errors) {
             return;
           }
+
           const dest = props.form.getFieldsValue();
           const areaExtraProps: AreaState<T> = {}
           if (isEditor) {
@@ -54,6 +55,7 @@ export const createModelPage = <T extends Bean>
           })
         })
       },
+
       onCancel: () => {
         const areaName = areaState.areaName;
         const dispatchState: BaseState = {

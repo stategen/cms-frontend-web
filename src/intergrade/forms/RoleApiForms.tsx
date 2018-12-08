@@ -27,7 +27,9 @@ const getRolePageListByDefaultQuery_roleIds = {
 };
 getRolePageListByDefaultQuery_roleIds.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_roleIds};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_roleIds;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -44,7 +46,9 @@ const getRolePageListByDefaultQuery_roleNameLike = {
 };
 getRolePageListByDefaultQuery_roleNameLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_roleNameLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_roleNameLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -61,7 +65,9 @@ const getRolePageListByDefaultQuery_descriptionLike = {
 };
 getRolePageListByDefaultQuery_descriptionLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_descriptionLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_descriptionLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -80,7 +86,9 @@ const getRolePageListByDefaultQuery_createTimeMin = {
 };
 getRolePageListByDefaultQuery_createTimeMin.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_createTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_createTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -99,7 +107,9 @@ const getRolePageListByDefaultQuery_createTimeMax = {
 };
 getRolePageListByDefaultQuery_createTimeMax.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_createTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_createTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -118,7 +128,9 @@ const getRolePageListByDefaultQuery_updateTimeMin = {
 };
 getRolePageListByDefaultQuery_updateTimeMin.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_updateTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_updateTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -137,7 +149,9 @@ const getRolePageListByDefaultQuery_updateTimeMax = {
 };
 getRolePageListByDefaultQuery_updateTimeMax.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_updateTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_updateTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -157,7 +171,9 @@ const getRolePageListByDefaultQuery_roleTypes = {
 };
 getRolePageListByDefaultQuery_roleTypes.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_roleTypes};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_roleTypes;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 
@@ -174,7 +190,9 @@ const getRolePageListByDefaultQuery_showDateMin = {
 };
 getRolePageListByDefaultQuery_showDateMin.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showDateMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showDateMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -191,7 +209,9 @@ const getRolePageListByDefaultQuery_showDateMax = {
 };
 getRolePageListByDefaultQuery_showDateMax.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showDateMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showDateMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -208,7 +228,9 @@ const getRolePageListByDefaultQuery_showTimeMin = {
 };
 getRolePageListByDefaultQuery_showTimeMin.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -225,7 +247,9 @@ const getRolePageListByDefaultQuery_showTimeMax = {
 };
 getRolePageListByDefaultQuery_showTimeMax.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -242,7 +266,9 @@ const getRolePageListByDefaultQuery_showDateTimeMin = {
 };
 getRolePageListByDefaultQuery_showDateTimeMin.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showDateTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showDateTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -259,7 +285,9 @@ const getRolePageListByDefaultQuery_showDateTimeMax = {
 };
 getRolePageListByDefaultQuery_showDateTimeMax.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getRolePageListByDefaultQuery_showDateTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getRolePageListByDefaultQuery_showDateTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 

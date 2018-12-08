@@ -31,7 +31,9 @@ const role_roleId = {
 };
 role_roleId.Editor =
   (props?: UIUtil.HiddenEditorProps) => {
-    props = {...props, formItemConfig: role_roleId};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_roleId;
+    props = {...props, formItemConfig};
     return UIUtil.BuildHiddenEditor(props);
   }
 
@@ -58,7 +60,9 @@ const role_roleName = {
 };
 role_roleName.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: role_roleName};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_roleName;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -85,7 +89,9 @@ const role_description = {
 };
 role_description.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: role_description};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_description;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -105,7 +111,9 @@ const role_createTime = {
 };
 role_createTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: role_createTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_createTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -125,7 +133,9 @@ const role_updateTime = {
 };
 role_updateTime.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: role_updateTime};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_updateTime;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -144,7 +154,9 @@ const role_roleType = {
 };
 role_roleType.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: role_roleType};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || role_roleType;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 

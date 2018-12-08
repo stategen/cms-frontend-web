@@ -76,7 +76,7 @@ export class RoleCommand {
   /** 角色分页列表,多条件 */
   static * getRolePageListByDefaultQuery_effect({payload}, {call, put, select}) {
     const oldRoleArea = yield select((_) => _.role.roleArea);
-    payload ={...oldRoleArea.queryRule, ...payload};
+    payload = {...oldRoleArea.queryRule, ...payload};
     const rolePageList: AntdPageList<Role> = yield call(RoleApis.getRolePageListByDefaultQuery, payload);
     const pagination = rolePageList ? rolePageList.pagination : null;
 
@@ -86,7 +86,7 @@ export class RoleCommand {
         pagination,
         queryRule: payload,
         ...{
-                  doEdit: false,
+          doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
@@ -120,21 +120,21 @@ export class RoleCommand {
   /** 关闭role对话框  更新状态*/
   static hideRoleModal_reducer = (state: RoleState, payload): RoleState => {
     const mergedState: RoleState = {
-            roleArea: {
+      roleArea: {
         ...{
-                doEdit: false,
+          doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
       ...{
-                allModalVisible: false,
+        allModalVisible: false,
       },
       ...payload ? payload.stateExtraProps__ : null,
     };
 
     return mergeObjects(
       state,
-        mergedState,
+      mergedState,
       payload,
     );
   };
@@ -149,7 +149,7 @@ export class RoleCommand {
       roleArea: {
         list: roles,
         ...{
-                  doEdit: false,
+          doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
@@ -163,7 +163,6 @@ export class RoleCommand {
   static insert_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
-        mergedState,
       payload,
     );
   };
@@ -172,9 +171,9 @@ export class RoleCommand {
   /** 打开role对话框  更新状态*/
   static showRoleModal_reducer = (state: RoleState, payload): RoleState => {
     const mergedState: RoleState = {
-            roleArea: {
+      roleArea: {
         ...{
-                doEdit: true,
+          doEdit: true,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
@@ -182,7 +181,7 @@ export class RoleCommand {
 
     return mergeObjects(
       state,
-        mergedState,
+      mergedState,
       payload,
     );
   };
@@ -197,7 +196,7 @@ export class RoleCommand {
       roleArea: {
         list: roles,
         ...{
-                  doEdit: false,
+          doEdit: false,
         },
         ...payload ? payload.areaExtraProps__ : null,
       },
@@ -211,7 +210,6 @@ export class RoleCommand {
   static update_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
-        mergedState,
       payload,
     );
   };

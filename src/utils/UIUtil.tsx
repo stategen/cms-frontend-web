@@ -9,8 +9,8 @@ import {InputProps} from "antd/lib/input";
 import {DatePickerProps} from "antd/lib/date-picker/interface";
 import {SelectProps} from "antd/lib/select";
 import {LinkProps} from "react-router-dom";
-import {FormItemEditorProps,  KeyValue} from "@utils/DvaUtil";
-import FormItem,{FormItemProps} from "antd/es/form/FormItem";
+import {FormItemEditorProps, KeyValue} from "@utils/DvaUtil";
+import FormItem, {FormItemProps} from "antd/es/form/FormItem";
 import {WrappedFormUtils} from "antd/es/form/Form";
 import {TextAreaProps} from 'antd/es/input/TextArea';
 import {TimePickerProps} from 'antd/es/time-picker';
@@ -21,7 +21,7 @@ const {TextArea} = Input;
 namespace UIUtil {
   export type InputEditorProps = Partial<InputProps> & FormItemEditorProps
 
-  export const BuildInputEditor = (props?: InputEditorProps) => {
+  export function BuildInputEditor(props?: InputEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
       <Input
@@ -34,14 +34,14 @@ namespace UIUtil {
 
   export type PasswordEditorProps = InputEditorProps;
 
-  export const BuildPasswordEditor = (props?: PasswordEditorProps) => {
+  export function BuildPasswordEditor(props?: PasswordEditorProps) {
     props['type'] = 'password';
     return BuildInputEditor(props);
   }
 
   export type HiddenEditorProps = InputEditorProps;
 
-  export const BuildHiddenEditor = (props?: HiddenEditorProps) => {
+  export function BuildHiddenEditor(props?: HiddenEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
       <Input
@@ -55,7 +55,7 @@ namespace UIUtil {
 
   export type TextareaEditorProps = Partial<TextAreaProps> & FormItemEditorProps;
 
-  export const BuildTextareaEditor = (props?: TextareaEditorProps) => {
+  export function BuildTextareaEditor(props?: TextareaEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
       <TextArea
@@ -70,7 +70,7 @@ namespace UIUtil {
   export type TimeStampEditorProps = Partial<DatePickerProps> & FormItemEditorProps;
 
 
-  export const BuildTimeStampEditor = (props?: TimeStampEditorProps) => {
+  export function BuildTimeStampEditor(props?: TimeStampEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
       <DatePicker
@@ -83,9 +83,9 @@ namespace UIUtil {
     )
   }
 
-  export type DatePickerEditorProps = Partial<DatePickerProps> &  FormItemEditorProps;
+  export type DatePickerEditorProps = Partial<DatePickerProps> & FormItemEditorProps;
 
-  export const BuildDatePickerEditor = (props?: DatePickerEditorProps) => {
+  export function BuildDatePickerEditor(props?: DatePickerEditorProps) {
     return (
       <BuildTimeStampEditor
         {...props}
@@ -96,7 +96,7 @@ namespace UIUtil {
 
   export type TimePickerEditorProps = Partial<TimePickerProps> & FormItemEditorProps
 
-  export const BuildTimePickerEditor = (props?: TimePickerEditorProps) => {
+  export function BuildTimePickerEditor(props?: TimePickerEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
       <TimePicker
@@ -107,8 +107,8 @@ namespace UIUtil {
     )
   }
 
-  export const makeSelectOptions = (options: Options = {}) => {
-    const result = Object.values(options).map((option, key) => {
+  export function makeSelectOptions(options: Options = {}) {
+    const result = Object.values(options).map((option) => {
       return (
         <Select.Option value={option.value} key={`${option.value}`}>{option.title || option.value}
         </Select.Option>
@@ -119,11 +119,12 @@ namespace UIUtil {
 
   export type EnumEditorProps = Partial<SelectProps> & FormItemEditorProps;
 
-  export const BuildEnumEditor = (props?: EnumEditorProps) => {
+  export function BuildEnumEditor(props?: EnumEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     const muti = formItemConfig.isArray ? {mode: "multiple"} : null;
     return (
       <Select
+        style={{ width: 120 }}
         {...muti}
         {...customs}
       >
@@ -134,33 +135,33 @@ namespace UIUtil {
 
   export type ImageEditorProps = FormItemEditorProps;
 
-  export const BuildImageEditor = (props: ImageEditorProps) => {
+  export function BuildImageEditor(props: ImageEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (<Input {...customs}/>)
   }
 
-
-  export function CreateFormItem(props: FormItemProps & FormItemConfig & FormItemEditorProps) {
-    const {formItemConfig, Editor, isArray, isId, isEnum, isImage, ...customs} = props;
-    return (
-      <FormItem
-        {...customs}
-      >
-      </FormItem>
-    )
+  export interface FormItemConfigFixed extends Partial<FormItemConfig>{
+    Editor:(props?)=>any;
   }
 
-  export function buildFormItems(formItemConfigs: FormItemConfig[], form: WrappedFormUtils, formItemProps: FormItemProps) {
+  export function getFormItemProps(formItemConfig:FormItemConfig,form: WrappedFormUtils,formItemProps?: FormItemProps){
+    const result= {
+      ...formItemProps,
+      key: formItemConfig.name,
+      label: formItemConfig.label,
+      children: form.getFieldDecorator(formItemConfig.name, formItemConfig.config)((formItemConfig as FormItemConfigFixed).Editor({formItemConfig}))
+    }
+    return result;
+  }
+
+  export function buildFormItems(formItemConfigs: FormItemConfig[], form: WrappedFormUtils, formItemProps?: FormItemProps) {
     const result = formItemConfigs.map((formItemConfig: FormItemConfig) => {
       form = form || formItemConfig.form;
       return (
-        <CreateFormItem
-          {...formItemProps}
-          key={formItemConfig.name}
-          label={formItemConfig.label}
+        <FormItem
+          {...getFormItemProps(formItemConfig,form,formItemProps)}
         >
-          {form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))}
-        </CreateFormItem>
+        </FormItem>
       )
     });
     return result;
@@ -168,25 +169,20 @@ namespace UIUtil {
 
   export type CustomBuildFormItem<T> = (formItemPropsMap: KeyValue<T, FormItemProps>) => any;
 
-  export function buildFormItemsCreatorMap<T>(FormItemConfigMap: KeyValue<T, FormItemConfig>, form: WrappedFormUtils, formItemProps: FormItemProps): KeyValue<T, FormItemProps> {
+  export function buildFormItemsCreatorMap<T>(FormItemConfigMap: KeyValue<T, FormItemConfig>, form: WrappedFormUtils, formItemProps?: FormItemProps): KeyValue<T, FormItemProps> {
     const result = {};
     Object.keys(FormItemConfigMap).forEach((fieldName: string) => {
       const formItemConfig: FormItemConfig = FormItemConfigMap[fieldName];
-      result[fieldName] = {
-        ...formItemProps,
-        key: formItemConfig.name,
-        label: formItemConfig.label,
-        children: form.getFieldDecorator(formItemConfig.name, formItemConfig.config)(formItemConfig["Editor"](formItemConfig))
-      }
+      result[fieldName] = getFormItemProps(formItemConfig,form,formItemProps)
     });
     return result;
   }
 
-  export interface LinkFixedProps extends Partial<LinkProps> {
+  export interface LinkPropsFixed extends Partial<LinkProps> {
     to?: string;
   }
 
-  export const buildLink = (menu: Menu = {}, props?: LinkFixedProps) => {
+  export function buildLink(menu: Menu = {}, props?: LinkPropsFixed) {
     let route = (menu.route || '#');
     // props =props || {to:route};
     const width = {style: {width: 10}};

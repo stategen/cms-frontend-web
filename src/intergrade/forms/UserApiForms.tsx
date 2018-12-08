@@ -27,7 +27,9 @@ const getUserPageListByDefaultQuery_userIds = {
 };
 getUserPageListByDefaultQuery_userIds.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_userIds};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_userIds;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -44,7 +46,9 @@ const getUserPageListByDefaultQuery_usernameLike = {
 };
 getUserPageListByDefaultQuery_usernameLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_usernameLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_usernameLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -61,7 +65,9 @@ const getUserPageListByDefaultQuery_passwordLike = {
 };
 getUserPageListByDefaultQuery_passwordLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_passwordLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_passwordLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -81,7 +87,9 @@ const getUserPageListByDefaultQuery_roleTypes = {
 };
 getUserPageListByDefaultQuery_roleTypes.Editor =
   (props?: UIUtil.EnumEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_roleTypes};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_roleTypes;
+    props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
 
@@ -98,7 +106,9 @@ const getUserPageListByDefaultQuery_nameLike = {
 };
 getUserPageListByDefaultQuery_nameLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_nameLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_nameLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -115,7 +125,9 @@ const getUserPageListByDefaultQuery_nickNameLike = {
 };
 getUserPageListByDefaultQuery_nickNameLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_nickNameLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_nickNameLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -132,7 +144,9 @@ const getUserPageListByDefaultQuery_ageMin = {
 };
 getUserPageListByDefaultQuery_ageMin.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_ageMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_ageMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -149,7 +163,9 @@ const getUserPageListByDefaultQuery_ageMax = {
 };
 getUserPageListByDefaultQuery_ageMax.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_ageMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_ageMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -166,7 +182,9 @@ const getUserPageListByDefaultQuery_addressLike = {
 };
 getUserPageListByDefaultQuery_addressLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_addressLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_addressLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -183,7 +201,9 @@ const getUserPageListByDefaultQuery_avatarLike = {
 };
 getUserPageListByDefaultQuery_avatarLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_avatarLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_avatarLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -200,7 +220,9 @@ const getUserPageListByDefaultQuery_emailLike = {
 };
 getUserPageListByDefaultQuery_emailLike.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_emailLike};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_emailLike;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -219,7 +241,9 @@ const getUserPageListByDefaultQuery_createTimeMin = {
 };
 getUserPageListByDefaultQuery_createTimeMin.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_createTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -238,7 +262,9 @@ const getUserPageListByDefaultQuery_createTimeMax = {
 };
 getUserPageListByDefaultQuery_createTimeMax.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_createTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_createTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -257,7 +283,9 @@ const getUserPageListByDefaultQuery_updateTimeMin = {
 };
 getUserPageListByDefaultQuery_updateTimeMin.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMin};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_updateTimeMin;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 
@@ -276,7 +304,9 @@ const getUserPageListByDefaultQuery_updateTimeMax = {
 };
 getUserPageListByDefaultQuery_updateTimeMax.Editor =
   (props?: UIUtil.TimeStampEditorProps) => {
-    props = {...props, formItemConfig: getUserPageListByDefaultQuery_updateTimeMax};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || getUserPageListByDefaultQuery_updateTimeMax;
+    props = {...props, formItemConfig};
     return UIUtil.BuildTimeStampEditor(props);
   }
 

@@ -33,7 +33,9 @@ const login_username = {
 };
 login_username.Editor =
   (props?: UIUtil.InputEditorProps) => {
-    props = {...props, formItemConfig: login_username};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || login_username;
+    props = {...props, formItemConfig};
     return UIUtil.BuildInputEditor(props);
   }
 
@@ -58,7 +60,9 @@ const login_password = {
 };
 login_password.Editor =
   (props?: UIUtil.PasswordEditorProps) => {
-    props = {...props, formItemConfig: login_password};
+    let formItemConfig = props ? props.formItemConfig : null;
+    formItemConfig = formItemConfig || login_password;
+    props = {...props, formItemConfig};
     return UIUtil.BuildPasswordEditor(props);
   }
 
