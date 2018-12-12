@@ -6,13 +6,14 @@
  */
 import {appInitModel, AppModel, AppState} from "../interfaces/AppFaces";
 import AppApis from "../apis/AppApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState} from "@utils/DvaUtil";
+import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import Menu from "../beans/Menu";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
 
-export class AppCommand {
+
+export class AppCommand extends BaseCommand {
   static * setup_effect({payload}, {call, put, select}) {
     let newPayload = {};
     const {getAllMenusParams = null, getCookieUserParams = null, ...lastParams} = payload || {};
@@ -25,6 +26,10 @@ export class AppCommand {
     newPayload = AppCommand.getCookieUser_success_reducer(<AppState>newPayload, getCookieUserPayload);
     return newPayload;
   };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
 
   /** 获所所有菜单 */
   static * getAllMenus_effect({payload}, {call, put, select}) {
@@ -40,6 +45,9 @@ export class AppCommand {
     return newPayload;
   };
 
+  static getAllMenus_success_type(payload) {
+    return {type: "getAllMenus_success", payload: payload};
+  }
 
   /** 获所所有菜单  成功后 更新状态*/
   static getAllMenus_success_reducer = (state: AppState, payload): AppState => {
@@ -63,6 +71,9 @@ export class AppCommand {
     return newPayload;
   };
 
+  static getCookieUser_success_type(payload) {
+    return {type: "getCookieUser_success", payload: payload};
+  }
 
   /**   成功后 更新状态*/
   static getCookieUser_success_reducer = (state: AppState, payload): AppState => {
@@ -88,6 +99,9 @@ export class AppCommand {
     return newPayload;
   };
 
+  static logout_success_type(payload) {
+    return {type: "logout_success", payload: payload};
+  }
 
   /**   成功后 更新状态*/
   static logout_success_reducer = (state: AppState, payload): AppState => {
@@ -104,13 +118,14 @@ export const appDefaultModel: AppModel = <AppModel>(mergeObjects(abstractModel, 
 appDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
-    const match = RouteUtil.getMatch(appDefaultModel.pathname, pathname);
+    const keys = [];
+    const match = RouteUtil.getMatch(appDefaultModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
-    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(listener)} ;
-    const getAllMenusParams = appDefaultModel.getAllMenusInitParamsFn ? appDefaultModel.getAllMenusInitParamsFn({pathname, match}) : null;
-    const getCookieUserParams = appDefaultModel.getCookieUserInitParamsFn ? appDefaultModel.getCookieUserInitParamsFn({pathname, match}) : null;
+    let payload = {...RouteUtil.getQuery(listener)} ;
+    const getAllMenusParams = appDefaultModel.getAllMenusInitParamsFn ? appDefaultModel.getAllMenusInitParamsFn({pathname, match, keys}) : null;
+    const getCookieUserParams = appDefaultModel.getCookieUserInitParamsFn ? appDefaultModel.getCookieUserInitParamsFn({pathname, match, keys}) : null;
     payload = {...payload, getAllMenusParams, getCookieUserParams}
     dispatch({
       type: 'app/setup',
@@ -126,21 +141,13 @@ appDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
     return;
   }
 
-  if (appDefaultModel.getInitState){
-    const initState =appDefaultModel.getInitState();
-    yield put({
-        type: 'updateState',
-        payload: initState,
-      }
-    )
+  if (appDefaultModel.getInitState) {
+    const initState = appDefaultModel.getInitState();
+    yield put(AppCommand.updateState_type(initState));
   }
 
   const newPayload = yield AppCommand.setup_effect({payload}, {call, put, select});
-  yield put({
-      type: 'setup_success',
-      payload: newPayload,
-    }
-  )
+  yield put(AppCommand.setup_success_type(newPayload));
 };
 
 appDefaultModel.reducers.setup_success = (state: AppState, {payload}): AppState => {
@@ -153,11 +160,7 @@ appDefaultModel.reducers.setup_success = (state: AppState, {payload}): AppState 
 /** 获所所有菜单 */
 appDefaultModel.effects.getAllMenus = function* ({payload}, {call, put, select}) {
   const newPayload = yield AppCommand.getAllMenus_effect({payload}, {call, put, select});
-  yield put({
-      type: 'getAllMenus_success',
-      payload: newPayload,
-    }
-  )
+  yield put(AppCommand.getAllMenus_success_type(newPayload));
 };
 
 appDefaultModel.reducers.getAllMenus_success = (state: AppState, {payload}): AppState => {
@@ -167,11 +170,7 @@ appDefaultModel.reducers.getAllMenus_success = (state: AppState, {payload}): App
 /**  */
 appDefaultModel.effects.getCookieUser = function* ({payload}, {call, put, select}) {
   const newPayload = yield AppCommand.getCookieUser_effect({payload}, {call, put, select});
-  yield put({
-      type: 'getCookieUser_success',
-      payload: newPayload,
-    }
-  )
+  yield put(AppCommand.getCookieUser_success_type(newPayload));
 };
 
 appDefaultModel.reducers.getCookieUser_success = (state: AppState, {payload}): AppState => {
@@ -181,11 +180,7 @@ appDefaultModel.reducers.getCookieUser_success = (state: AppState, {payload}): A
 /**  */
 appDefaultModel.effects.logout = function* ({payload}, {call, put, select}) {
   const newPayload = yield AppCommand.logout_effect({payload}, {call, put, select});
-  yield put({
-      type: 'logout_success',
-      payload: newPayload,
-    }
-  )
+  yield put(AppCommand.logout_success_type(newPayload));
 };
 
 appDefaultModel.reducers.logout_success = (state: AppState, {payload}): AppState => {

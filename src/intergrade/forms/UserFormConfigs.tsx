@@ -8,7 +8,6 @@ import User from "../beans/User"
 import UIUtil from "@utils/UIUtil";
 import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
-import {roleTypeOptions} from '../enums/RoleType';
 
 /** 用户ID */
 const user_userId = {
@@ -68,22 +67,26 @@ user_username.Editor =
 /** 用户角色 ADMIN,DEFAULT,DEVELOPER */
 const user_roleType = {
   name: 'roleType',
-  isEnum: true,
-  options: roleTypeOptions,
   label: "用户角色",
-  Editor: UIUtil.BuildEnumEditor,
+  Editor: UIUtil.BuildInputEditor,
   data: null,
   form: null,
   config: {
     initialValue: null,
+    rules: [
+      {
+        max: 32,
+        message: "{javax.validation.constraints.Max.message}",
+      },
+    ],
   }
 };
 user_roleType.Editor =
-  (props?: UIUtil.EnumEditorProps) => {
+  (props?: UIUtil.InputEditorProps) => {
     let formItemConfig = props ? props.formItemConfig : null;
     formItemConfig = formItemConfig || user_roleType;
     props = {...props, formItemConfig};
-    return UIUtil.BuildEnumEditor(props);
+    return UIUtil.BuildInputEditor(props);
   }
 
 /** name */

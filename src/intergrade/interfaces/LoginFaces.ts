@@ -14,7 +14,7 @@ import queryString from 'query-string';
 export interface LoginInitState extends BaseState {
 }
 
-export type LoginState = LoginInitState & typeof loginCustomState;
+export type LoginState = LoginInitState & Partial<typeof loginCustomState>;
 
 export interface LoginInitSubscriptions extends Subscriptions{
 }

@@ -1,5 +1,5 @@
 import pathToRegexp from "path-to-regexp";
-import {RouteOrders} from "@utils/DvaUtil";
+import {RouteOrders, SetupProps} from "@utils/DvaUtil";
 
 export default class RouteUtil {
 
@@ -8,20 +8,35 @@ export default class RouteUtil {
     return pathname;
   }
 
-  static getMatch(route, pathname: string):RegExpExecArray {
-    let match = pathToRegexp(route || '').exec(pathname);
+  static getMatch(route, pathname: string, keys?: []): RegExpExecArray {
+    keys = keys || [];
+    const regEx = pathToRegexp(route || '', keys, {end: false});
+    const match = regEx.exec(pathname);
     return match;
   }
 
-  static compileRoute(route:string,params:{}){
+  static getParams({pathname, match, keys}: SetupProps) {
+    if (match) {
+      const names = keys.map(key => key.name)
+      const parmas = names.reduce((memo, name, idx) => {
+        memo[name] = match[idx + 1]
+        return memo
+      }, {})
+      console.log(parmas)
+      return parmas;
+    }
+    return null;
+  };
+
+  static compileRoute(route: string, params: {}) {
     let toPathFn = pathToRegexp.compile(route || "");
     return toPathFn(params);
   }
 
-  static isRouteOpend(routeOrders:RouteOrders, pathname: string): boolean {
+  static isRouteOpend(routeOrders: RouteOrders, pathname: string): boolean {
     if (pathname) {
       pathname = this.getRealPathname(pathname);
-      if (pathname.indexOf(":") >0){
+      if (pathname.indexOf(":") > 0) {
         return true;
       }
       const routes = Object.keys(routeOrders);
@@ -40,13 +55,12 @@ export default class RouteUtil {
     //1留给dashborad
     let maxOpendOrder = 1;
     const values = Object.values(routeOrders);
-    const maxOrder=Math.max(maxOpendOrder, ...values) + 1;
+    const maxOrder = Math.max(maxOpendOrder, ...values) + 1;
     return maxOrder;
   }
 
 
-
-  static checkNotExistAndGetNextOrder(routeOrders:RouteOrders, route: string): number {
+  static checkNotExistAndGetNextOrder(routeOrders: RouteOrders, route: string): number {
     if (route) {
       if (!routeOrders[route]) {
         const nextMaxOpendOrder = this.getNextMaxOpendOrder(routeOrders);
@@ -56,7 +70,7 @@ export default class RouteUtil {
     return null;
   }
 
-  static checkAndGetPreOrder(opendOrders :RouteOrders, inactiveRoute: string): string {
+  static checkAndGetPreOrder(opendOrders: RouteOrders, inactiveRoute: string): string {
     let maxOpendOrder = 0;
     let route = null;
     Object.keys(opendOrders).forEach((tempRoute) => {
@@ -72,9 +86,9 @@ export default class RouteUtil {
     return route;
   }
 
-  static getQuery(listener){
-    const query =listener.query;
-    if (query && query instanceof  Object){
+  static getQuery(listener) {
+    const query = listener.query;
+    if (query && query instanceof Object) {
       for (let i in query) {
         return query;
       }

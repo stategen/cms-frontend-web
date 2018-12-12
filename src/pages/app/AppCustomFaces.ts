@@ -27,10 +27,10 @@ export const appCustomState = {
   },
   homeMenu: <Menu>{},
   menuPopoverVisible: false,
-  siderFold: JSON.parse(window.localStorage.getItem(`${prefix}siderFold`)) === 'true',
-  darkTheme: JSON.parse(window.localStorage.getItem(`${prefix}darkTheme`)) === 'true',
+  siderFold: JSON.parse(window.localStorage.getItem(prefix+'siderFold')) === 'true',
+  darkTheme: JSON.parse(window.localStorage.getItem(prefix+'darkTheme')) === 'true',
   isNavbar: document.body.clientWidth < 769,
-  navOpenKeys: JSON.parse(window.localStorage.getItem(`${prefix}navOpenKeys`)) || [],
+  navOpenKeys: JSON.parse(window.localStorage.getItem(prefix+'navOpenKeys')) || [],
   locationPathname: '',
   locationQuery: {from:null},
 }

@@ -21,7 +21,7 @@ export const createModelPage = <T extends Bean>
     if (formItemConfigs instanceof Array) {
       formItems = UIUtil.buildFormItems(formItemConfigs, props.form, commonFormItemLayout);
     } else {
-      const createrMap = UIUtil.buildFormItemsCreatorMap(formItemConfigs, props.form, {width:"100%"});
+      const createrMap = UIUtil.buildFormItemsCreatorMap(formItemConfigs, props.form, commonFormItemLayout);
       formItems = customBuildFormItem(createrMap);
     }
 
@@ -30,7 +30,7 @@ export const createModelPage = <T extends Bean>
       visible: isEditor ? areaState.doEdit : areaState.doQuery,
       title,
       maskClosable: false,
-      /*confirmLoading: loading.effects[`${roleArea.modalType}`],*/
+      /*confirmLoading: loading.effects[roleArea.modalType.toString()],*/
       /*wrapClassName: 'vertical-center-modal',*/
       onOk: (e) => {
         e.preventDefault();

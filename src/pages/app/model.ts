@@ -169,7 +169,7 @@ appModel.effects.changeNavbar = function* (action, {put, select}) {
 };
 
 appModel.reducers.switchSider = (state) => {
-  window.localStorage.setItem(`${prefix}siderFold`, JSON.stringify(!state.siderFold))
+  window.localStorage.setItem(prefix+'siderFold', JSON.stringify(!state.siderFold))
   return {
     ...state,
     siderFold: !state.siderFold,
@@ -177,7 +177,7 @@ appModel.reducers.switchSider = (state) => {
 };
 
 appModel.reducers.switchTheme = (state) => {
-  window.localStorage.setItem(`${prefix}darkTheme`, JSON.stringify(!state.darkTheme))
+  window.localStorage.setItem(prefix+'darkTheme', JSON.stringify(!state.darkTheme))
   return {
     ...state,
     darkTheme: !state.darkTheme,

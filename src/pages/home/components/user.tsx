@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Button } from 'antd'
 import CountUp from 'react-countup'
 import { color } from '@utils/index'
@@ -13,9 +12,17 @@ const countUpProps = {
   separator: ',',
 }
 
+interface  UserPropTypes  {
+  avatar: string,
+  name: string,
+  email: string,
+  sales: number,
+  sold: number,
+}
+
 function User ({
   avatar, name, email, sales, sold,
-}) {
+}:UserPropTypes) {
   return (<div className={styles.user}>
     <div className={styles.header}>
       <div className={styles.headerinner}>
@@ -47,12 +54,6 @@ function User ({
   </div>)
 }
 
-User.propTypes = {
-  avatar: PropTypes.string,
-  name: PropTypes.string,
-  email: PropTypes.string,
-  sales: PropTypes.number,
-  sold: PropTypes.number,
-}
+
 
 export default User

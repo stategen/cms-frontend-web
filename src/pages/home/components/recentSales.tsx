@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Table, Tag } from 'antd'
 import { color } from '@utils/index'
 import styles from './recentSales.less'
+import ArrayDataProps from "@pages/home/components/ArrayDataProps";
 
 const status = {
   1: {
@@ -23,7 +23,7 @@ const status = {
   },
 }
 
-function RecentSales ({ data }) {
+function RecentSales ({ data }:ArrayDataProps) {
   const columns = [
     {
       title: 'NAME',
@@ -49,8 +49,5 @@ function RecentSales ({ data }) {
   )
 }
 
-RecentSales.propTypes = {
-  data: PropTypes.array,
-}
 
 export default RecentSales

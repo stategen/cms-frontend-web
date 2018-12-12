@@ -24,43 +24,71 @@ enum ResponseStatus {
 
 }
 
-export const responseStatusOptions: Options = {
+export const responseStatusOptions = {
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** OK */
   OK: {
     value: ResponseStatus.OK,
     title: 'OK',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** NO_TOKEN */
   NO_TOKEN: {
     value: ResponseStatus.NO_TOKEN,
     title: 'NO_TOKEN',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** ERROR */
   ERROR: {
     value: ResponseStatus.ERROR,
     title: 'ERROR',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** MISSED */
   MISSED: {
     value: ResponseStatus.MISSED,
     title: 'MISSED',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** PAY_NO_TOKEN */
   PAY_NO_TOKEN: {
     value: ResponseStatus.PAY_NO_TOKEN,
     title: 'PAY_NO_TOKEN',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** NOT_LOGIN */
   NOT_LOGIN: {
     value: ResponseStatus.NOT_LOGIN,
     title: 'NOT_LOGIN',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** NO_USER_ID */
   NO_USER_ID: {
     value: ResponseStatus.NO_USER_ID,

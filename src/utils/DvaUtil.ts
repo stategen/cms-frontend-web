@@ -6,7 +6,7 @@ import {OptionProps} from "antd/lib/select";
 import {ReactElement} from "react";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import {History} from "history";
-import {FormItemProps} from "antd/es/form/FormItem";
+import {Key} from "path-to-regexp";
 
 export const TIME_FORMAT = "HH:mm:ss";
 export const DATE_FORMAT = "YYYY-MM-DD";
@@ -40,8 +40,11 @@ export interface RouteOrders {
   [route: string]: number
 }
 
-export interface Options {
-  [enumName: string]: OptionProps;
+export interface Options extends KeyValue<Options, OptionProps> {
+  _None?: {
+    value?: any,
+    title?: string,
+  },
 }
 
 export type Reducer<S> = (state: S, action: Action) => S;
@@ -130,12 +133,13 @@ export interface Subscription {
 }
 
 export interface SetupProps {
-  pathname: string,
-  match: RegExpExecArray;
+  pathname?: string,
+  match?: RegExpExecArray;
+  keys?: Key[]
 }
 
 export interface SetupParamsFun {
-  ({pathname, match}: SetupProps): any;
+  (setupProps: SetupProps): any;
 }
 
 export interface Subscriptions {
@@ -206,6 +210,7 @@ export interface DvaPageElement {
 
 export interface LoadingProps {
   effects?: any;
+  models?: any;
 }
 
 export interface ConnectionPros {
@@ -231,15 +236,20 @@ export interface FormItemConfig {
   label?: string,
   isArray?: boolean,
   format?: string,
-  options?: Options,
+  // options?: Options,
   data?: any,
   temporalType?: string,
   config?: GetFieldDecoratorOptions,
-  Editor?: (props) => any,
+  /*Editor?: (props) => any,*/
   form?: FormPropsUtils,
   type?: string,
 }
 
+export class BaseCommand {
+  static updateState_type(payload) {
+    return {type: "updateState", payload};
+  }
+}
 
 export interface FormItemConfigMap extends KeyValue<FormItemConfigMap, FormItemConfig> {
 }

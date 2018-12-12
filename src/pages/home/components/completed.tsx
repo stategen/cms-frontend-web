@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { color } from '@utils/index'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import styles from './completed.less'
+import ArrayDataProps from "@pages/home/components/ArrayDataProps";
 
-function Completed ({ data }) {
+
+function Completed ({ data }:ArrayDataProps) {
   return (
     <div className={styles.sales}>
       <div className={styles.title}>TEAM TOTAL COMPLETED</div>
@@ -37,8 +38,5 @@ function Completed ({ data }) {
   )
 }
 
-Completed.propTypes = {
-  data: PropTypes.array,
-}
 
 export default Completed

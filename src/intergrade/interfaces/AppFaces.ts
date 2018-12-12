@@ -18,7 +18,7 @@ export interface AppInitState extends BaseState {
   userArea?: AreaState<User>;
 }
 
-export type AppState = AppInitState & typeof appCustomState;
+export type AppState = AppInitState & Partial<typeof appCustomState>;
 
 export interface AppInitSubscriptions extends Subscriptions{
   setup?: Subscription;

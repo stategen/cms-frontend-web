@@ -18,7 +18,7 @@ export interface RoleInitState extends BaseState {
   roleArea?: AreaState<Role>;
 }
 
-export type RoleState = RoleInitState & typeof roleCustomState;
+export type RoleState = RoleInitState & Partial<typeof roleCustomState>;
 
 export interface RoleInitSubscriptions extends Subscriptions{
   setup?: Subscription;
@@ -33,8 +33,8 @@ export interface RoleInitEffects extends Effects {
   /** 批量删除角色 */
   deleteByRoleIds?: Effect,
   /** 角色分页列表,多条件 */
-  getRolePageListByDefaultQuery?: Effect,
-  getRolePageListByDefaultQuery_next?: Effect,
+  getRolePageList?: Effect,
+  getRolePageList_next?: Effect,
   /** 创建角色 */
   insert?: Effect,
   /** 更新角色 */
@@ -50,13 +50,9 @@ interface RoleInitReducers<S extends RoleState> extends Reducers<S> {
   /** 批量删除角色  成功后 更新状态*/
   deleteByRoleIds_success?: Reducer<RoleState>,
   /** 角色分页列表,多条件  成功后 更新状态*/
-  getRolePageListByDefaultQuery_success?: Reducer<RoleState>,
-  /** 关闭role对话框  更新状态*/
-  hideRoleModal?: Reducer<RoleState>,
+  getRolePageList_success?: Reducer<RoleState>,
   /** 创建角色  成功后 更新状态*/
   insert_success?: Reducer<RoleState>,
-  /** 打开role对话框  更新状态*/
-  showRoleModal?: Reducer<RoleState>,
   /** 更新角色  成功后 更新状态*/
   update_success?: Reducer<RoleState>,
 }
@@ -72,7 +68,7 @@ export interface RoleModel extends IModel<RoleState, RoleReducers, RoleEffects> 
   reducers?: RoleReducers;
   effects?: RoleEffects;
   subscriptions?: RoleSubscriptions;
-  getRolePageListByDefaultQueryInitParamsFn?: SetupParamsFun;
+  getRolePageListInitParamsFn?: SetupParamsFun;
   getInitState?: () => RoleState;
 }
 
@@ -155,9 +151,9 @@ export class RoleDispatch {
 
 
   /** 角色分页列表,多条件 */
-  static getRolePageListByDefaultQuery_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static getRolePageList_effect(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
-      type: roleInitModel.namespace + '/getRolePageListByDefaultQuery',
+      type: roleInitModel.namespace + '/getRolePageList',
       payload: {
         ...params,
         areaExtraProps__,
@@ -166,23 +162,13 @@ export class RoleDispatch {
     }
   };
 
-  static getRolePageListByDefaultQuery_next_effect() {
+  static getRolePageList_next_effect() {
     return {
-      type: roleInitModel.namespace + '/getRolePageListByDefaultQuery_next',
+      type: roleInitModel.namespace + '/getRolePageList_next',
       payload: {
       }
     }
   };
-
-
-  static hideRoleModal_reducer(roleState: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/hideRoleModal',
-      payload: {
-        ...roleState,
-      }
-    }
-  }
 
 
   /** 创建角色 */
@@ -196,16 +182,6 @@ export class RoleDispatch {
       }
     }
   };
-
-
-  static showRoleModal_reducer(roleState: RoleState) {
-    return {
-      type: roleInitModel.namespace + '/showRoleModal',
-      payload: {
-        ...roleState,
-      }
-    }
-  }
 
 
   /** 更新角色 */

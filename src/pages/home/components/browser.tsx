@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Table, Tag } from 'antd'
 import { color } from '@utils/index'
 import styles from './browser.less'
+import ArrayDataProps from "@pages/home/components/ArrayDataProps";
 
 const status = {
   1: {
@@ -19,7 +19,7 @@ const status = {
   },
 }
 
-function Browser ({ data }) {
+function Browser ({ data }:ArrayDataProps) {
   const columns = [
     {
       title: 'name',
@@ -35,8 +35,5 @@ function Browser ({ data }) {
   return <Table pagination={false} showHeader={false} columns={columns} rowKey={(record, key) => key} dataSource={data} />
 }
 
-Browser.propTypes = {
-  data: PropTypes.array,
-}
 
 export default Browser

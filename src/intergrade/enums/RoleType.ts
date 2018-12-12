@@ -16,19 +16,31 @@ enum RoleType {
 
 }
 
-export const roleTypeOptions: Options = {
+export const roleTypeOptions = {
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** 管理员 */
   ADMIN: {
     value: RoleType.ADMIN,
     title: '管理员',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** 默认角色 */
   DEFAULT: {
     value: RoleType.DEFAULT,
     title: '默认角色',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** 开发人员 */
   DEVELOPER: {
     value: RoleType.DEVELOPER,

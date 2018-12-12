@@ -1,11 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { color } from '@utils/index'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import styles from './sales.less'
+import ArrayDataProps from "@pages/home/components/ArrayDataProps";
 
-function Sales ({ data }) {
+function Sales ({ data }:ArrayDataProps) {
   return (
     <div className={styles.sales}>
       <div className={styles.title}>Yearly Sales</div>
@@ -38,8 +38,5 @@ function Sales ({ data }) {
   )
 }
 
-Sales.propTypes = {
-  data: PropTypes.array,
-}
 
 export default Sales

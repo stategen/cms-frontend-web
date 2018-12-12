@@ -8,7 +8,6 @@ import {TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT} from "@utils/DvaUtil";
 import User from "../beans/User"
 import {ColumnProps} from "antd/lib/table";
 import moment from 'moment';
-import {roleTypeOptions} from '../enums/RoleType';
 
 export interface UserColumns<U> {
   /** 用户ID  */
@@ -75,10 +74,6 @@ export const userDefaultColumns: UserColumns<User> = {
     title: '用户角色',
     dataIndex: 'roleType',
     key: 'roleType',
-    render: (text: any, record: User, index: number) => {
-      const optionProp = roleTypeOptions[text];
-      return optionProp != null ? optionProp.title : null;
-    },
   },
 
   /** name  */

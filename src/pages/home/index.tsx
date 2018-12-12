@@ -5,6 +5,10 @@ import { color } from '@utils/index'
 import { NumberCard, Quote, Sales, Weather, RecentSales, Comments, Completed, Browser, Cpu, User } from './components'
 import styles from './index.less'
 import Page from "@components/Page/Page";
+import {ConnectionPros} from "@utils/DvaUtil";
+import StatesAlias from "@i/configs/tradeCms-statesAlias";
+import {AppProps} from "@i/interfaces/AppFaces";
+import {HomeProps} from "@i/interfaces/HomeFaces";
 
 const bodyStyle = {
   bodyStyle: {
@@ -12,11 +16,13 @@ const bodyStyle = {
     background: '#fff',
   },
 }
+type HomePageProps = AppProps & HomeProps;
 
-function Dashboard ({ home, loading }) {
+function homePage ({ homeState, loading }:HomePageProps) {
   const {
     weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user,
-  } = home
+  } = homeState;
+
   const numberCards = numbers.map((item, key) => (<Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>))
@@ -103,4 +109,16 @@ function Dashboard ({ home, loading }) {
 
 
 
-export default connect(({ home, loading }) => ({ home, loading }))(Dashboard)
+
+const mapStateToProps = (states: StatesAlias & ConnectionPros): HomePageProps => {
+  const props: HomePageProps = {
+    appState: states.app,
+    homeState: states.home,
+    loading: states.loading,
+  }
+  return props;
+}
+
+const HomePage = connect(mapStateToProps)(homePage);
+
+export default HomePage;

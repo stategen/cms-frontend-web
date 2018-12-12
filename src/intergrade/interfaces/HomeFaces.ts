@@ -14,14 +14,16 @@ export interface HomeInitState extends BaseState {
   anyArea?: AreaState<any>;
 }
 
-export type HomeState = HomeInitState & typeof homeCustomState;
+export type HomeState = HomeInitState & Partial<typeof homeCustomState>;
 
 export interface HomeInitSubscriptions extends Subscriptions{
+  setup?: Subscription;
 }
 
 export type HomeSubscriptions = HomeInitSubscriptions & HomeCustomSubscriptions;
 
 export interface HomeInitEffects extends Effects {
+  setup?: Effect;
   /**  */
   getDashboard?: Effect,
 }
@@ -29,6 +31,7 @@ export interface HomeInitEffects extends Effects {
 export type HomeEffects = HomeInitEffects & HomeCustomEffects;
 
 interface HomeInitReducers<S extends HomeState> extends Reducers<S> {
+  setup_success?: Reducer<HomeState>,
   /**   成功后 更新状态*/
   getDashboard_success?: Reducer<HomeState>,
 }
@@ -44,6 +47,8 @@ export interface HomeModel extends IModel<HomeState, HomeReducers, HomeEffects> 
   reducers?: HomeReducers;
   effects?: HomeEffects;
   subscriptions?: HomeSubscriptions;
+  getDashboardInitParamsFn?: SetupParamsFun;
+  getInitState?: () => HomeState;
 }
 
 export interface HomeProps extends ConnectionPros {
@@ -85,6 +90,17 @@ export class HomeDispatch {
       pushRoute.search = queryString.stringify(search);
     }
     return routerRedux.push(pushRoute);
+  }
+
+  static setup_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: HomeState) {
+    return {
+      type: homeInitModel.namespace + '/setup',
+      payload: {
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
   }
 
   /**  */

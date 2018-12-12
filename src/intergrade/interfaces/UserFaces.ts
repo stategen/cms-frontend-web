@@ -18,7 +18,7 @@ export interface UserInitState extends BaseState {
   userArea?: AreaState<User>;
 }
 
-export type UserState = UserInitState & typeof userCustomState;
+export type UserState = UserInitState & Partial<typeof userCustomState>;
 
 export interface UserInitSubscriptions extends Subscriptions{
   setup?: Subscription;
@@ -35,8 +35,8 @@ export interface UserInitEffects extends Effects {
   /** 批量删除用户 */
   deleteByUserIds?: Effect,
   /** 用户列表 */
-  getUserPageListByDefaultQuery?: Effect,
-  getUserPageListByDefaultQuery_next?: Effect,
+  getUserPageList?: Effect,
+  getUserPageList_next?: Effect,
   /** 修改用户 */
   patchUser?: Effect,
 }
@@ -52,7 +52,7 @@ interface UserInitReducers<S extends UserState> extends Reducers<S> {
   /** 批量删除用户  成功后 更新状态*/
   deleteByUserIds_success?: Reducer<UserState>,
   /** 用户列表  成功后 更新状态*/
-  getUserPageListByDefaultQuery_success?: Reducer<UserState>,
+  getUserPageList_success?: Reducer<UserState>,
   /** 修改用户  成功后 更新状态*/
   patchUser_success?: Reducer<UserState>,
 }
@@ -68,7 +68,7 @@ export interface UserModel extends IModel<UserState, UserReducers, UserEffects> 
   reducers?: UserReducers;
   effects?: UserEffects;
   subscriptions?: UserSubscriptions;
-  getUserPageListByDefaultQueryInitParamsFn?: SetupParamsFun;
+  getUserPageListInitParamsFn?: SetupParamsFun;
   getInitState?: () => UserState;
 }
 
@@ -164,9 +164,9 @@ export class UserDispatch {
 
 
   /** 用户列表 */
-  static getUserPageListByDefaultQuery_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static getUserPageList_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
-      type: userInitModel.namespace + '/getUserPageListByDefaultQuery',
+      type: userInitModel.namespace + '/getUserPageList',
       payload: {
         ...params,
         areaExtraProps__,
@@ -175,9 +175,9 @@ export class UserDispatch {
     }
   };
 
-  static getUserPageListByDefaultQuery_next_effect() {
+  static getUserPageList_next_effect() {
     return {
-      type: userInitModel.namespace + '/getUserPageListByDefaultQuery_next',
+      type: userInitModel.namespace + '/getUserPageList_next',
       payload: {
       }
     }

@@ -8,8 +8,8 @@ import Menu from "../beans/Menu"
 import UIUtil from "@utils/UIUtil";
 import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
+import {menuTypeOptions} from '../enums/MenuType';
 import {visitCheckTypeOptions} from '../enums/VisitCheckType';
-import {visitTypeOptions} from '../enums/VisitType';
 
 /** roleId */
 const menu_roleId = {
@@ -283,12 +283,12 @@ menu_route.Editor =
     return UIUtil.BuildInputEditor(props);
   }
 
-/** visitType */
-const menu_visitType = {
-  name: 'visitType',
+/** menuType */
+const menu_menuType = {
+  name: 'menuType',
   isEnum: true,
-  options: visitTypeOptions,
-  label: "visitType",
+  options: menuTypeOptions,
+  label: "menuType",
   Editor: UIUtil.BuildEnumEditor,
   data: null,
   form: null,
@@ -296,10 +296,10 @@ const menu_visitType = {
     initialValue: null,
   }
 };
-menu_visitType.Editor =
+menu_menuType.Editor =
   (props?: UIUtil.EnumEditorProps) => {
     let formItemConfig = props ? props.formItemConfig : null;
-    formItemConfig = formItemConfig || menu_visitType;
+    formItemConfig = formItemConfig || menu_menuType;
     props = {...props, formItemConfig};
     return UIUtil.BuildEnumEditor(props);
   }
@@ -443,8 +443,8 @@ export interface MenuFormItemConfigMap extends FormItemConfigMap {
   /** 路由路径  */
   Route?: typeof menu_route & Partial<FormItemConfig>,
 
-  /** visitType  */
-  VisitType?: typeof menu_visitType & Partial<FormItemConfig>,
+  /** menuType  */
+  MenuType?: typeof menu_menuType & Partial<FormItemConfig>,
 
   /** checkType  */
   CheckType?: typeof menu_checkType & Partial<FormItemConfig>,
@@ -523,11 +523,11 @@ export const getMenuFormItemConfigMap = (menu: Menu, form?: FormPropsUtils): Men
   const menu_routeValue =menu.route;
   menu_route.config.initialValue = menu_routeValue;
   menu_route.data = menu_routeValue;
-  /** visitType */
-  menu_visitType.form = form;
-  const menu_visitTypeValue =menu.visitType;
-  menu_visitType.config.initialValue = menu_visitTypeValue;
-  menu_visitType.data = menu_visitTypeValue;
+  /** menuType */
+  menu_menuType.form = form;
+  const menu_menuTypeValue =menu.menuType;
+  menu_menuType.config.initialValue = menu_menuTypeValue;
+  menu_menuType.data = menu_menuTypeValue;
   /** checkType */
   menu_checkType.form = form;
   const menu_checkTypeValue =menu.checkType;
@@ -567,7 +567,7 @@ export const getMenuFormItemConfigMap = (menu: Menu, form?: FormPropsUtils): Men
     Icon: menu_icon,
     Name: menu_name,
     Route: menu_route,
-    VisitType: menu_visitType,
+    MenuType: menu_menuType,
     CheckType: menu_checkType,
     CreateTime: menu_createTime,
     UpdateTime: menu_updateTime,

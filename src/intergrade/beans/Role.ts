@@ -4,7 +4,6 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import RoleType from "../enums/RoleType";
 import {Bean} from "@utils/DvaUtil";
 
 /** roleId */
@@ -48,7 +47,7 @@ export default interface Role extends Bean {
   deleteFlag?: number;
 
   /** roleType */
-  roleType?: RoleType;
+  roleType?: string;
 
 }
 

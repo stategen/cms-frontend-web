@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Table, Tag } from 'antd'
 import { color } from '@utils/index'
 import styles from './comments.less'
+import ArrayDataProps from "@pages/home/components/ArrayDataProps";
 
 const status = {
   1: {
@@ -19,14 +19,14 @@ const status = {
   },
 }
 
-function Comments ({ data }) {
+function Comments ({ data }:ArrayDataProps) {
   const columns = [
     {
       title: 'avatar',
       dataIndex: 'avatar',
       width: 48,
       className: styles.avatarcolumn,
-      render: text => <span style={{ backgroundImage: `url(${text})` }} className={styles.avatar} />,
+      render: text => <span style={{ backgroundImage: 'url('+text+')' }} className={styles.avatar} />,
     }, {
       title: 'content',
       dataIndex: 'content',
@@ -47,8 +47,5 @@ function Comments ({ data }) {
   )
 }
 
-Comments.propTypes = {
-  data: PropTypes.array,
-}
 
 export default Comments

@@ -7,7 +7,7 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
 
     "experimentalDecorators": true,
@@ -24,7 +24,8 @@
       "themes/*": ["./src/themes/*"],
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
-      "@pages/*": ["./src/pages/*"]
+      "@pages/*": ["./src/pages/*"],
+      "@images/*": ["./src/images/*"]
     }
   },
   "exclude": [

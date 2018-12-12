@@ -4,16 +4,14 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
+import MenuType from "../enums/MenuType";
 import VisitCheckType from "../enums/VisitCheckType";
-import VisitType from "../enums/VisitType";
 import {Bean} from "@utils/DvaUtil";
 
 /** menuId */
 export const Menu_ID: string = 'menuId';
 
 export enum MenuFields {
-  /** breadChildren */
-  breadChildren = 'breadChildren',
   /** roleId */
   roleId = 'roleId',
   /** checked */
@@ -38,8 +36,8 @@ export enum MenuFields {
   name = 'name',
   /** route */
   route = 'route',
-  /** visitType */
-  visitType = 'visitType',
+  /** menuType */
+  menuType = 'menuType',
   /** checkType */
   checkType = 'checkType',
   /** createTime */
@@ -50,16 +48,13 @@ export enum MenuFields {
   deleteFlag = 'deleteFlag',
   /** id */
   id = 'id',
-  /** menuChildren */
-  menuChildren = 'menuChildren',
   /** opendOrder */
   opendOrder = 'opendOrder',
+  /** menuChildren */
+  menuChildren = 'menuChildren',
 }
 
 export default interface Menu extends Bean {
-
-  /** breadChildren */
-  breadChildren?: Menu[];
 
   /** roleId */
   roleId?: string;
@@ -97,8 +92,8 @@ export default interface Menu extends Bean {
   /** 路由路径 */
   route?: string;
 
-  /** visitType */
-  visitType?: VisitType;
+  /** menuType */
+  menuType?: MenuType;
 
   /** checkType */
   checkType?: VisitCheckType;
@@ -115,11 +110,11 @@ export default interface Menu extends Bean {
   /** id,和MenuId相同，为了生成树 */
   id?: number;
 
-  /** menuChildren */
-  menuChildren?: Menu[];
-
   /** 打开顺序，前端model存储用 */
   opendOrder?: number;
+
+  /** menuChildren */
+  menuChildren?: Menu[];
 
 }
 

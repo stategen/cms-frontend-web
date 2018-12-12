@@ -6,32 +6,52 @@
  */
 import {connect} from 'dva';
 import {UserDispatch, userEffects, UserProps, userReducers, UserState} from '@i/interfaces/UserFaces';
-import User, {User_ID} from "@i/beans/User";
+import User from "@i/beans/User";
 import {userDefaultColumns} from "@i/columns/UserColumns";
-import {Table, Modal, Col, Button, Popconfirm} from "antd";
+import {Table, Modal, Col, Button, Popconfirm, Form} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
-import {getUserFormConfigs} from "@i/forms/UserFormConfigs";
-import {BaseProps, ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
+import {getUserFormItemConfigMap, UserFormItemConfigMap} from "@i/forms/UserFormConfigs";
+import {ConnectionPros, operateOptions, cleanSelectRowsProps, KeyValue,} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
-import {createModelPage} from "@components/QueryModal/QueryModal";
 import {UserApiForms} from "@i/forms/UserApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
+import UIUtil from "@utils/UIUtil";
+import FormItem, {FormItemProps} from "antd/es/form/FormItem";
+import {createModelPage} from "@components/QueryModal/QueryModal";
+import Link from "umi/link";
+
 
 const {confirm} = Modal;
 
-const userPage = ({location, dispatch, userState, appState, loading}: UserProps & AppProps & BaseProps) => {
-  const {pathname} = location;
-  const userArea = userState.userArea;
+type UserPageProps = AppProps & UserProps;
+
+interface HandleMenuClick {
+  (e, record: User, index: number): any;
+}
+
+const userIdRender = (text: any, record: User, index: number) =>{
+  return (
+    <Link to={"#"} key={record.userId} title={text}>
+      {text}
+    </Link>
+  )
+}
+const userPage = (props: UserPageProps) => {
+  const loading = props.loading;
+  const dispatch = props.dispatch;
+  const userArea = props.userState.userArea;
+  //自定义渲染
+  userDefaultColumns.userId.render=userIdRender;
   const userColumns = Object.values(userDefaultColumns);
 
   const onAdd = () => {
     const userState: UserState = {
       userArea: {
         type: userEffects.insert,
-        item: {},
+        index: -1,
         doEdit: true,
         cancelState: {
           type: userReducers.updateState,
@@ -42,60 +62,98 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
     dispatch(UserDispatch.updateState_reducer(userState));
   };
 
-  const onDeleteItem = (userId) => {
-    dispatch(UserDispatch.delete_effect({userId}, cleanSelectRowsProps))
+  const onDeleteItem = (index) => {
+    const user = props.userState.userArea.list[index];
+    if (user) {
+      dispatch(UserDispatch.delete_effect({userId: user.userId}, cleanSelectRowsProps))
+    }
   };
 
 
-  const onEditItem = (user) => {
+  const onEditItem = (index) => {
     dispatch(UserDispatch.updateState_reducer({
       userArea: {
         type: userEffects.update,
-        item: user,
+        index,
         doEdit: true,
         cancelState: {
           type: userReducers.updateState,
           doEdit: false,
+          index: -1,
         }
       }
     }))
   };
 
-  const handleMenuClick = (record, e) => {
+  const handleMenuClick = function (e, record: User, index: number) {
     if (e.key === 'Update') {
-      onEditItem(record);
+      onEditItem(index);
     } else if (e.key === 'Delete') {
       confirm({
         title: 'Are you sure delete this record?',
         onOk: () => {
-          onDeleteItem(record.userId)
+          onDeleteItem(index)
         },
       })
     }
-  }
+  } as HandleMenuClick;
 
   userColumns.push({
     title: 'Operation',
     key: 'operation',
     width: 100,
-    render: (text, record: User) => {
-      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={operateOptions}/>
+    render: function (text, record: User, index: number) {
+      return <DropOption key={index} onMenuClick={e => handleMenuClick(e, record, index)} menuOptions={operateOptions}/>
     },
   });
 
   let UserEditorModalPage = null;
   if (userArea.doEdit) {
-    const isCreate = userArea.type === `${userEffects.insert}`;
-    const title = isCreate ? 'Create' : 'Update';
-    const currentUser: User = isCreate ? {} : userArea.item;
-    let userFormConfigs = getUserFormConfigs(currentUser);
-    UserEditorModalPage = createModelPage(true, title, userArea, userFormConfigs, User_ID, dispatch);
+    const index = userArea.index;
+    const isCreate = index < 0;
+    const title = isCreate ? '创建' : '更新';
+    const currentUser: User = isCreate ? {} : userArea.list[index];
+    const userFormConfigMap = getUserFormItemConfigMap(currentUser);
+    //1.调整顺序，自动生成 1,2,3任选
+    const userFormConfigs = Object.values(userFormConfigMap);
+    //2.调整顺序
+    // const userFormConfigs: FormItemConfig[] = [];
+    // userFormConfigs.push(userFormConfigMap.UserName)
+    // userFormConfigs.push(userFormConfigMap.UserId)
+    // userFormConfigs.push(userFormConfigMap.UserType)
+    UserEditorModalPage = createModelPage(true, title, userArea, dispatch, userFormConfigs, null);
+
+    //3.写定义组件
+    // const customBuildFormItem: UIUtil.CustomBuildFormItem<UserFormItemConfigMap> = (formItemPropsMap: KeyValue<UserFormItemConfigMap, FormItemProps>) => {
+    //   return (
+    //     <>
+    //       <FormItem
+    //         {...formItemPropsMap.UserId}
+    //       >
+    //       </FormItem>
+    //
+    //       <FormItem
+    //         {...formItemPropsMap.UserType}
+    //       >
+    //       </FormItem>
+    //       <FormItem
+    //         {...formItemPropsMap.UserName}
+    //       >
+    //       </FormItem>
+    //       <FormItem
+    //         {...formItemPropsMap.Description}
+    //       >
+    //       </FormItem>
+    //     </>
+    //   )
+    // }
+    // UserEditorModalPage = createModelPage(true, title, userArea, dispatch, userFormConfigMap, customBuildFormItem);
   }
 
   const onFilter = () => {
     dispatch(UserDispatch.updateState_reducer({
       userArea: {
-        type: userEffects.getUserPageListByDefaultQuery,
+        type: userEffects.getUserPageList,
         doQuery: true,
         cancelState: {
           type: userReducers.updateState,
@@ -109,8 +167,9 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
   let UserQueryForm = null;
   if (userArea.doQuery) {
     const title = 'Query';
-    const filtersFormConfigs = UserApiForms.getUserPageListByDefaultQueryFormConfigs(userArea.queryRule ? userArea.queryRule : {});
-    UserQueryForm = createModelPage(false, title, userArea, filtersFormConfigs, "", dispatch);
+    const userPageListFormItemConfigMap = UserApiForms.getGetUserPageListFormItemConfigMap(userArea.queryRule ? userArea.queryRule : {});
+    const formItemConfigs = Object.values(userPageListFormItemConfigMap);
+    UserQueryForm = createModelPage(false, title, userArea, dispatch, formItemConfigs);
   }
 
   const rowSelection: TableRowSelection<User> = {
@@ -123,7 +182,7 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
       dispatch(UserDispatch.updateState_reducer(dispachData));
     },
     getCheckboxProps: (record) => ({
-      disabled: record.userId === 'ADMIN',
+      disabled: false,//record.userId === 'ADMIN',
       /*name: record.name,*/
     }),
   };
@@ -135,7 +194,7 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
   const pagination = userArea.pagination;
   if (pagination) {
     pagination.onChange = (page: number, pageSize?: number) => {
-      dispatch(UserDispatch.getUserPageListByDefaultQuery_effect({...userArea.queryRule, pageSize, page}));
+      dispatch(UserDispatch.getUserPageList_effect({...userArea.queryRule, pageSize, page}));
     };
     pagination.showSizeChanger = true;
   }
@@ -145,23 +204,24 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
     bordered: true,
     rowKey: (user: User) => user.userId,
     dataSource: userArea.list,
-    loading: loading.effects[`${userEffects.getAll}`],
+    loading: loading.effects[userEffects.getUserPageList.toString()],
     columns: userColumns,
     pagination: pagination,
   }
 
 
   return (
-    <Page inner>
+    <Page
+      inner>
       <Row>
         <Col>
-          <Button type="ghost" onClick={onAdd}>Create</Button>
-          <Button type="ghost" onClick={onFilter}>Filter</Button>
+          <Button type="ghost" onClick={onAdd}>创建</Button>
+          <Button type="ghost" onClick={onFilter}>查询</Button>
           {
             userArea.selectedRowKeys.length > 0 &&
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" style={{marginLeft: 8}}>Remove</Button>
-              {`Selected ${userArea.selectedRowKeys.length} items `}
+              <Button type="primary" style={{marginLeft: 8}}>删除</Button>
+              {'Selected '+userArea.selectedRowKeys.length+' items' }
             </Popconfirm>
           }
         </Col>
@@ -173,10 +233,15 @@ const userPage = ({location, dispatch, userState, appState, loading}: UserProps 
   )
 };
 
-const UserPage = connect(({user: userState, app: appState, loading}: StatesAlias & ConnectionPros) => ({
-  userState,
-  appState,
-  loading
-}))(userPage);
+const mapStateToProps = (states: StatesAlias & ConnectionPros): UserPageProps => {
+  const props: UserPageProps = {
+    appState: states.app,
+    userState: states.user,
+    loading: states.loading,
+  }
+  return props;
+}
+
+const UserPage = connect(mapStateToProps)(userPage);
 
 export default UserPage;

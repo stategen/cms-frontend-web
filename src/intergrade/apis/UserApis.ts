@@ -54,13 +54,13 @@ export default class UserApis {
   }
 
   /**
-   * GET /api/user/getUserPageListByDefaultQuery
+   * GET /api/user/getUserPageList
    * 用户列表
    */
-  static getUserPageListByDefaultQuery(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<User> {
+  static getUserPageList(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/user/getUserPageListByDefaultQuery';
+    requestInit.url = '/api/user/getUserPageList';
     requestInit.data = params;
     requestInit.method = Method.GET;
     return Net.fetch(requestInit);

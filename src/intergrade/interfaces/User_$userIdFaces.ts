@@ -15,14 +15,16 @@ export interface User_$userIdInitState extends BaseState {
   userArea?: AreaState<User>;
 }
 
-export type User_$userIdState = User_$userIdInitState & typeof user_$userIdCustomState;
+export type User_$userIdState = User_$userIdInitState & Partial<typeof user_$userIdCustomState>;
 
 export interface User_$userIdInitSubscriptions extends Subscriptions{
+  setup?: Subscription;
 }
 
 export type User_$userIdSubscriptions = User_$userIdInitSubscriptions & User_$userIdCustomSubscriptions;
 
 export interface User_$userIdInitEffects extends Effects {
+  setup?: Effect;
   /** 获取用户详情 */
   getUserById?: Effect,
 }
@@ -30,6 +32,7 @@ export interface User_$userIdInitEffects extends Effects {
 export type User_$userIdEffects = User_$userIdInitEffects & User_$userIdCustomEffects;
 
 interface User_$userIdInitReducers<S extends User_$userIdState> extends Reducers<S> {
+  setup_success?: Reducer<User_$userIdState>,
   /** 获取用户详情  成功后 更新状态*/
   getUserById_success?: Reducer<User_$userIdState>,
 }
@@ -45,6 +48,8 @@ export interface User_$userIdModel extends IModel<User_$userIdState, User_$userI
   reducers?: User_$userIdReducers;
   effects?: User_$userIdEffects;
   subscriptions?: User_$userIdSubscriptions;
+  getUserByIdInitParamsFn?: SetupParamsFun;
+  getInitState?: () => User_$userIdState;
 }
 
 export interface User_$userIdProps extends ConnectionPros {
@@ -86,6 +91,17 @@ export class User_$userIdDispatch {
       pushRoute.search = queryString.stringify(search);
     }
     return routerRedux.push(pushRoute);
+  }
+
+  static setup_effect(params: { userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: User_$userIdState) {
+    return {
+      type: user_$userIdInitModel.namespace + '/setup',
+      payload: {
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
   }
 
   /** 获取用户详情 */

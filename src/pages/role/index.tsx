@@ -6,17 +6,13 @@
  */
 import {connect} from 'dva';
 import {RoleDispatch, roleEffects, RoleProps, roleReducers, RoleState} from '@i/interfaces/RoleFaces';
-import Role, {Role_ID} from "@i/beans/Role";
+import Role from "@i/beans/Role";
 import {roleDefaultColumns} from "@i/columns/RoleColumns";
 import {Table, Modal, Col, Button, Popconfirm, Form} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
 import {getRoleFormItemConfigMap, RoleFormItemConfigMap} from "@i/forms/RoleFormConfigs";
-import {
-  ConnectionPros, operateOptions, cleanSelectRowsProps, optimizeFieldPostValues,
-  FormItemConfigMap, Bean, AreaState, Dispatch, FormProps, BaseState, commonFormItemLayout, FormItemConfig, KeyValue,
-  CreateFun
-} from "@utils/DvaUtil";
+import {ConnectionPros, operateOptions, cleanSelectRowsProps, KeyValue,} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
@@ -25,6 +21,8 @@ import StatesAlias from "@i/configs/tradeCms-statesAlias";
 import UIUtil from "@utils/UIUtil";
 import FormItem, {FormItemProps} from "antd/es/form/FormItem";
 import {createModelPage} from "@components/QueryModal/QueryModal";
+import * as React from "react";
+import Link from "umi/link";
 
 
 const {confirm} = Modal;
@@ -35,10 +33,20 @@ interface HandleMenuClick {
   (e, record: Role, index: number): any;
 }
 
+const roleIdRender = (text: any, record: Role, index: number) =>{
+  return (
+    <Link to={"#"} key={record.roleId} title={text}>
+      {text}
+    </Link>
+  )
+}
+
 const rolePage = (props: RolePageProps) => {
   const loading = props.loading;
   const dispatch = props.dispatch;
   const roleArea = props.roleState.roleArea;
+  //自定义渲染
+  roleDefaultColumns.roleId.render=roleIdRender;
   const roleColumns = Object.values(roleDefaultColumns);
 
   const onAdd = () => {
@@ -105,47 +113,49 @@ const rolePage = (props: RolePageProps) => {
   if (roleArea.doEdit) {
     const index = roleArea.index;
     const isCreate = index < 0;
-    const title = isCreate ? 'Create' : 'Update';
+    const title = isCreate ? '创建' : '更新';
     const currentRole: Role = isCreate ? {} : roleArea.list[index];
     const roleFormConfigMap = getRoleFormItemConfigMap(currentRole);
-    // const roleFormConfigs = Object.values(roleFormConfigMap);
+    //1.调整顺序，自动生成 1,2,3任选
+    const roleFormConfigs = Object.values(roleFormConfigMap);
+    //2.调整顺序
     // const roleFormConfigs: FormItemConfig[] = [];
     // roleFormConfigs.push(roleFormConfigMap.RoleName)
     // roleFormConfigs.push(roleFormConfigMap.RoleId)
     // roleFormConfigs.push(roleFormConfigMap.RoleType)
-    // RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigs, null);
+    RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigs, null);
 
-    const customBuildFormItem: UIUtil.CustomBuildFormItem<RoleFormItemConfigMap> = (formItemPropsMap: KeyValue<RoleFormItemConfigMap, FormItemProps>) => {
-      return (
-        <>
-          <FormItem
-            {...formItemPropsMap.RoleId}
-          >
-          </FormItem>
-
-          <FormItem
-            {...formItemPropsMap.RoleType}
-          >
-          </FormItem>
-          <FormItem
-            {...formItemPropsMap.RoleName}
-          >
-          </FormItem>
-          <FormItem
-            {...formItemPropsMap.Description}
-          >
-          </FormItem>
-        </>
-      )
-    }
-
-    RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigMap, customBuildFormItem);
+    //3.写定义组件
+    // const customBuildFormItem: UIUtil.CustomBuildFormItem<RoleFormItemConfigMap> = (formItemPropsMap: KeyValue<RoleFormItemConfigMap, FormItemProps>) => {
+    //   return (
+    //     <>
+    //       <FormItem
+    //         {...formItemPropsMap.RoleId}
+    //       >
+    //       </FormItem>
+    //
+    //       <FormItem
+    //         {...formItemPropsMap.RoleType}
+    //       >
+    //       </FormItem>
+    //       <FormItem
+    //         {...formItemPropsMap.RoleName}
+    //       >
+    //       </FormItem>
+    //       <FormItem
+    //         {...formItemPropsMap.Description}
+    //       >
+    //       </FormItem>
+    //     </>
+    //   )
+    // }
+    // RoleEditorModalPage = createModelPage(true, title, roleArea, dispatch, roleFormConfigMap, customBuildFormItem);
   }
 
   const onFilter = () => {
     dispatch(RoleDispatch.updateState_reducer({
       roleArea: {
-        type: roleEffects.getRolePageListByDefaultQuery,
+        type: roleEffects.getRolePageList,
         doQuery: true,
         cancelState: {
           type: roleReducers.updateState,
@@ -159,8 +169,8 @@ const rolePage = (props: RolePageProps) => {
   let RoleQueryForm = null;
   if (roleArea.doQuery) {
     const title = 'Query';
-    const rolePageListByDefaultQueryFormItemConfigMap = RoleApiForms.getGetRolePageListByDefaultQueryFormItemConfigMap(roleArea.queryRule ? roleArea.queryRule : {});
-    const formItemConfigs = Object.values(rolePageListByDefaultQueryFormItemConfigMap);
+    const rolePageListFormItemConfigMap = RoleApiForms.getGetRolePageListFormItemConfigMap(roleArea.queryRule ? roleArea.queryRule : {});
+    const formItemConfigs = Object.values(rolePageListFormItemConfigMap);
     RoleQueryForm = createModelPage(false, title, roleArea, dispatch, formItemConfigs);
   }
 
@@ -186,7 +196,7 @@ const rolePage = (props: RolePageProps) => {
   const pagination = roleArea.pagination;
   if (pagination) {
     pagination.onChange = (page: number, pageSize?: number) => {
-      dispatch(RoleDispatch.getRolePageListByDefaultQuery_effect({...roleArea.queryRule, pageSize, page}));
+      dispatch(RoleDispatch.getRolePageList_effect({...roleArea.queryRule, pageSize, page}));
     };
     pagination.showSizeChanger = true;
   }
@@ -196,7 +206,7 @@ const rolePage = (props: RolePageProps) => {
     bordered: true,
     rowKey: (role: Role) => role.roleId,
     dataSource: roleArea.list,
-    loading: loading.effects[`${roleEffects.getAll}`],
+    loading: loading.effects[roleEffects.getRolePageList.toString()],
     columns: roleColumns,
     pagination: pagination,
   }
@@ -207,13 +217,13 @@ const rolePage = (props: RolePageProps) => {
       inner>
       <Row>
         <Col>
-          <Button type="ghost" onClick={onAdd}>Create</Button>
-          <Button type="ghost" onClick={onFilter}>Filter</Button>
+          <Button type="ghost" onClick={onAdd}>创建</Button>
+          <Button type="ghost" onClick={onFilter}>查询</Button>
           {
             roleArea.selectedRowKeys.length > 0 &&
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" style={{marginLeft: 8}}>Remove</Button>
-              {`Selected ${roleArea.selectedRowKeys.length} items `}
+              <Button type="primary" style={{marginLeft: 8}}>删除</Button>
+              {'Selected '+roleArea.selectedRowKeys.length+' items' }
             </Popconfirm>
           }
         </Col>
@@ -226,12 +236,12 @@ const rolePage = (props: RolePageProps) => {
 };
 
 const mapStateToProps = (states: StatesAlias & ConnectionPros): RolePageProps => {
-  const result: RolePageProps = {
+  const props: RolePageProps = {
     appState: states.app,
     roleState: states.role,
     loading: states.loading,
   }
-  return result;
+  return props;
 }
 
 const RolePage = connect(mapStateToProps)(rolePage);

@@ -21,6 +21,11 @@ const {TextArea} = Input;
 namespace UIUtil {
   export type InputEditorProps = Partial<InputProps> & FormItemEditorProps
 
+  export interface FormItemConfigFixed extends Partial<FormItemConfig> {
+    Editor?: (props?) => any;
+    options?: Options;
+  }
+
   export function BuildInputEditor(props?: InputEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (
@@ -122,13 +127,16 @@ namespace UIUtil {
   export function BuildEnumEditor(props?: EnumEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     const muti = formItemConfig.isArray ? {mode: "multiple"} : null;
+    const formItemConfigFiexd = (formItemConfig as FormItemConfigFixed);
+
     return (
       <Select
-        style={{ width: 120 }}
+        placeholder={formItemConfigFiexd.options._None.title}
+        style={{width: 120}}
         {...muti}
         {...customs}
       >
-        {props.children || makeSelectOptions(formItemConfig.options)}
+        {props.children || makeSelectOptions(formItemConfigFiexd.options)}
       </Select>
     )
   }
@@ -140,12 +148,9 @@ namespace UIUtil {
     return (<Input {...customs}/>)
   }
 
-  export interface FormItemConfigFixed extends Partial<FormItemConfig>{
-    Editor:(props?)=>any;
-  }
 
-  export function getFormItemProps(formItemConfig:FormItemConfig,form: WrappedFormUtils,formItemProps?: FormItemProps){
-    const result= {
+  export function getFormItemProps(formItemConfig: FormItemConfig, form: WrappedFormUtils, formItemProps?: FormItemProps) {
+    const result = {
       ...formItemProps,
       key: formItemConfig.name,
       label: formItemConfig.label,
@@ -159,7 +164,7 @@ namespace UIUtil {
       form = form || formItemConfig.form;
       return (
         <FormItem
-          {...getFormItemProps(formItemConfig,form,formItemProps)}
+          {...getFormItemProps(formItemConfig, form, formItemProps)}
         >
         </FormItem>
       )
@@ -173,7 +178,7 @@ namespace UIUtil {
     const result = {};
     Object.keys(FormItemConfigMap).forEach((fieldName: string) => {
       const formItemConfig: FormItemConfig = FormItemConfigMap[fieldName];
-      result[fieldName] = getFormItemProps(formItemConfig,form,formItemProps)
+      result[fieldName] = getFormItemProps(formItemConfig, form, formItemProps)
     });
     return result;
   }
@@ -181,6 +186,7 @@ namespace UIUtil {
   export interface LinkPropsFixed extends Partial<LinkProps> {
     to?: string;
   }
+
 
   export function buildLink(menu: Menu = {}, props?: LinkPropsFixed) {
     let route = (menu.route || '#');

@@ -90,7 +90,7 @@ const appPage = ({children, dispatch, appState, loading, location}: AppPagesProp
       dispatch({type: appReducers.switchTheme})
     },
     changeOpenKeys(openKeys) {
-      window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
+      window.localStorage.setItem(prefix+'navOpenKeys', JSON.stringify(openKeys))
       dispatch({type: appReducers.handleNavOpenKeys, payload: {navOpenKeys: openKeys}})
     },
   }

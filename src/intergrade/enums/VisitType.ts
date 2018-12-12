@@ -14,13 +14,21 @@ enum VisitType {
 
 }
 
-export const visitTypeOptions: Options = {
+export const visitTypeOptions = {
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** MENU */
   MENU: {
     value: VisitType.MENU,
     title: 'MENU',
   },
 
+  _None:{
+    value: null,
+    title: '请选择',
+  },
   /** API_PATH */
   API_PATH: {
     value: VisitType.API_PATH,

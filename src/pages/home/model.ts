@@ -1,74 +1,18 @@
 import { parse } from 'qs'
 import modelExtend from 'dva-model-extend'
-import * as weatherService from './services/weather'
 import HomeApis from "@i/apis/HomeApis"
 import {abstractModel} from "@utils/DvaUtil";
 import {homeInitModel} from "@i/interfaces/HomeFaces";
+/**
+ *  Do not remove this unless you get business authorization.
+ *  Home
+ *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
+ *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
+ */
+import {homeDefaultModel} from "@i/models/HomeDefaultModel";
+import {HomeModel} from "@i/interfaces/HomeFaces";
 
-export default modelExtend(abstractModel, {
-  namespace: 'home',
-  state: {
-    weather: {
-      city: '深圳',
-      temperature: '30',
-      name: '晴',
-      icon: '//s5.sencdn.com/web/icons/3d_50/2.png',
-    },
-    sales: [],
-    quote: {
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
-    },
-    numbers: [],
-    recentSales: [],
-    comments: [],
-    completed: [],
-    browser: [],
-    cpu: {},
-    user: {
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
-    },
-  },
-  subscriptions: {
-    setup ({ dispatch, history }) {
-      history.listen(({ pathname }) => {
-        if (pathname === homeInitModel.pathname || pathname === '/') {
-          dispatch({ type: 'query' })
-          dispatch({ type: 'queryWeather' })
-        }
-      })
-    },
-  },
-  effects: {
-    * query ({
-      payload,
-    }, { call, put }) {
-      const data = yield call(HomeApis.getDashboard, parse(payload))
-      yield put({
-        type: 'updateState',
-        payload: data,
-      })
-    },
-    * queryWeather ({
-      payload = {},
-    }, { call, put }) {
-      payload.location = 'shenzhen';
-      const result = yield call(weatherService.query, payload)
-      const { success } = result
-      if (success) {
-        const data = result.results[0]
-        const weather = {
-          city: data.location.name,
-          temperature: data.now.temperature,
-          name: data.now.text,
-          icon: `//s5.sencdn.com/web/icons/3d_50/${data.now.code}.png`,
-        }
-        yield put({
-          type: 'updateState',
-          payload: {
-            weather,
-          },
-        })
-      }
-    },
-  },
-})
+const homeModel: HomeModel = homeDefaultModel;
+
+export default homeModel;
+

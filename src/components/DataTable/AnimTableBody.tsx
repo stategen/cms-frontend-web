@@ -39,12 +39,15 @@ const leaveAnim = [
   },
 ]
 
-const AnimTableBody = props => (<TweenOneGroup
-  component="tbody"
-  {...props}
-  enter={enterAnim}
-  leave={leaveAnim}
-  appear={false}
-/>)
+const AnimTableBody = (props) => {
+  return (
+    <TweenOneGroup
+    component="tbody"
+    {...props}
+    enter={enterAnim}
+    leave={leaveAnim}
+    appear={false}
+  />)
+}
 
 export default AnimTableBody

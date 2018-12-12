@@ -8,8 +8,8 @@ import {TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT} from "@utils/DvaUtil";
 import Menu from "../beans/Menu"
 import {ColumnProps} from "antd/lib/table";
 import moment from 'moment';
+import {menuTypeOptions} from '../enums/MenuType';
 import {visitCheckTypeOptions} from '../enums/VisitCheckType';
-import {visitTypeOptions} from '../enums/VisitType';
 
 export interface MenuColumns<M> {
   /** roleId  */
@@ -48,8 +48,8 @@ export interface MenuColumns<M> {
   /** 路由路径  */
   route?: ColumnProps<M>,
 
-  /** visitType  */
-  visitType?: ColumnProps<M>,
+  /** menuType  */
+  menuType?: ColumnProps<M>,
 
   /** checkType  */
   checkType?: ColumnProps<M>,
@@ -160,13 +160,13 @@ export const menuDefaultColumns: MenuColumns<Menu> = {
     key: 'route',
   },
 
-  /** visitType  */
-  visitType: {
-    title: 'visitType',
-    dataIndex: 'visitType',
-    key: 'visitType',
+  /** menuType  */
+  menuType: {
+    title: 'menuType',
+    dataIndex: 'menuType',
+    key: 'menuType',
     render: (text: any, record: Menu, index: number) => {
-      const optionProp = visitTypeOptions[text];
+      const optionProp = menuTypeOptions[text];
       return optionProp != null ? optionProp.title : null;
     },
   },

@@ -1,10 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styles from './quote.less'
+
+interface  QuotePropTypes  {
+  name: string,
+  content: string,
+  title: string,
+  avatar: string,
+}
+
 
 function Quote ({
   name, content, title, avatar,
-}) {
+}:QuotePropTypes) {
   return (
     <div className={styles.quote}>
       <div className={styles.inner}>
@@ -21,11 +28,5 @@ function Quote ({
   )
 }
 
-Quote.propTypes = {
-  name: PropTypes.string,
-  content: PropTypes.string,
-  title: PropTypes.string,
-  avatar: PropTypes.string,
-}
 
 export default Quote

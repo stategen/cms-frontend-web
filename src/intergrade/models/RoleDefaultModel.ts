@@ -6,22 +6,27 @@
  */
 import {roleInitModel, RoleModel, RoleState} from "../interfaces/RoleFaces";
 import RoleApis from "../apis/RoleApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState} from "@utils/DvaUtil";
+import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 
-export class RoleCommand {
+
+export class RoleCommand extends BaseCommand {
   static * setup_effect({payload}, {call, put, select}) {
     let newPayload = {};
 
     /** 角色分页列表,多条件 */
-    const getRolePageListByDefaultQueryPayload = yield RoleCommand.getRolePageListByDefaultQuery_effect({payload}, {call, put, select});
-    newPayload = RoleCommand.getRolePageListByDefaultQuery_success_reducer(<RoleState>newPayload, getRolePageListByDefaultQueryPayload);
+    const getRolePageListPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
+    newPayload = RoleCommand.getRolePageList_success_reducer(<RoleState>newPayload, getRolePageListPayload);
     return newPayload;
   };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
 
   /** 删除角色 */
   static * delete_effect({payload}, {call, put, select}) {
@@ -39,6 +44,9 @@ export class RoleCommand {
     return newPayload;
   };
 
+  static delete_success_type(payload) {
+    return {type: "delete_success", payload: payload};
+  }
 
   /** 删除角色  成功后 更新状态*/
   static delete_success_reducer = (state: RoleState, payload): RoleState => {
@@ -64,6 +72,9 @@ export class RoleCommand {
     return newPayload;
   };
 
+  static deleteByRoleIds_success_type(payload) {
+    return {type: "deleteByRoleIds_success", payload: payload};
+  }
 
   /** 批量删除角色  成功后 更新状态*/
   static deleteByRoleIds_success_reducer = (state: RoleState, payload): RoleState => {
@@ -74,10 +85,10 @@ export class RoleCommand {
   };
 
   /** 角色分页列表,多条件 */
-  static * getRolePageListByDefaultQuery_effect({payload}, {call, put, select}) {
+  static * getRolePageList_effect({payload}, {call, put, select}) {
     const oldRoleArea = yield select((_) => _.role.roleArea);
-    payload = {...oldRoleArea.queryRule, ...payload};
-    const rolePageList: AntdPageList<Role> = yield call(RoleApis.getRolePageListByDefaultQuery, payload);
+    payload = {page: 1, pageSize: 10, ...oldRoleArea.queryRule, ...payload};
+    const rolePageList: AntdPageList<Role> = yield call(RoleApis.getRolePageList, payload);
     const pagination = rolePageList ? rolePageList.pagination : null;
 
     const newPayload: RoleState = {
@@ -95,7 +106,11 @@ export class RoleCommand {
     return newPayload;
   };
 
-  static * getRolePageListByDefaultQuery_next_effect({payload}, {call, put, select}) {
+  static getRolePageList_success_type(payload) {
+    return {type: "getRolePageList_success", payload: payload};
+  }
+
+  static * getRolePageList_next_effect({payload}, {call, put, select}) {
     const oldRoleArea = yield select((_) => _.role.roleArea);
     const pagination = oldRoleArea.pagination;
     let page = pagination.current;
@@ -103,38 +118,14 @@ export class RoleCommand {
     const totalPages = Math.trunc(pagination.total / (pagination.pageSize || 10)) + 1;
     page = Math.min(page, totalPages)
     payload = {...oldRoleArea.queryRule, page};
-    const newPayload = yield RoleCommand.getRolePageListByDefaultQuery_effect({payload}, {call, put, select});
+    const newPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
     return newPayload;
   }
 
-
   /** 角色分页列表,多条件  成功后 更新状态*/
-  static getRolePageListByDefaultQuery_success_reducer = (state: RoleState, payload): RoleState => {
+  static getRolePageList_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
-      payload,
-    );
-  };
-
-
-  /** 关闭role对话框  更新状态*/
-  static hideRoleModal_reducer = (state: RoleState, payload): RoleState => {
-    const mergedState: RoleState = {
-      roleArea: {
-        ...{
-          doEdit: false,
-        },
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...{
-        allModalVisible: false,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-
-    return mergeObjects(
-      state,
-      mergedState,
       payload,
     );
   };
@@ -158,30 +149,14 @@ export class RoleCommand {
     return newPayload;
   };
 
+  static insert_success_type(payload) {
+    return {type: "insert_success", payload: payload};
+  }
 
   /** 创建角色  成功后 更新状态*/
   static insert_success_reducer = (state: RoleState, payload): RoleState => {
     return mergeObjects(
       state,
-      payload,
-    );
-  };
-
-
-  /** 打开role对话框  更新状态*/
-  static showRoleModal_reducer = (state: RoleState, payload): RoleState => {
-    const mergedState: RoleState = {
-      roleArea: {
-        ...{
-          doEdit: true,
-        },
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-    };
-
-    return mergeObjects(
-      state,
-      mergedState,
       payload,
     );
   };
@@ -205,6 +180,9 @@ export class RoleCommand {
     return newPayload;
   };
 
+  static update_success_type(payload) {
+    return {type: "update_success", payload: payload};
+  }
 
   /** 更新角色  成功后 更新状态*/
   static update_success_reducer = (state: RoleState, payload): RoleState => {
@@ -221,13 +199,14 @@ export const roleDefaultModel: RoleModel = <RoleModel>(mergeObjects(abstractMode
 roleDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
-    const match = RouteUtil.getMatch(roleDefaultModel.pathname, pathname);
+    const keys = [];
+    const match = RouteUtil.getMatch(roleDefaultModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
-    let payload = {page: 1, pageSize: 10, ...RouteUtil.getQuery(listener)} ;
-    const getRolePageListByDefaultQueryParams = roleDefaultModel.getRolePageListByDefaultQueryInitParamsFn ? roleDefaultModel.getRolePageListByDefaultQueryInitParamsFn({pathname, match}) : null;
-    payload = {...payload, ...getRolePageListByDefaultQueryParams}
+    let payload = {...RouteUtil.getQuery(listener)} ;
+    const getRolePageListParams = roleDefaultModel.getRolePageListInitParamsFn ? roleDefaultModel.getRolePageListInitParamsFn({pathname, match, keys}) : null;
+    payload = {...payload, ...getRolePageListParams}
     dispatch({
       type: 'role/setup',
       payload,
@@ -242,21 +221,13 @@ roleDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
     return;
   }
 
-  if (roleDefaultModel.getInitState){
-    const initState =roleDefaultModel.getInitState();
-    yield put({
-        type: 'updateState',
-        payload: initState,
-      }
-    )
+  if (roleDefaultModel.getInitState) {
+    const initState = roleDefaultModel.getInitState();
+    yield put(RoleCommand.updateState_type(initState));
   }
 
   const newPayload = yield RoleCommand.setup_effect({payload}, {call, put, select});
-  yield put({
-      type: 'setup_success',
-      payload: newPayload,
-    }
-  )
+  yield put(RoleCommand.setup_success_type(newPayload));
 };
 
 roleDefaultModel.reducers.setup_success = (state: RoleState, {payload}): RoleState => {
@@ -269,11 +240,7 @@ roleDefaultModel.reducers.setup_success = (state: RoleState, {payload}): RoleSta
 /** 删除角色 */
 roleDefaultModel.effects.delete = function* ({payload}, {call, put, select}) {
   const newPayload = yield RoleCommand.delete_effect({payload}, {call, put, select});
-  yield put({
-      type: 'delete_success',
-      payload: newPayload,
-    }
-  )
+  yield put(RoleCommand.delete_success_type(newPayload));
 };
 
 roleDefaultModel.reducers.delete_success = (state: RoleState, {payload}): RoleState => {
@@ -283,11 +250,7 @@ roleDefaultModel.reducers.delete_success = (state: RoleState, {payload}): RoleSt
 /** 批量删除角色 */
 roleDefaultModel.effects.deleteByRoleIds = function* ({payload}, {call, put, select}) {
   const newPayload = yield RoleCommand.deleteByRoleIds_effect({payload}, {call, put, select});
-  yield put({
-      type: 'deleteByRoleIds_success',
-      payload: newPayload,
-    }
-  )
+  yield put(RoleCommand.deleteByRoleIds_success_type(newPayload));
 };
 
 roleDefaultModel.reducers.deleteByRoleIds_success = (state: RoleState, {payload}): RoleState => {
@@ -295,60 +258,34 @@ roleDefaultModel.reducers.deleteByRoleIds_success = (state: RoleState, {payload}
 };
 
 /** 角色分页列表,多条件 */
-roleDefaultModel.effects.getRolePageListByDefaultQuery = function* ({payload}, {call, put, select}) {
-  const newPayload = yield RoleCommand.getRolePageListByDefaultQuery_effect({payload}, {call, put, select});
-  yield put({
-      type: 'getRolePageListByDefaultQuery_success',
-      payload: newPayload,
-    }
-  )
+roleDefaultModel.effects.getRolePageList = function* ({payload}, {call, put, select}) {
+  const newPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
+  yield put(RoleCommand.getRolePageList_success_type(newPayload));
 };
 
-roleDefaultModel.effects.getRolePageListByDefaultQuery_next = function* ({payload}, {call, put, select}) {
-  const newPayload = yield RoleCommand.getRolePageListByDefaultQuery_next_effect({payload}, {call, put, select});
-  yield put({
-      type: 'getRolePageListByDefaultQuery_success',
-      payload: newPayload,
-    }
-  )
+roleDefaultModel.effects.getRolePageList_next = function* ({payload}, {call, put, select}) {
+  const newPayload = yield RoleCommand.getRolePageList_next_effect({payload}, {call, put, select});
+  yield put(RoleCommand.getRolePageList_success_type(newPayload));
 };
 
-roleDefaultModel.reducers.getRolePageListByDefaultQuery_success = (state: RoleState, {payload}): RoleState => {
-  return RoleCommand.getRolePageListByDefaultQuery_success_reducer(state, payload);
-};
-
-
-roleDefaultModel.reducers.hideRoleModal = (state: RoleState, {payload}): RoleState => {
-  return RoleCommand.hideRoleModal_reducer(state, payload);
+roleDefaultModel.reducers.getRolePageList_success = (state: RoleState, {payload}): RoleState => {
+  return RoleCommand.getRolePageList_success_reducer(state, payload);
 };
 
 /** 创建角色 */
 roleDefaultModel.effects.insert = function* ({payload}, {call, put, select}) {
   const newPayload = yield RoleCommand.insert_effect({payload}, {call, put, select});
-  yield put({
-      type: 'insert_success',
-      payload: newPayload,
-    }
-  )
+  yield put(RoleCommand.insert_success_type(newPayload));
 };
 
 roleDefaultModel.reducers.insert_success = (state: RoleState, {payload}): RoleState => {
   return RoleCommand.insert_success_reducer(state, payload);
 };
 
-
-roleDefaultModel.reducers.showRoleModal = (state: RoleState, {payload}): RoleState => {
-  return RoleCommand.showRoleModal_reducer(state, payload);
-};
-
 /** 更新角色 */
 roleDefaultModel.effects.update = function* ({payload}, {call, put, select}) {
   const newPayload = yield RoleCommand.update_effect({payload}, {call, put, select});
-  yield put({
-      type: 'update_success',
-      payload: newPayload,
-    }
-  )
+  yield put(RoleCommand.update_success_type(newPayload));
 };
 
 roleDefaultModel.reducers.update_success = (state: RoleState, {payload}): RoleState => {

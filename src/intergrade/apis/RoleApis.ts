@@ -42,27 +42,13 @@ export default class RoleApis {
   }
 
   /**
-   * POST /api/role/getRolePageListByDefaultQuery
+   * POST /api/role/getRolePageList
    * 角色分页列表,多条件
    */
-  static getRolePageListByDefaultQuery(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Role> {
+  static getRolePageList(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Role> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/getRolePageListByDefaultQuery';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/hideRoleModal
-   * 关闭role对话框
-   */
-  static hideRoleModal(params?: {}): void {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/hideRoleModal';
+    requestInit.url = '/api/role/getRolePageList';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
     requestInit.method = Method.POST;
@@ -77,20 +63,6 @@ export default class RoleApis {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/insert';
-    requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
-    requestInit.method = Method.POST;
-    return Net.fetch(requestInit);
-  }
-
-  /**
-   * POST /api/role/showRoleModal
-   * 打开role对话框
-   */
-  static showRoleModal(params?: {}): void {
-    let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
-    requestInit.url = '/api/role/showRoleModal';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
     requestInit.method = Method.POST;
