@@ -6,7 +6,7 @@
  */
 import User from "../beans/User"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
 
 /** 用户ID */
@@ -15,8 +15,8 @@ const user_userId = {
   isId: true,
   label: "用户ID",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -40,8 +40,8 @@ const user_username = {
   name: 'username',
   label: "用户名",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -69,8 +69,8 @@ const user_roleType = {
   name: 'roleType',
   label: "用户角色",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -94,8 +94,8 @@ const user_name = {
   name: 'name',
   label: "name",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -119,8 +119,8 @@ const user_nickName = {
   name: 'nickName',
   label: "nickName",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -144,8 +144,8 @@ const user_age = {
   name: 'age',
   label: "age",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -163,8 +163,8 @@ const user_address = {
   name: 'address',
   label: "address",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -188,8 +188,8 @@ const user_isMale = {
   name: 'isMale',
   label: "isMale",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -207,8 +207,8 @@ const user_avatarUrl = {
   name: 'avatarUrl',
   label: "avatarUrl",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -232,8 +232,8 @@ const user_email = {
   name: 'email',
   label: "邮箱",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -267,8 +267,8 @@ const user_createTime = {
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -288,8 +288,8 @@ const user_updateTime = {
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -340,64 +340,64 @@ export interface UserFormItemConfigMap extends FormItemConfigMap {
   UpdateTime?: typeof user_updateTime & Partial<FormItemConfig>,
 
 }
-export const getUserFormItemConfigMap = (user: User, pagesProps: PagesProps): UserFormItemConfigMap => {
+export const getUserFormItemConfigMap = (user: User, form?: FormPropsUtils): UserFormItemConfigMap => {
   /** 用户ID */
-  user_userId.pagesProps = pagesProps;
+  user_userId.form = form;
   const user_userIdValue =user.userId;
   user_userId.config.initialValue = user_userIdValue;
   user_userId.data = user_userIdValue;
   /** 用户名 */
-  user_username.pagesProps = pagesProps;
+  user_username.form = form;
   const user_usernameValue =user.username;
   user_username.config.initialValue = user_usernameValue;
   user_username.data = user_usernameValue;
   /** 用户角色 ADMIN,DEFAULT,DEVELOPER */
-  user_roleType.pagesProps = pagesProps;
+  user_roleType.form = form;
   const user_roleTypeValue =user.roleType;
   user_roleType.config.initialValue = user_roleTypeValue;
   user_roleType.data = user_roleTypeValue;
   /** name */
-  user_name.pagesProps = pagesProps;
+  user_name.form = form;
   const user_nameValue =user.name;
   user_name.config.initialValue = user_nameValue;
   user_name.data = user_nameValue;
   /** nickName */
-  user_nickName.pagesProps = pagesProps;
+  user_nickName.form = form;
   const user_nickNameValue =user.nickName;
   user_nickName.config.initialValue = user_nickNameValue;
   user_nickName.data = user_nickNameValue;
   /** age */
-  user_age.pagesProps = pagesProps;
+  user_age.form = form;
   const user_ageValue =user.age;
   user_age.config.initialValue = user_ageValue;
   user_age.data = user_ageValue;
   /** address */
-  user_address.pagesProps = pagesProps;
+  user_address.form = form;
   const user_addressValue =user.address;
   user_address.config.initialValue = user_addressValue;
   user_address.data = user_addressValue;
   /** isMale */
-  user_isMale.pagesProps = pagesProps;
+  user_isMale.form = form;
   const user_isMaleValue =user.isMale;
   user_isMale.config.initialValue = user_isMaleValue;
   user_isMale.data = user_isMaleValue;
   /** avatarUrl */
-  user_avatarUrl.pagesProps = pagesProps;
+  user_avatarUrl.form = form;
   const user_avatarUrlValue =user.avatarUrl;
   user_avatarUrl.config.initialValue = user_avatarUrlValue;
   user_avatarUrl.data = user_avatarUrlValue;
   /** 邮箱 */
-  user_email.pagesProps = pagesProps;
+  user_email.form = form;
   const user_emailValue =user.email;
   user_email.config.initialValue = user_emailValue;
   user_email.data = user_emailValue;
   /** 创建时间 TIMESTAMP*/
-  user_createTime.pagesProps = pagesProps;
+  user_createTime.form = form;
   const user_createTimeValue =user.createTime ? moment(user.createTime) : null;
   user_createTime.config.initialValue = user_createTimeValue;
   user_createTime.data = user_createTimeValue;
   /** 更新时间 TIMESTAMP*/
-  user_updateTime.pagesProps = pagesProps;
+  user_updateTime.form = form;
   const user_updateTimeValue =user.updateTime ? moment(user.updateTime) : null;
   user_updateTime.config.initialValue = user_updateTimeValue;
   user_updateTime.data = user_updateTimeValue;

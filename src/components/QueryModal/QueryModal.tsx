@@ -4,8 +4,8 @@ import {
   AreaState, Payload, FormItemConfig, commonFormItemLayout, KeyValue
 } from "@utils/DvaUtil";
 import {ModalFuncProps} from "antd/lib/modal";
-import {FormItemProps} from "antd/es/form/FormItem";
-import {FormComponentProps} from "antd/es/form/Form";
+import {FormItemProps} from "antd/lib/form/FormItem";
+import {FormComponentProps} from "antd/lib/form/Form";
 import {FormProps} from "antd/lib/form";
 import UIUtil from "@utils/UIUtil";
 

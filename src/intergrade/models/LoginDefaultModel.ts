@@ -40,14 +40,14 @@ export class LoginCommand extends BaseCommand {
 
 }
 
-export const loginModel: LoginModel = <LoginModel>(mergeObjects(abstractModel, loginInitModel));
+export const loginDefaultModel: LoginModel = <LoginModel>(mergeObjects(abstractModel, loginInitModel));
 /**  */
-loginModel.effects.login = function* ({payload}, {call, put, select}) {
+loginDefaultModel.effects.login = function* ({payload}, {call, put, select}) {
   const newPayload = yield LoginCommand.login_effect({payload}, {call, put, select});
   yield put(LoginCommand.login_success_type(newPayload));
 };
 
-loginModel.reducers.login_success = (state: LoginState, {payload}): LoginState => {
+loginDefaultModel.reducers.login_success = (state: LoginState, {payload}): LoginState => {
   return LoginCommand.login_success_reducer(state, payload);
 };
 

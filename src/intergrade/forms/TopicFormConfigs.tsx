@@ -6,17 +6,16 @@
  */
 import Topic from "../beans/Topic"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
 import moment from 'moment';
-import {topicTypeOptions} from '../enums/TopicType';
 
 /** author */
 const topic_author = {
   name: 'author',
   label: "author",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -34,8 +33,8 @@ const topic_replyCount = {
   name: 'replyCount',
   label: "replyCount",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -48,44 +47,6 @@ topic_replyCount.Editor =
     return UIUtil.BuildInputEditor(props);
   }
 
-/** city */
-const topic_city = {
-  name: 'city',
-  label: "city",
-  Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
-  data: null,
-  config: {
-    initialValue: null,
-  }
-};
-topic_city.Editor =
-  (props?: UIUtil.InputEditorProps) => {
-    let formItemConfig = props ? props.formItemConfig : null;
-    formItemConfig = formItemConfig || topic_city;
-    props = {...props, formItemConfig};
-    return UIUtil.BuildInputEditor(props);
-  }
-
-/** province */
-const topic_province = {
-  name: 'province',
-  label: "province",
-  Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
-  data: null,
-  config: {
-    initialValue: null,
-  }
-};
-topic_province.Editor =
-  (props?: UIUtil.InputEditorProps) => {
-    let formItemConfig = props ? props.formItemConfig : null;
-    formItemConfig = formItemConfig || topic_province;
-    props = {...props, formItemConfig};
-    return UIUtil.BuildInputEditor(props);
-  }
-
 /** topicId */
 const topic_topicId = {
   name: 'topicId',
@@ -93,8 +54,8 @@ const topic_topicId = {
   label: "topicId",
   type: "hidden",
   Editor: UIUtil.BuildHiddenEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -118,8 +79,8 @@ const topic_authorId = {
   name: 'authorId',
   label: "authorId",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -141,22 +102,26 @@ topic_authorId.Editor =
 /** topicType */
 const topic_topicType = {
   name: 'topicType',
-  isEnum: true,
-  options: topicTypeOptions,
   label: "topicType",
-  Editor: UIUtil.BuildEnumEditor,
-  pagesProps: null,
+  Editor: UIUtil.BuildInputEditor,
   data: null,
+  form: null,
   config: {
     initialValue: null,
+    rules: [
+      {
+        max: 64,
+        message: "{javax.validation.constraints.Max.message}",
+      },
+    ],
   }
 };
 topic_topicType.Editor =
-  (props?: UIUtil.EnumEditorProps) => {
+  (props?: UIUtil.InputEditorProps) => {
     let formItemConfig = props ? props.formItemConfig : null;
     formItemConfig = formItemConfig || topic_topicType;
     props = {...props, formItemConfig};
-    return UIUtil.BuildEnumEditor(props);
+    return UIUtil.BuildInputEditor(props);
   }
 
 /** content */
@@ -165,8 +130,8 @@ const topic_content = {
   label: "content",
   type: "textarea",
   Editor: UIUtil.BuildTextareaEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -190,8 +155,8 @@ const topic_title = {
   name: 'title',
   label: "title",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -217,8 +182,8 @@ const topic_lastReplyAt = {
   format: TIMESTAMP_FORMAT,
   label: "lastReplyAt",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -236,8 +201,8 @@ const topic_good = {
   name: 'good',
   label: "good",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -255,8 +220,8 @@ const topic_top = {
   name: 'top',
   label: "top",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -274,8 +239,8 @@ const topic_visitCount = {
   name: 'visitCount',
   label: "visitCount",
   Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -295,8 +260,8 @@ const topic_testTimestamp = {
   format: TIMESTAMP_FORMAT,
   label: "testTimestamp",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -316,8 +281,8 @@ const topic_testDatetime = {
   format: TIMESTAMP_FORMAT,
   label: "testDatetime",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -337,8 +302,8 @@ const topic_testDate = {
   format: DATE_FORMAT,
   label: "测式日期",
   Editor: UIUtil.BuildDatePickerEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -358,8 +323,8 @@ const topic_testTime = {
   format: TIME_FORMAT,
   label: "测试时间",
   Editor: UIUtil.BuildTimePickerEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -372,56 +337,6 @@ topic_testTime.Editor =
     return UIUtil.BuildTimePickerEditor(props);
   }
 
-/** provinceId */
-const topic_provinceId = {
-  name: 'provinceId',
-  label: "provinceId",
-  Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
-  data: null,
-  config: {
-    initialValue: null,
-    rules: [
-      {
-        max: 64,
-        message: "{javax.validation.constraints.Max.message}",
-      },
-    ],
-  }
-};
-topic_provinceId.Editor =
-  (props?: UIUtil.InputEditorProps) => {
-    let formItemConfig = props ? props.formItemConfig : null;
-    formItemConfig = formItemConfig || topic_provinceId;
-    props = {...props, formItemConfig};
-    return UIUtil.BuildInputEditor(props);
-  }
-
-/** cityId */
-const topic_cityId = {
-  name: 'cityId',
-  label: "cityId",
-  Editor: UIUtil.BuildInputEditor,
-  pagesProps: null,
-  data: null,
-  config: {
-    initialValue: null,
-    rules: [
-      {
-        max: 64,
-        message: "{javax.validation.constraints.Max.message}",
-      },
-    ],
-  }
-};
-topic_cityId.Editor =
-  (props?: UIUtil.InputEditorProps) => {
-    let formItemConfig = props ? props.formItemConfig : null;
-    formItemConfig = formItemConfig || topic_cityId;
-    props = {...props, formItemConfig};
-    return UIUtil.BuildInputEditor(props);
-  }
-
 /** 创建时间 TIMESTAMP*/
 const topic_createTime = {
   name: 'createTime',
@@ -430,8 +345,8 @@ const topic_createTime = {
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -452,8 +367,8 @@ const topic_updateTime = {
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   Editor: UIUtil.BuildTimeStampEditor,
-  pagesProps: null,
   data: null,
+  form: null,
   config: {
     initialValue: null,
   }
@@ -472,12 +387,6 @@ export interface TopicFormItemConfigMap extends FormItemConfigMap {
 
   /** replyCount  */
   ReplyCount?: typeof topic_replyCount & Partial<FormItemConfig>,
-
-  /** city  */
-  City?: typeof topic_city & Partial<FormItemConfig>,
-
-  /** province  */
-  Province?: typeof topic_province & Partial<FormItemConfig>,
 
   /** topicId  */
   TopicId?: typeof topic_topicId & Partial<FormItemConfig>,
@@ -518,12 +427,6 @@ export interface TopicFormItemConfigMap extends FormItemConfigMap {
   /** 测试时间  TIME*/
   TestTime?: typeof topic_testTime & Partial<FormItemConfig>,
 
-  /** provinceId  */
-  ProvinceId?: typeof topic_provinceId & Partial<FormItemConfig>,
-
-  /** cityId  */
-  CityId?: typeof topic_cityId & Partial<FormItemConfig>,
-
   /** 创建时间  TIMESTAMP*/
   CreateTime?: typeof topic_createTime & Partial<FormItemConfig>,
 
@@ -531,109 +434,89 @@ export interface TopicFormItemConfigMap extends FormItemConfigMap {
   UpdateTime?: typeof topic_updateTime & Partial<FormItemConfig>,
 
 }
-export const getTopicFormItemConfigMap = (topic: Topic, pagesProps: PagesProps): TopicFormItemConfigMap => {
+export const getTopicFormItemConfigMap = (topic: Topic, form?: FormPropsUtils): TopicFormItemConfigMap => {
   /** author */
-  topic_author.pagesProps = pagesProps;
+  topic_author.form = form;
   const topic_authorValue =topic.author;
   topic_author.config.initialValue = topic_authorValue;
   topic_author.data = topic_authorValue;
   /** replyCount */
-  topic_replyCount.pagesProps = pagesProps;
+  topic_replyCount.form = form;
   const topic_replyCountValue =topic.replyCount;
   topic_replyCount.config.initialValue = topic_replyCountValue;
   topic_replyCount.data = topic_replyCountValue;
-  /** city */
-  topic_city.pagesProps = pagesProps;
-  const topic_cityValue =topic.city;
-  topic_city.config.initialValue = topic_cityValue;
-  topic_city.data = topic_cityValue;
-  /** province */
-  topic_province.pagesProps = pagesProps;
-  const topic_provinceValue =topic.province;
-  topic_province.config.initialValue = topic_provinceValue;
-  topic_province.data = topic_provinceValue;
   /** topicId */
-  topic_topicId.pagesProps = pagesProps;
+  topic_topicId.form = form;
   const topic_topicIdValue =topic.topicId;
   topic_topicId.config.initialValue = topic_topicIdValue;
   topic_topicId.data = topic_topicIdValue;
   /** authorId */
-  topic_authorId.pagesProps = pagesProps;
+  topic_authorId.form = form;
   const topic_authorIdValue =topic.authorId;
   topic_authorId.config.initialValue = topic_authorIdValue;
   topic_authorId.data = topic_authorIdValue;
   /** topicType */
-  topic_topicType.pagesProps = pagesProps;
+  topic_topicType.form = form;
   const topic_topicTypeValue =topic.topicType;
   topic_topicType.config.initialValue = topic_topicTypeValue;
   topic_topicType.data = topic_topicTypeValue;
   /** content */
-  topic_content.pagesProps = pagesProps;
+  topic_content.form = form;
   const topic_contentValue =topic.content;
   topic_content.config.initialValue = topic_contentValue;
   topic_content.data = topic_contentValue;
   /** title */
-  topic_title.pagesProps = pagesProps;
+  topic_title.form = form;
   const topic_titleValue =topic.title;
   topic_title.config.initialValue = topic_titleValue;
   topic_title.data = topic_titleValue;
   /** lastReplyAt TIMESTAMP*/
-  topic_lastReplyAt.pagesProps = pagesProps;
+  topic_lastReplyAt.form = form;
   const topic_lastReplyAtValue =topic.lastReplyAt ? moment(topic.lastReplyAt) : null;
   topic_lastReplyAt.config.initialValue = topic_lastReplyAtValue;
   topic_lastReplyAt.data = topic_lastReplyAtValue;
   /** good */
-  topic_good.pagesProps = pagesProps;
+  topic_good.form = form;
   const topic_goodValue =topic.good;
   topic_good.config.initialValue = topic_goodValue;
   topic_good.data = topic_goodValue;
   /** top */
-  topic_top.pagesProps = pagesProps;
+  topic_top.form = form;
   const topic_topValue =topic.top;
   topic_top.config.initialValue = topic_topValue;
   topic_top.data = topic_topValue;
   /** visitCount */
-  topic_visitCount.pagesProps = pagesProps;
+  topic_visitCount.form = form;
   const topic_visitCountValue =topic.visitCount;
   topic_visitCount.config.initialValue = topic_visitCountValue;
   topic_visitCount.data = topic_visitCountValue;
   /** testTimestamp TIMESTAMP*/
-  topic_testTimestamp.pagesProps = pagesProps;
+  topic_testTimestamp.form = form;
   const topic_testTimestampValue =topic.testTimestamp ? moment(topic.testTimestamp) : null;
   topic_testTimestamp.config.initialValue = topic_testTimestampValue;
   topic_testTimestamp.data = topic_testTimestampValue;
   /** testDatetime TIMESTAMP*/
-  topic_testDatetime.pagesProps = pagesProps;
+  topic_testDatetime.form = form;
   const topic_testDatetimeValue =topic.testDatetime ? moment(topic.testDatetime) : null;
   topic_testDatetime.config.initialValue = topic_testDatetimeValue;
   topic_testDatetime.data = topic_testDatetimeValue;
   /** 测式日期 DATE*/
-  topic_testDate.pagesProps = pagesProps;
+  topic_testDate.form = form;
   const topic_testDateValue =topic.testDate ? moment(topic.testDate) : null;
   topic_testDate.config.initialValue = topic_testDateValue;
   topic_testDate.data = topic_testDateValue;
   /** 测试时间 TIME*/
-  topic_testTime.pagesProps = pagesProps;
+  topic_testTime.form = form;
   const topic_testTimeValue =topic.testTime ? moment(topic.testTime) : null;
   topic_testTime.config.initialValue = topic_testTimeValue;
   topic_testTime.data = topic_testTimeValue;
-  /** provinceId */
-  topic_provinceId.pagesProps = pagesProps;
-  const topic_provinceIdValue =topic.provinceId;
-  topic_provinceId.config.initialValue = topic_provinceIdValue;
-  topic_provinceId.data = topic_provinceIdValue;
-  /** cityId */
-  topic_cityId.pagesProps = pagesProps;
-  const topic_cityIdValue =topic.cityId;
-  topic_cityId.config.initialValue = topic_cityIdValue;
-  topic_cityId.data = topic_cityIdValue;
   /** 创建时间 TIMESTAMP*/
-  topic_createTime.pagesProps = pagesProps;
+  topic_createTime.form = form;
   const topic_createTimeValue =topic.createTime ? moment(topic.createTime) : null;
   topic_createTime.config.initialValue = topic_createTimeValue;
   topic_createTime.data = topic_createTimeValue;
   /** 更新时间 TIMESTAMP*/
-  topic_updateTime.pagesProps = pagesProps;
+  topic_updateTime.form = form;
   const topic_updateTimeValue =topic.updateTime ? moment(topic.updateTime) : null;
   topic_updateTime.config.initialValue = topic_updateTimeValue;
   topic_updateTime.data = topic_updateTimeValue;
@@ -641,8 +524,6 @@ export const getTopicFormItemConfigMap = (topic: Topic, pagesProps: PagesProps):
   return {
     Author: topic_author,
     ReplyCount: topic_replyCount,
-    City: topic_city,
-    Province: topic_province,
     TopicId: topic_topicId,
     AuthorId: topic_authorId,
     TopicType: topic_topicType,
@@ -656,8 +537,6 @@ export const getTopicFormItemConfigMap = (topic: Topic, pagesProps: PagesProps):
     TestDatetime: topic_testDatetime,
     TestDate: topic_testDate,
     TestTime: topic_testTime,
-    ProvinceId: topic_provinceId,
-    CityId: topic_cityId,
     CreateTime: topic_createTime,
     UpdateTime: topic_updateTime,
   }

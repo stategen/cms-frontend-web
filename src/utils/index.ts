@@ -109,4 +109,3 @@ export function arrayToTree(array, id = 'id', pid = 'pid', children = 'children'
   })
   return result
 }
-

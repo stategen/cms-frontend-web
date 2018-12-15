@@ -1,5 +1,5 @@
 import React from 'react'
-import {Input, DatePicker, TimePicker, Select, Cascader } from 'antd';
+import {Input, DatePicker, TimePicker, Select, Form} from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import {Options, FormItemConfig} from "./DvaUtil";
 import Menu from "@i/beans/Menu";
@@ -9,14 +9,11 @@ import {InputProps} from "antd/lib/input";
 import {DatePickerProps} from "antd/lib/date-picker/interface";
 import {SelectProps} from "antd/lib/select";
 import {LinkProps} from "react-router-dom";
-import {AreaState, FormItemEditorProps, KeyValue, uncapFirst} from "@utils/DvaUtil";
+import {FormItemEditorProps, KeyValue} from "@utils/DvaUtil";
 import FormItem, {FormItemProps} from "antd/es/form/FormItem";
 import {WrappedFormUtils} from "antd/es/form/Form";
 import {TextAreaProps} from 'antd/es/input/TextArea';
 import {TimePickerProps} from 'antd/es/time-picker';
-import {CascaderProps} from 'antd/es/cascader';
-import {AppDispatch} from "@i/interfaces/AppFaces";
-import {OptionProps} from "antd/es/select";
 
 
 const {TextArea} = Input;
@@ -115,8 +112,8 @@ namespace UIUtil {
     )
   }
 
-  export function makeSelectOptions(options: OptionProps[]) {
-    const result = options.map((option) => {
+  export function makeSelectOptions(options: Options = {}) {
+    const result = Object.values(options).map((option) => {
       return (
         <Select.Option value={option.value} key={`${option.value}`}>{option.title || option.value}
         </Select.Option>
@@ -139,46 +136,17 @@ namespace UIUtil {
         {...muti}
         {...customs}
       >
-        {props.children || makeSelectOptions(Object.values(formItemConfigFiexd.options))}
-      </Select>
-    )
-  }
-
-  export type SelectEditorProps  =FormItemEditorProps & Partial<SelectProps>;
-
-  export function BuildSelectEditor(props?:SelectEditorProps){
-    const {formItemConfig, Editor, ...customs} = props;
-    const muti = formItemConfig.isArray ? {mode: "multiple"} : null;
-    const formItemConfigFiexd = (formItemConfig as FormItemConfigFixed);
-    const pagesProps = formItemConfig.pagesProps;
-
-    const optionProvidor = formItemConfig.optionProvidor;
-    const dispatchData = AppDispatch["get"+optionProvidor+"s_effect"]();
-
-    const area:AreaState<any>= pagesProps.appState[uncapFirst(optionProvidor)+"Area"];
-    return (
-      <Select
-        /*labelInValue*/
-        showSearch
-        // placeholder={formItemConfigFiexd.options._None.title}
-        style={{width: 120}}
-        {...muti}
-        {...customs}
-        onFocus={pagesProps.dispatch(dispatchData)}
-      >
-        {props.children || makeSelectOptions(area.list)}
+        {props.children || makeSelectOptions(formItemConfigFiexd.options)}
       </Select>
     )
   }
 
   export type ImageEditorProps = FormItemEditorProps;
 
-  export function BuildImageEditor(props?: ImageEditorProps) {
+  export function BuildImageEditor(props: ImageEditorProps) {
     const {formItemConfig, Editor, ...customs} = props;
     return (<Input {...customs}/>)
   }
-
-
 
 
   export function getFormItemProps(formItemConfig: FormItemConfig, form: WrappedFormUtils, formItemProps?: FormItemProps) {
@@ -193,7 +161,7 @@ namespace UIUtil {
 
   export function buildFormItems(formItemConfigs: FormItemConfig[], form: WrappedFormUtils, formItemProps?: FormItemProps) {
     const result = formItemConfigs.map((formItemConfig: FormItemConfig) => {
-      form = form || formItemConfig.pagesProps.form;
+      form = form || formItemConfig.form;
       return (
         <FormItem
           {...getFormItemProps(formItemConfig, form, formItemProps)}
@@ -214,7 +182,6 @@ namespace UIUtil {
     });
     return result;
   }
-
 
   export interface LinkPropsFixed extends Partial<LinkProps> {
     to?: string;

@@ -1,9 +1,10 @@
 import {routerRedux} from 'dva/router'
 import {loginInitModel} from "@i/interfaces/LoginFaces";
-import {LoginCommand, loginModel} from "@i/models/LoginModel";
+import {LoginCommand, loginDefaultModel} from "@i/models/LoginDefaultModel";
 import {appEffects} from "@i/interfaces/AppFaces";
 import {HomeDispatch} from "@i/interfaces/HomeFaces";
 
+const loginModel = loginDefaultModel;
 
 //重写login effect
 loginModel.effects.login = function* ({payload}, {put, call, select}) {

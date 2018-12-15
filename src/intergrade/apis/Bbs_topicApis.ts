@@ -9,7 +9,6 @@ import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
 import Topic from "../beans/Topic";
-import TopicType from "../enums/TopicType";
 import {apiUrlKey} from "../configs/tradeCms-config";
 
 export default class Bbs_topicApis {
@@ -43,7 +42,7 @@ export default class Bbs_topicApis {
    * GET /api/topic/getTopicPageList
    * 
    */
-  static getTopicPageList(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: string[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, provinceIds?: string[], cityIds?: string[], page?: number, pageSize?: number }): AntdPageList<Topic> {
+  static getTopicPageList(params: { topicId?: string, topicIds?: string[], authorId?: string, authorIds?: string[], topicType?: string, topicTypes?: string[], content?: string, contentLike?: string, title?: string, titleLike?: string, lastReplyAtMin?: Date, lastReplyAtMax?: Date, goodMin?: number, goodMax?: number, topMin?: number, topMax?: number, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Topic> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/topic/getTopicPageList';
@@ -56,7 +55,7 @@ export default class Bbs_topicApis {
    * GET /api/topic/insert
    * 
    */
-  static insert(params: { topicId?: string, authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date, provinceId?: string, cityId?: string }): Topic {
+  static insert(params: { topicId?: string, authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date }): Topic {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/topic/insert';
