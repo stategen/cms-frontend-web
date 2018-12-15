@@ -7,6 +7,7 @@
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import Menu from "../beans/Menu";
+import Province from "../beans/Province";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
 import {apiUrlKey} from "../configs/tradeCms-config";
@@ -33,6 +34,19 @@ export default class AppApis {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/app/getCookieUser';
+    requestInit.data = params;
+    requestInit.method = Method.GET;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * GET /api/app/getProvinces
+   * 省份
+   */
+  static getProvinces(params?: {}): Province[] {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.url = '/api/app/getProvinces';
     requestInit.data = params;
     requestInit.method = Method.GET;
     return Net.fetch(requestInit);

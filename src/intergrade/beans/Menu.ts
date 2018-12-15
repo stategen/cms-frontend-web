@@ -48,10 +48,10 @@ export enum MenuFields {
   deleteFlag = 'deleteFlag',
   /** id */
   id = 'id',
-  /** opendOrder */
-  opendOrder = 'opendOrder',
   /** menuChildren */
   menuChildren = 'menuChildren',
+  /** opendOrder */
+  opendOrder = 'opendOrder',
 }
 
 export default interface Menu extends Bean {
@@ -110,11 +110,11 @@ export default interface Menu extends Bean {
   /** id,和MenuId相同，为了生成树 */
   id?: number;
 
-  /** 打开顺序，前端model存储用 */
-  opendOrder?: number;
-
   /** menuChildren */
   menuChildren?: Menu[];
+
+  /** 打开顺序，前端model存储用 */
+  opendOrder?: number;
 
 }
 

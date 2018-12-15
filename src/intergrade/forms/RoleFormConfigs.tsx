@@ -6,7 +6,7 @@
  */
 import Role from "../beans/Role"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
 import moment from 'moment';
 
 /** 角色ID */
@@ -16,8 +16,8 @@ const role_roleId = {
   label: "角色ID",
   type: "hidden",
   Editor: UIUtil.BuildHiddenEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -41,8 +41,8 @@ const role_roleName = {
   name: 'roleName',
   label: "角色名称",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -70,8 +70,8 @@ const role_description = {
   name: 'description',
   label: "描述",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -102,8 +102,8 @@ const role_createTime = {
   format: TIMESTAMP_FORMAT,
   label: "创建时间",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -124,8 +124,8 @@ const role_updateTime = {
   format: TIMESTAMP_FORMAT,
   label: "更新时间",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -143,8 +143,8 @@ const role_roleType = {
   name: 'roleType',
   label: "roleType",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -183,34 +183,34 @@ export interface RoleFormItemConfigMap extends FormItemConfigMap {
   RoleType?: typeof role_roleType & Partial<FormItemConfig>,
 
 }
-export const getRoleFormItemConfigMap = (role: Role, form?: FormPropsUtils): RoleFormItemConfigMap => {
+export const getRoleFormItemConfigMap = (role: Role, pagesProps: PagesProps): RoleFormItemConfigMap => {
   /** 角色ID */
-  role_roleId.form = form;
+  role_roleId.pagesProps = pagesProps;
   const role_roleIdValue =role.roleId;
   role_roleId.config.initialValue = role_roleIdValue;
   role_roleId.data = role_roleIdValue;
   /** 角色名称 */
-  role_roleName.form = form;
+  role_roleName.pagesProps = pagesProps;
   const role_roleNameValue =role.roleName;
   role_roleName.config.initialValue = role_roleNameValue;
   role_roleName.data = role_roleNameValue;
   /** 描述 */
-  role_description.form = form;
+  role_description.pagesProps = pagesProps;
   const role_descriptionValue =role.description;
   role_description.config.initialValue = role_descriptionValue;
   role_description.data = role_descriptionValue;
   /** 创建时间 TIMESTAMP*/
-  role_createTime.form = form;
+  role_createTime.pagesProps = pagesProps;
   const role_createTimeValue =role.createTime ? moment(role.createTime) : null;
   role_createTime.config.initialValue = role_createTimeValue;
   role_createTime.data = role_createTimeValue;
   /** 更新时间 TIMESTAMP*/
-  role_updateTime.form = form;
+  role_updateTime.pagesProps = pagesProps;
   const role_updateTimeValue =role.updateTime ? moment(role.updateTime) : null;
   role_updateTime.config.initialValue = role_updateTimeValue;
   role_updateTime.data = role_updateTimeValue;
   /** roleType */
-  role_roleType.form = form;
+  role_roleType.pagesProps = pagesProps;
   const role_roleTypeValue =role.roleType;
   role_roleType.config.initialValue = role_roleTypeValue;
   role_roleType.data = role_roleTypeValue;

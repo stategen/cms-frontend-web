@@ -8,6 +8,7 @@ import {TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT} from "@utils/DvaUtil";
 import Topic from "../beans/Topic"
 import {ColumnProps} from "antd/lib/table";
 import moment from 'moment';
+import {topicTypeOptions} from '../enums/TopicType';
 
 export interface TopicColumns<T> {
   /** author  */
@@ -15,6 +16,12 @@ export interface TopicColumns<T> {
 
   /** replyCount  */
   replyCount?: ColumnProps<T>,
+
+  /** city  */
+  city?: ColumnProps<T>,
+
+  /** province  */
+  province?: ColumnProps<T>,
 
   /** topicId  */
   topicId?: ColumnProps<T>,
@@ -55,6 +62,12 @@ export interface TopicColumns<T> {
   /** 测试时间  TIME*/
   testTime?: ColumnProps<T>,
 
+  /** provinceId  */
+  provinceId?: ColumnProps<T>,
+
+  /** cityId  */
+  cityId?: ColumnProps<T>,
+
   /** 创建时间  TIMESTAMP*/
   createTime?: ColumnProps<T>,
 
@@ -84,6 +97,20 @@ export const topicDefaultColumns: TopicColumns<Topic> = {
     key: 'replyCount',
   },
 
+  /** city  */
+  city: {
+    title: 'city',
+    dataIndex: 'city',
+    key: 'city',
+  },
+
+  /** province  */
+  province: {
+    title: 'province',
+    dataIndex: 'province',
+    key: 'province',
+  },
+
   /** topicId  */
   topicId: {
     title: 'topicId',
@@ -103,6 +130,10 @@ export const topicDefaultColumns: TopicColumns<Topic> = {
     title: 'topicType',
     dataIndex: 'topicType',
     key: 'topicType',
+    render: (text: any, record: Topic, index: number) => {
+      const optionProp = topicTypeOptions[text];
+      return optionProp != null ? optionProp.title : null;
+    },
   },
 
   /** content  */
@@ -178,6 +209,20 @@ export const topicDefaultColumns: TopicColumns<Topic> = {
     dataIndex: 'testTime',
     key: 'testTime',
     render: (text: any, record: Topic, index: number) => record.testTime ? moment(record.testTime).format(TIME_FORMAT) : null,
+  },
+
+  /** provinceId  */
+  provinceId: {
+    title: 'provinceId',
+    dataIndex: 'provinceId',
+    key: 'provinceId',
+  },
+
+  /** cityId  */
+  cityId: {
+    title: 'cityId',
+    dataIndex: 'cityId',
+    key: 'cityId',
   },
 
   /** 创建时间  TIMESTAMP*/

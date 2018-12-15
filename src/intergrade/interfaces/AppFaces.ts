@@ -8,6 +8,7 @@ import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, Connectio
         Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
 import {appCustomState,AppCustomSubscriptions , AppCustomEffects, AppCustomReducers} from '@pages/app/AppCustomFaces'
 import Menu from "../beans/Menu";
+import Province from "../beans/Province";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
@@ -15,6 +16,7 @@ import queryString from 'query-string';
 
 export interface AppInitState extends BaseState {
   menuArea?: AreaState<Menu>;
+  provinceArea?: AreaState<Province>;
   userArea?: AreaState<User>;
 }
 
@@ -32,6 +34,8 @@ export interface AppInitEffects extends Effects {
   getAllMenus?: Effect,
   /**  */
   getCookieUser?: Effect,
+  /** 省份 */
+  getProvinces?: Effect,
   /**  */
   logout?: Effect,
 }
@@ -44,6 +48,8 @@ interface AppInitReducers<S extends AppState> extends Reducers<S> {
   getAllMenus_success?: Reducer<AppState>,
   /**   成功后 更新状态*/
   getCookieUser_success?: Reducer<AppState>,
+  /** 省份  成功后 更新状态*/
+  getProvinces_success?: Reducer<AppState>,
   /**   成功后 更新状态*/
   logout_success?: Reducer<AppState>,
 }
@@ -81,12 +87,16 @@ export const appMenuAreaState = {
   areaName: 'menuArea',
 };
 
+export const appProvinceAreaState = {
+  areaName: 'provinceArea',
+};
+
 export const appUserAreaState = {
   areaName: 'userArea',
 };
 
 appInitModel.getInitState = () => {
-  const initState = mergeObjects({menuArea: {...appMenuAreaState, ...initAreaState}, userArea: {...appUserAreaState, ...initAreaState}},appCustomState);
+  const initState = mergeObjects({menuArea: {...appMenuAreaState, ...initAreaState}, provinceArea: {...appProvinceAreaState, ...initAreaState}, userArea: {...appUserAreaState, ...initAreaState}},appCustomState);
   return initState;
 }
 
@@ -140,6 +150,19 @@ export class AppDispatch {
   static getCookieUser_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
     return {
       type: appInitModel.namespace + '/getCookieUser',
+      payload: {
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
+  };
+
+
+  /** 省份 */
+  static getProvinces_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
+    return {
+      type: appInitModel.namespace + '/getProvinces',
       payload: {
         ...params,
         areaExtraProps__,

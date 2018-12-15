@@ -113,7 +113,7 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
     const isCreate = index < 0;
     const title = isCreate ? '创建' : '更新';
     const currentTopic: Topic = isCreate ? {} : topicArea.list[index];
-    const topicFormConfigMap = getTopicFormItemConfigMap(currentTopic);
+    const topicFormConfigMap = getTopicFormItemConfigMap(currentTopic,props);
     //1.调整顺序，自动生成 1,2,3任选
     const topicFormConfigs = Object.values(topicFormConfigMap);
     //2.调整顺序
@@ -167,7 +167,7 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
   let TopicQueryForm = null;
   if (topicArea.doQuery) {
     const title = 'Query';
-    const topicPageListFormItemConfigMap = Bbs_topicApiForms.getGetTopicPageListFormItemConfigMap(topicArea.queryRule ? topicArea.queryRule : {});
+    const topicPageListFormItemConfigMap = Bbs_topicApiForms.getGetTopicPageListFormItemConfigMap(topicArea.queryRule || {},props);
     const formItemConfigs = Object.values(topicPageListFormItemConfigMap);
     TopicQueryForm = createModelPage(false, title, topicArea, dispatch, formItemConfigs);
   }

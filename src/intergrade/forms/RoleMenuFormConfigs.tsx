@@ -6,7 +6,7 @@
  */
 import RoleMenu from "../beans/RoleMenu"
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
 import moment from 'moment';
 
 /** id */
@@ -15,8 +15,8 @@ const roleMenu_id = {
   isId: true,
   label: "id",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -34,8 +34,8 @@ const roleMenu_roleId = {
   name: 'roleId',
   label: "roleId",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -59,8 +59,8 @@ const roleMenu_menuId = {
   name: 'menuId',
   label: "menuId",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -80,8 +80,8 @@ const roleMenu_createTime = {
   format: TIMESTAMP_FORMAT,
   label: "数据创建时间",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -101,8 +101,8 @@ const roleMenu_updateTime = {
   format: TIMESTAMP_FORMAT,
   label: "数据更新时间",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -132,29 +132,29 @@ export interface RoleMenuFormItemConfigMap extends FormItemConfigMap {
   UpdateTime?: typeof roleMenu_updateTime & Partial<FormItemConfig>,
 
 }
-export const getRoleMenuFormItemConfigMap = (roleMenu: RoleMenu, form?: FormPropsUtils): RoleMenuFormItemConfigMap => {
+export const getRoleMenuFormItemConfigMap = (roleMenu: RoleMenu, pagesProps: PagesProps): RoleMenuFormItemConfigMap => {
   /** id */
-  roleMenu_id.form = form;
+  roleMenu_id.pagesProps = pagesProps;
   const roleMenu_idValue =roleMenu.id;
   roleMenu_id.config.initialValue = roleMenu_idValue;
   roleMenu_id.data = roleMenu_idValue;
   /** roleId */
-  roleMenu_roleId.form = form;
+  roleMenu_roleId.pagesProps = pagesProps;
   const roleMenu_roleIdValue =roleMenu.roleId;
   roleMenu_roleId.config.initialValue = roleMenu_roleIdValue;
   roleMenu_roleId.data = roleMenu_roleIdValue;
   /** menuId */
-  roleMenu_menuId.form = form;
+  roleMenu_menuId.pagesProps = pagesProps;
   const roleMenu_menuIdValue =roleMenu.menuId;
   roleMenu_menuId.config.initialValue = roleMenu_menuIdValue;
   roleMenu_menuId.data = roleMenu_menuIdValue;
   /** 数据创建时间 TIMESTAMP*/
-  roleMenu_createTime.form = form;
+  roleMenu_createTime.pagesProps = pagesProps;
   const roleMenu_createTimeValue =roleMenu.createTime ? moment(roleMenu.createTime) : null;
   roleMenu_createTime.config.initialValue = roleMenu_createTimeValue;
   roleMenu_createTime.data = roleMenu_createTimeValue;
   /** 数据更新时间 TIMESTAMP*/
-  roleMenu_updateTime.form = form;
+  roleMenu_updateTime.pagesProps = pagesProps;
   const roleMenu_updateTimeValue =roleMenu.updateTime ? moment(roleMenu.updateTime) : null;
   roleMenu_updateTime.config.initialValue = roleMenu_updateTimeValue;
   roleMenu_updateTime.data = roleMenu_updateTimeValue;

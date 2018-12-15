@@ -2,16 +2,18 @@ import {PaginationProps} from "antd/lib/pagination/Pagination";
 import {call as Call, put as Put} from 'redux-saga/effects';
 import React from 'react';
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
-import {OptionProps} from "antd/lib/select";
+import {OptionProps} from "antd/es/select";
 import {ReactElement} from "react";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import {History} from "history";
 import {Key} from "path-to-regexp";
+import {FormItemProps} from "antd/lib/form/FormItem";
 
 export const TIME_FORMAT = "HH:mm:ss";
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const TIMESTAMP_FORMAT = "YYYY-MM-DD HH:mm:ss";
 import moment from 'moment';
+import {AppProps, AppState} from "@i/interfaces/AppFaces";
 
 export enum TemporalType {
   TIME = "TIME",
@@ -120,7 +122,6 @@ export interface Effect {
 }
 
 export interface Effects {
-  [effect: string]: Effect;
 }
 
 export interface SubscriptionPros {
@@ -227,6 +228,12 @@ export interface FormItemEditorProps {
   Editor?: (props) => any,
 }
 
+export interface PagesProps extends Partial<AppProps>, Partial<FormProps>, Partial<ConnectionPros> {
+  form?: FormPropsUtils,
+  dispatch?: Dispatch;
+  appState?: AppState;
+}
+
 export interface FormItemConfig {
   name?: string,
   hidden?: boolean,
@@ -239,10 +246,11 @@ export interface FormItemConfig {
   // options?: Options,
   data?: any,
   temporalType?: string,
+  optionProvidor?: string,
   config?: GetFieldDecoratorOptions,
   /*Editor?: (props) => any,*/
-  form?: FormPropsUtils,
-  type?: string,
+  /*type?: string,*/
+  pagesProps?: PagesProps;
 }
 
 export class BaseCommand {
@@ -411,6 +419,9 @@ export const commonFormItemLayout: FormItemProps = {
   },
 };
 
+export function uncapFirst(str){
+  return str.replace(/(\w)/,function(v){return v.toLowerCase()});
+}
 
 
 

@@ -6,7 +6,7 @@
  */
 import SimpleResponse from "../beans/SimpleResponse";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
 import moment from 'moment';
 
 /** 用户名 */
@@ -14,8 +14,8 @@ const login_username = {
   name: 'username',
   label: "用户名",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -45,8 +45,8 @@ const login_password = {
   label: "密码",
   type: "password",
   Editor: UIUtil.BuildPasswordEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
     rules: [
@@ -75,14 +75,14 @@ export namespace LoginApiForms {
     Password?: typeof login_password & Partial<FormItemConfig>,
   }
 
-  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): LoginApiLoginFormItemConfigMap => {
+  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, pagesProps: PagesProps): LoginApiLoginFormItemConfigMap => {
     /** 用户名 */
-    login_username.form = form;
+    login_username.pagesProps = pagesProps;
     const login_usernameValue =queryRule.username;
     login_username.config.initialValue = login_usernameValue;
     login_username.data = login_usernameValue;
     /** 密码 */
-    login_password.form = form;
+    login_password.pagesProps = pagesProps;
     const login_passwordValue =queryRule.password;
     login_password.config.initialValue = login_passwordValue;
     login_password.data = login_passwordValue;

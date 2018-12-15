@@ -10,6 +10,7 @@ import {bbs_topicCustomState,Bbs_topicCustomSubscriptions , Bbs_topicCustomEffec
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
 import Topic from "../beans/Topic";
+import TopicType from "../enums/TopicType";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
@@ -117,7 +118,7 @@ export class Bbs_topicDispatch {
     return routerRedux.push(pushRoute);
   }
 
-  static setup_effect(params: { topicId?: string, topicIds?: string[], authorId?: string, authorIds?: string[], topicType?: string, topicTypes?: string[], content?: string, contentLike?: string, title?: string, titleLike?: string, lastReplyAtMin?: Date, lastReplyAtMax?: Date, goodMin?: number, goodMax?: number, topMin?: number, topMax?: number, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static setup_effect(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: string[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, provinceIds?: string[], cityIds?: string[], page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/setup',
       payload: {
@@ -155,7 +156,7 @@ export class Bbs_topicDispatch {
 
 
   /**  */
-  static getTopicPageList_effect(params: { topicId?: string, topicIds?: string[], authorId?: string, authorIds?: string[], topicType?: string, topicTypes?: string[], content?: string, contentLike?: string, title?: string, titleLike?: string, lastReplyAtMin?: Date, lastReplyAtMax?: Date, goodMin?: number, goodMax?: number, topMin?: number, topMax?: number, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static getTopicPageList_effect(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: string[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, provinceIds?: string[], cityIds?: string[], page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/getTopicPageList',
       payload: {
@@ -176,7 +177,7 @@ export class Bbs_topicDispatch {
 
 
   /**  */
-  static insert_effect(params: { topicId?: string, authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static insert_effect(params: { topicId?: string, authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date, provinceId?: string, cityId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/insert',
       payload: {

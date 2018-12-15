@@ -11,6 +11,7 @@ import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from "antd/lib/pagination";
 import Topic from "../beans/Topic";
+import TopicType from "../enums/TopicType";
 
 
 export class Bbs_topicCommand extends BaseCommand {
@@ -174,18 +175,18 @@ export class Bbs_topicCommand extends BaseCommand {
 
 }
 
-export const bbs_topicDefaultModel: Bbs_topicModel = <Bbs_topicModel>(mergeObjects(abstractModel, bbs_topicInitModel));
+export const bbs_topicModel: Bbs_topicModel = <Bbs_topicModel>(mergeObjects(abstractModel, bbs_topicInitModel));
 
-bbs_topicDefaultModel.subscriptions.setup = ({dispatch, history}) => {
+bbs_topicModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
     const keys = [];
-    const match = RouteUtil.getMatch(bbs_topicDefaultModel.pathname, pathname,keys);
+    const match = RouteUtil.getMatch(bbs_topicModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
     let payload = {...RouteUtil.getQuery(listener)} ;
-    const getTopicPageListParams = bbs_topicDefaultModel.getTopicPageListInitParamsFn ? bbs_topicDefaultModel.getTopicPageListInitParamsFn({pathname, match, keys}) : null;
+    const getTopicPageListParams = bbs_topicModel.getTopicPageListInitParamsFn ? bbs_topicModel.getTopicPageListInitParamsFn({pathname, match, keys}) : null;
     payload = {...payload, ...getTopicPageListParams}
     dispatch({
       type: 'bbs_topic/setup',
@@ -194,15 +195,15 @@ bbs_topicDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   })
 };
 
-bbs_topicDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.setup = function* ({payload}, {call, put, select}) {
   const appState = yield select(_ => _.app);
-  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, bbs_topicDefaultModel.pathname);
+  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, bbs_topicModel.pathname);
   if (!routeOpend) {
     return;
   }
 
-  if (bbs_topicDefaultModel.getInitState) {
-    const initState = bbs_topicDefaultModel.getInitState();
+  if (bbs_topicModel.getInitState) {
+    const initState = bbs_topicModel.getInitState();
     yield put(Bbs_topicCommand.updateState_type(initState));
   }
 
@@ -210,7 +211,7 @@ bbs_topicDefaultModel.effects.setup = function* ({payload}, {call, put, select})
   yield put(Bbs_topicCommand.setup_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.setup_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.setup_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return mergeObjects(
     state,
     payload,
@@ -218,57 +219,57 @@ bbs_topicDefaultModel.reducers.setup_success = (state: Bbs_topicState, {payload}
 };
 
 /**  */
-bbs_topicDefaultModel.effects.delete = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.delete = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.delete_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.delete_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.delete_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.delete_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.delete_success_reducer(state, payload);
 };
 
 /**  */
-bbs_topicDefaultModel.effects.deleteByTopicIds = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.deleteByTopicIds = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.deleteByTopicIds_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.deleteByTopicIds_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.deleteByTopicIds_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.deleteByTopicIds_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.deleteByTopicIds_success_reducer(state, payload);
 };
 
 /**  */
-bbs_topicDefaultModel.effects.getTopicPageList = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.getTopicPageList = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.getTopicPageList_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.getTopicPageList_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.effects.getTopicPageList_next = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.getTopicPageList_next = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.getTopicPageList_next_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.getTopicPageList_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.getTopicPageList_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.getTopicPageList_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.getTopicPageList_success_reducer(state, payload);
 };
 
 /**  */
-bbs_topicDefaultModel.effects.insert = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.insert = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.insert_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.insert_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.insert_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.insert_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.insert_success_reducer(state, payload);
 };
 
 /**  */
-bbs_topicDefaultModel.effects.update = function* ({payload}, {call, put, select}) {
+bbs_topicModel.effects.update = function* ({payload}, {call, put, select}) {
   const newPayload = yield Bbs_topicCommand.update_effect({payload}, {call, put, select});
   yield put(Bbs_topicCommand.update_success_type(newPayload));
 };
 
-bbs_topicDefaultModel.reducers.update_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
+bbs_topicModel.reducers.update_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.update_success_reducer(state, payload);
 };
 

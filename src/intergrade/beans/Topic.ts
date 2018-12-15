@@ -4,6 +4,9 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
+import City from "../beans/City";
+import Province from "../beans/Province";
+import TopicType from "../enums/TopicType";
 import User from "../beans/User";
 import {Bean} from "@utils/DvaUtil";
 
@@ -15,6 +18,10 @@ export enum TopicFields {
   author = 'author',
   /** replyCount */
   replyCount = 'replyCount',
+  /** city */
+  city = 'city',
+  /** province */
+  province = 'province',
   /** topicId */
   topicId = 'topicId',
   /** authorId */
@@ -41,6 +48,10 @@ export enum TopicFields {
   testDate = 'testDate',
   /** testTime */
   testTime = 'testTime',
+  /** provinceId */
+  provinceId = 'provinceId',
+  /** cityId */
+  cityId = 'cityId',
   /** createTime */
   createTime = 'createTime',
   /** updateTime */
@@ -57,6 +68,12 @@ export default interface Topic extends Bean {
   /** replyCount */
   replyCount?: number;
 
+  /** city */
+  city?: City;
+
+  /** province */
+  province?: Province;
+
   /** topicId */
   topicId?: string;
 
@@ -64,7 +81,7 @@ export default interface Topic extends Bean {
   authorId?: string;
 
   /** topicType */
-  topicType?: string;
+  topicType?: TopicType;
 
   /** content */
   content?: string;
@@ -95,6 +112,12 @@ export default interface Topic extends Bean {
 
   /** 测试时间 */
   testTime?: Date;
+
+  /** provinceId */
+  provinceId?: string;
+
+  /** cityId */
+  cityId?: string;
 
   /** 创建时间 */
   createTime?: Date;

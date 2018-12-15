@@ -10,9 +10,7 @@ const config = {
   logo: './static/public/logo.svg',
   iconFontCSS: './static/public/iconfont.css',
   iconFontJS: './static/public/iconfont.js',
-  CORS: [],
   openPages: ['/login'],
-  apiPrefix: '/api/v1',
 }
 
 export  default  config;

@@ -8,7 +8,7 @@ export default class RouteUtil {
     return pathname;
   }
 
-  static getMatch(route, pathname: string, keys?: []): RegExpExecArray {
+  static getMatch(route:string, pathname: string, keys?: any[]): RegExpExecArray {
     keys = keys || [];
     const regEx = pathToRegexp(route || '', keys, {end: false});
     const match = regEx.exec(pathname);

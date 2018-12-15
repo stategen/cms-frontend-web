@@ -9,7 +9,7 @@ import {PaginationProps} from "antd/lib/pagination";
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
+import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, TemporalType, PagesProps} from "@utils/DvaUtil";
 import moment from 'moment';
 import {roleTypeOptions} from '../enums/RoleType';
 
@@ -19,8 +19,8 @@ const getRolePageList_roleIds = {
   isArray: true,
   label: "角色IDs",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -38,8 +38,8 @@ const getRolePageList_roleNameLike = {
   name: 'roleNameLike',
   label: "角色名称Like",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -57,8 +57,8 @@ const getRolePageList_descriptionLike = {
   name: 'descriptionLike',
   label: "描述Like",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -78,8 +78,8 @@ const getRolePageList_createTimeMin = {
   format: TIMESTAMP_FORMAT,
   label: "创建时间Min",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -99,8 +99,8 @@ const getRolePageList_createTimeMax = {
   format: TIMESTAMP_FORMAT,
   label: "创建时间Max",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -120,8 +120,8 @@ const getRolePageList_updateTimeMin = {
   format: TIMESTAMP_FORMAT,
   label: "更新时间Min",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -141,8 +141,8 @@ const getRolePageList_updateTimeMax = {
   format: TIMESTAMP_FORMAT,
   label: "更新时间Max",
   Editor: UIUtil.BuildTimeStampEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -163,8 +163,8 @@ const getRolePageList_roleTypes = {
   isArray: true,
   label: "角色类型s",
   Editor: UIUtil.BuildEnumEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -182,8 +182,8 @@ const getRolePageList_showDateMin = {
   name: 'showDateMin',
   label: "showDateMin",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -201,8 +201,8 @@ const getRolePageList_showDateMax = {
   name: 'showDateMax',
   label: "showDateMax",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -220,8 +220,8 @@ const getRolePageList_showTimeMin = {
   name: 'showTimeMin',
   label: "showTimeMin",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -239,8 +239,8 @@ const getRolePageList_showTimeMax = {
   name: 'showTimeMax',
   label: "showTimeMax",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -258,8 +258,8 @@ const getRolePageList_showDateTimeMin = {
   name: 'showDateTimeMin',
   label: "showDateTimeMin",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -277,8 +277,8 @@ const getRolePageList_showDateTimeMax = {
   name: 'showDateTimeMax',
   label: "showDateTimeMax",
   Editor: UIUtil.BuildInputEditor,
+  pagesProps: null,
   data: null,
-  form: null,
   config: {
     initialValue: null,
   }
@@ -324,74 +324,74 @@ export namespace RoleApiForms {
     ShowDateTimeMax?: typeof getRolePageList_showDateTimeMax & Partial<FormItemConfig>,
   }
 
-  export const getGetRolePageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, form?: FormPropsUtils): RoleApiGetRolePageListFormItemConfigMap => {
+  export const getGetRolePageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, pagesProps: PagesProps): RoleApiGetRolePageListFormItemConfigMap => {
     /** 角色IDs */
-    getRolePageList_roleIds.form = form;
+    getRolePageList_roleIds.pagesProps = pagesProps;
     const getRolePageList_roleIdsValue =queryRule.roleIds;
     getRolePageList_roleIds.config.initialValue = getRolePageList_roleIdsValue;
     getRolePageList_roleIds.data = getRolePageList_roleIdsValue;
     /** 角色名称Like */
-    getRolePageList_roleNameLike.form = form;
+    getRolePageList_roleNameLike.pagesProps = pagesProps;
     const getRolePageList_roleNameLikeValue =queryRule.roleNameLike;
     getRolePageList_roleNameLike.config.initialValue = getRolePageList_roleNameLikeValue;
     getRolePageList_roleNameLike.data = getRolePageList_roleNameLikeValue;
     /** 描述Like */
-    getRolePageList_descriptionLike.form = form;
+    getRolePageList_descriptionLike.pagesProps = pagesProps;
     const getRolePageList_descriptionLikeValue =queryRule.descriptionLike;
     getRolePageList_descriptionLike.config.initialValue = getRolePageList_descriptionLikeValue;
     getRolePageList_descriptionLike.data = getRolePageList_descriptionLikeValue;
     /** 创建时间Min TIMESTAMP*/
-    getRolePageList_createTimeMin.form = form;
+    getRolePageList_createTimeMin.pagesProps = pagesProps;
     const getRolePageList_createTimeMinValue =queryRule.createTimeMin ? moment(queryRule.createTimeMin) : null;
     getRolePageList_createTimeMin.config.initialValue = getRolePageList_createTimeMinValue;
     getRolePageList_createTimeMin.data = getRolePageList_createTimeMinValue;
     /** 创建时间Max TIMESTAMP*/
-    getRolePageList_createTimeMax.form = form;
+    getRolePageList_createTimeMax.pagesProps = pagesProps;
     const getRolePageList_createTimeMaxValue =queryRule.createTimeMax ? moment(queryRule.createTimeMax) : null;
     getRolePageList_createTimeMax.config.initialValue = getRolePageList_createTimeMaxValue;
     getRolePageList_createTimeMax.data = getRolePageList_createTimeMaxValue;
     /** 更新时间Min TIMESTAMP*/
-    getRolePageList_updateTimeMin.form = form;
+    getRolePageList_updateTimeMin.pagesProps = pagesProps;
     const getRolePageList_updateTimeMinValue =queryRule.updateTimeMin ? moment(queryRule.updateTimeMin) : null;
     getRolePageList_updateTimeMin.config.initialValue = getRolePageList_updateTimeMinValue;
     getRolePageList_updateTimeMin.data = getRolePageList_updateTimeMinValue;
     /** 更新时间Max TIMESTAMP*/
-    getRolePageList_updateTimeMax.form = form;
+    getRolePageList_updateTimeMax.pagesProps = pagesProps;
     const getRolePageList_updateTimeMaxValue =queryRule.updateTimeMax ? moment(queryRule.updateTimeMax) : null;
     getRolePageList_updateTimeMax.config.initialValue = getRolePageList_updateTimeMaxValue;
     getRolePageList_updateTimeMax.data = getRolePageList_updateTimeMaxValue;
     /** 角色类型s */
-    getRolePageList_roleTypes.form = form;
+    getRolePageList_roleTypes.pagesProps = pagesProps;
     const getRolePageList_roleTypesValue =queryRule.roleTypes;
     getRolePageList_roleTypes.config.initialValue = getRolePageList_roleTypesValue;
     getRolePageList_roleTypes.data = getRolePageList_roleTypesValue;
     /** showDateMin */
-    getRolePageList_showDateMin.form = form;
+    getRolePageList_showDateMin.pagesProps = pagesProps;
     const getRolePageList_showDateMinValue =queryRule.showDateMin;
     getRolePageList_showDateMin.config.initialValue = getRolePageList_showDateMinValue;
     getRolePageList_showDateMin.data = getRolePageList_showDateMinValue;
     /** showDateMax */
-    getRolePageList_showDateMax.form = form;
+    getRolePageList_showDateMax.pagesProps = pagesProps;
     const getRolePageList_showDateMaxValue =queryRule.showDateMax;
     getRolePageList_showDateMax.config.initialValue = getRolePageList_showDateMaxValue;
     getRolePageList_showDateMax.data = getRolePageList_showDateMaxValue;
     /** showTimeMin */
-    getRolePageList_showTimeMin.form = form;
+    getRolePageList_showTimeMin.pagesProps = pagesProps;
     const getRolePageList_showTimeMinValue =queryRule.showTimeMin;
     getRolePageList_showTimeMin.config.initialValue = getRolePageList_showTimeMinValue;
     getRolePageList_showTimeMin.data = getRolePageList_showTimeMinValue;
     /** showTimeMax */
-    getRolePageList_showTimeMax.form = form;
+    getRolePageList_showTimeMax.pagesProps = pagesProps;
     const getRolePageList_showTimeMaxValue =queryRule.showTimeMax;
     getRolePageList_showTimeMax.config.initialValue = getRolePageList_showTimeMaxValue;
     getRolePageList_showTimeMax.data = getRolePageList_showTimeMaxValue;
     /** showDateTimeMin */
-    getRolePageList_showDateTimeMin.form = form;
+    getRolePageList_showDateTimeMin.pagesProps = pagesProps;
     const getRolePageList_showDateTimeMinValue =queryRule.showDateTimeMin;
     getRolePageList_showDateTimeMin.config.initialValue = getRolePageList_showDateTimeMinValue;
     getRolePageList_showDateTimeMin.data = getRolePageList_showDateTimeMinValue;
     /** showDateTimeMax */
-    getRolePageList_showDateTimeMax.form = form;
+    getRolePageList_showDateTimeMax.pagesProps = pagesProps;
     const getRolePageList_showDateTimeMaxValue =queryRule.showDateTimeMax;
     getRolePageList_showDateTimeMax.config.initialValue = getRolePageList_showDateTimeMaxValue;
     getRolePageList_showDateTimeMax.data = getRolePageList_showDateTimeMaxValue;
