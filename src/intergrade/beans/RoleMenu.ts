@@ -9,21 +9,6 @@ import {Bean} from "@utils/DvaUtil";
 /** id */
 export const RoleMenu_ID: string = 'id';
 
-export enum RoleMenuFields {
-  /** id */
-  id = 'id',
-  /** roleId */
-  roleId = 'roleId',
-  /** menuId */
-  menuId = 'menuId',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-}
-
 export default interface RoleMenu extends Bean {
 
   /** id */
@@ -43,6 +28,27 @@ export default interface RoleMenu extends Bean {
 
   /** 是否删除(0:正常，1删除) */
   deleteFlag?: number;
+
+  /** id s */
+  ids?: number[];
+
+  /** roleId s */
+  roleIds?: string[];
+
+  /** menuId s */
+  menuIds?: number[];
+
+  /** 数据创建时间Min */
+  createTimeMin?: Date;
+
+  /** 数据创建时间Max */
+  createTimeMax?: Date;
+
+  /** 数据更新时间Min */
+  updateTimeMin?: Date;
+
+  /** 数据更新时间Max */
+  updateTimeMax?: Date;
 
 }
 

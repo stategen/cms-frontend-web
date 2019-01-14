@@ -6,7 +6,7 @@
  */
 import {homeInitModel, HomeModel, HomeState} from "../interfaces/HomeFaces";
 import HomeApis from "../apis/HomeApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 
 
@@ -23,6 +23,7 @@ export class HomeCommand extends BaseCommand {
   static setup_success_type(payload) {
     return {type: "setup_success", payload: payload};
   }
+
 
   /**  */
   static * getDashboard_effect({payload}, {call, put, select}) {
@@ -46,21 +47,20 @@ export class HomeCommand extends BaseCommand {
       payload,
     );
   };
-
 }
 
-export const homeDefaultModel: HomeModel = <HomeModel>(mergeObjects(abstractModel, homeInitModel));
+export const homeModel: HomeModel = homeInitModel;
 
-homeDefaultModel.subscriptions.setup = ({dispatch, history}) => {
+homeModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
     const keys = [];
-    const match = RouteUtil.getMatch(homeDefaultModel.pathname, pathname,keys);
+    const match = RouteUtil.getMatch(homeModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
     let payload = {...RouteUtil.getQuery(listener)} ;
-    const getDashboardParams = homeDefaultModel.getDashboardInitParamsFn ? homeDefaultModel.getDashboardInitParamsFn({pathname, match, keys}) : null;
+    const getDashboardParams = homeModel.getDashboardInitParamsFn ? homeModel.getDashboardInitParamsFn({pathname, match, keys}) : null;
     payload = {...payload, ...getDashboardParams}
     dispatch({
       type: 'home/setup',
@@ -69,15 +69,15 @@ homeDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   })
 };
 
-homeDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
+homeModel.effects.setup = function* ({payload}, {call, put, select}) {
   const appState = yield select(_ => _.app);
-  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, homeDefaultModel.pathname);
+  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, homeModel.pathname);
   if (!routeOpend) {
     return;
   }
 
-  if (homeDefaultModel.getInitState) {
-    const initState = homeDefaultModel.getInitState();
+  if (homeModel.getInitState) {
+    const initState = homeModel.getInitState();
     yield put(HomeCommand.updateState_type(initState));
   }
 
@@ -85,7 +85,7 @@ homeDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
   yield put(HomeCommand.setup_success_type(newPayload));
 };
 
-homeDefaultModel.reducers.setup_success = (state: HomeState, {payload}): HomeState => {
+homeModel.reducers.setup_success = (state: HomeState, {payload}): HomeState => {
   return mergeObjects(
     state,
     payload,
@@ -93,12 +93,11 @@ homeDefaultModel.reducers.setup_success = (state: HomeState, {payload}): HomeSta
 };
 
 /**  */
-homeDefaultModel.effects.getDashboard = function* ({payload}, {call, put, select}) {
+homeModel.effects.getDashboard = function* ({payload}, {call, put, select}) {
   const newPayload = yield HomeCommand.getDashboard_effect({payload}, {call, put, select});
   yield put(HomeCommand.getDashboard_success_type(newPayload));
 };
 
-homeDefaultModel.reducers.getDashboard_success = (state: HomeState, {payload}): HomeState => {
+homeModel.reducers.getDashboard_success = (state: HomeState, {payload}): HomeState => {
   return HomeCommand.getDashboard_success_reducer(state, payload);
 };
-

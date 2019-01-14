@@ -5,7 +5,7 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {homeCustomState,HomeCustomSubscriptions , HomeCustomEffects, HomeCustomReducers} from '@pages/home/HomeCustomFaces'
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
@@ -55,7 +55,7 @@ export interface HomeProps extends ConnectionPros {
   homeState?: HomeState,
 }
 
-export const homeInitModel: HomeModel = <HomeModel>{
+export let homeInitModel: HomeModel = <HomeModel>{
   namespace: 'home',
   pathname: '/home',
   state: {},
@@ -74,6 +74,7 @@ homeInitModel.getInitState = () => {
 }
 
 homeInitModel.state=homeInitModel.getInitState();
+homeInitModel = (mergeObjects(abstractModel, homeInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const homeEffects = modelPathsProxy<HomeEffects>(homeInitModel);

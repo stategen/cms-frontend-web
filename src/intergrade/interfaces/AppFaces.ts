@@ -5,16 +5,24 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {appCustomState,AppCustomSubscriptions , AppCustomEffects, AppCustomReducers} from '@pages/app/AppCustomFaces'
+import City from "../beans/City";
+import Hoppy from "../beans/Hoppy";
 import Menu from "../beans/Menu";
+import Province from "../beans/Province";
+import Region from "../beans/Region";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface AppInitState extends BaseState {
+  cityArea?: AreaState<City>;
+  hoppyArea?: AreaState<Hoppy>;
   menuArea?: AreaState<Menu>;
+  provinceArea?: AreaState<Province>;
+  regionArea?: AreaState<Region>;
   userArea?: AreaState<User>;
 }
 
@@ -42,8 +50,13 @@ interface AppInitReducers<S extends AppState> extends Reducers<S> {
   setup_success?: Reducer<AppState>,
   /** 获所所有菜单  成功后 更新状态*/
   getAllMenus_success?: Reducer<AppState>,
+  /** 城市  更新状态*/
   /**   成功后 更新状态*/
   getCookieUser_success?: Reducer<AppState>,
+  /** 爱好  更新状态*/
+  /** 省份  更新状态*/
+  /** 获取地区  更新状态*/
+  /** 获取用户  更新状态*/
   /**   成功后 更新状态*/
   logout_success?: Reducer<AppState>,
 }
@@ -68,7 +81,7 @@ export interface AppProps extends ConnectionPros {
   appState?: AppState,
 }
 
-export const appInitModel: AppModel = <AppModel>{
+export let appInitModel: AppModel = <AppModel>{
   namespace: 'app',
   pathname: '/app',
   state: {},
@@ -77,8 +90,24 @@ export const appInitModel: AppModel = <AppModel>{
   effects: <AppEffects>{},
 };
 
+export const appCityAreaState = {
+  areaName: 'cityArea',
+};
+
+export const appHoppyAreaState = {
+  areaName: 'hoppyArea',
+};
+
 export const appMenuAreaState = {
   areaName: 'menuArea',
+};
+
+export const appProvinceAreaState = {
+  areaName: 'provinceArea',
+};
+
+export const appRegionAreaState = {
+  areaName: 'regionArea',
 };
 
 export const appUserAreaState = {
@@ -86,11 +115,12 @@ export const appUserAreaState = {
 };
 
 appInitModel.getInitState = () => {
-  const initState = mergeObjects({menuArea: {...appMenuAreaState, ...initAreaState}, userArea: {...appUserAreaState, ...initAreaState}},appCustomState);
+  const initState = mergeObjects({cityArea: {...appCityAreaState, ...initAreaState}, hoppyArea: {...appHoppyAreaState, ...initAreaState}, menuArea: {...appMenuAreaState, ...initAreaState}, provinceArea: {...appProvinceAreaState, ...initAreaState}, regionArea: {...appRegionAreaState, ...initAreaState}, userArea: {...appUserAreaState, ...initAreaState}},appCustomState);
   return initState;
 }
 
 appInitModel.state=appInitModel.getInitState();
+appInitModel = (mergeObjects(abstractModel, appInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const appEffects = modelPathsProxy<AppEffects>(appInitModel);
@@ -136,6 +166,8 @@ export class AppDispatch {
   };
 
 
+
+
   /**  */
   static getCookieUser_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
     return {
@@ -147,6 +179,14 @@ export class AppDispatch {
       }
     }
   };
+
+
+
+
+
+
+
+
 
 
   /**  */

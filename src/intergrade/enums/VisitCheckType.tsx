@@ -15,20 +15,12 @@ enum VisitCheckType {
 }
 
 export const visitCheckTypeOptions = {
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** VISIT_CHECK */
   VISIT_CHECK: {
     value: VisitCheckType.VISIT_CHECK,
     title: 'VISIT_CHECK',
   },
 
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** NONE */
   NONE: {
     value: VisitCheckType.NONE,

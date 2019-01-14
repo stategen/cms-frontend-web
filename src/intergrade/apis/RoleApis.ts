@@ -7,7 +7,7 @@
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import AntdPageList from "../beans/AntdPageList";
-import {PaginationProps} from "antd/lib/pagination";
+import {PaginationProps} from 'antd/es/pagination';
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 import {apiUrlKey} from "../configs/tradeCms-config";
@@ -17,12 +17,12 @@ export default class RoleApis {
    * POST /api/role/delete
    * 删除角色
    */
-  static delete(params: { roleId?: string }): string {
+  static delete(params: { roleId?: string } | string): string {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/delete';
     requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
+    requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {roleId: params};
     requestInit.method = Method.POST;
     return Net.fetch(requestInit);
   }
@@ -31,12 +31,12 @@ export default class RoleApis {
    * POST /api/role/deleteByRoleIds
    * 批量删除角色
    */
-  static deleteByRoleIds(params: { roleIds: string[] }): string[] {
+  static deleteByRoleIds(params: { roleIds: string[] } | string[]): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/deleteByRoleIds';
     requestInit.mediaType = MediaType.FORM;
-    requestInit.data = params;
+    requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {roleIds: params};
     requestInit.method = Method.POST;
     return Net.fetch(requestInit);
   }
@@ -59,7 +59,7 @@ export default class RoleApis {
    * POST /api/role/insert
    * 创建角色
    */
-  static insert(params: { role?: Role }): Role {
+  static insert(params: { roleId?: string, roleName?: string, description?: string, roleType?: string }): Role {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/insert';
@@ -73,7 +73,7 @@ export default class RoleApis {
    * POST /api/role/update
    * 更新角色
    */
-  static update(params: { role?: Role }): Role {
+  static update(params: { roleName?: string, description?: string, roleType?: string, roleId?: string }): Role {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/role/update';

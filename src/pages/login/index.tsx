@@ -6,8 +6,8 @@ import styles from './index.less'
 import {ConnectionPros, FormProps} from "@utils/DvaUtil";
 import {FormComponentProps} from "antd/lib/form/Form";
 import {LoginDispatch, LoginProps} from "@i/interfaces/LoginFaces";
-import UIUtil from "@utils/UIUtil";
-import {LoginApiForms} from "@i/forms/LoginApiForms";
+import UIEditors from "@utils/UIEditors";
+import LoginApiForms from "@i/forms/LoginApiForms";
 import {AppProps} from "@i/interfaces/AppFaces";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
 
@@ -27,10 +27,9 @@ const loginPage = (props: LoginPageProps) => {
       // dispatch({ type: 'login/login', payload: values })
     })
   }
-  const loginFormConfigs = LoginApiForms.getLoginFormConfigs({},form);
-  loginFormConfigs.password.editor =UIUtil.buildInputEditor(null,{type:'password'});
-  const formItems = UIUtil.buildFormItems(loginFormConfigs,form,null);
-
+  const loginFormItemConfigMap = LoginApiForms.getLoginFormItemConfigMap({},props);
+   const UsernameEditor = loginFormItemConfigMap.Username.Editor;
+   const PasswordEditor = loginFormItemConfigMap.Password.Editor;
   return (
     <div className={styles.form}>
       <div className={styles.logo}>
@@ -38,15 +37,18 @@ const loginPage = (props: LoginPageProps) => {
         <span>{config.name}</span>
       </div>
       <form>
-        {formItems}
+        <UsernameEditor
+          placeholder={"用户名 admin"}
+        >
+        </UsernameEditor>
+        <PasswordEditor
+          placeholder={"密码为 admin"}
+        >
+        </PasswordEditor>
         <Row>
-          <Button type="primary" onClick={handleOk} loading={loading.effects.login}>
+          <Button type="primary" onClick={handleOk} loading={props.loading.effects.login}>
             Sign in
           </Button>
-          <p>
-            <span>Username：guest</span>
-            <span>Password：guest</span>
-          </p>
         </Row>
 
       </form>
@@ -57,7 +59,7 @@ const loginPage = (props: LoginPageProps) => {
 
 
 const mapStateToProps = (states: StatesAlias & ConnectionPros) : LoginPageProps =>{
-  let result: LoginPageProps = {
+  const result: LoginPageProps = {
     appState: states.app,
     loginState: states.login,
     loading: states.loading,

@@ -5,11 +5,11 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
-import {PaginationProps} from "antd/lib/pagination";
-import RoleType from "../enums/RoleType";
+import {PaginationProps} from 'antd/es/pagination';
+import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
@@ -28,8 +28,6 @@ export type UserSubscriptions = UserInitSubscriptions & UserCustomSubscriptions;
 
 export interface UserInitEffects extends Effects {
   setup?: Effect;
-  /** 创建用户 */
-  createUser?: Effect,
   /** 删除用户 */
   delete?: Effect,
   /** 批量删除用户 */
@@ -37,24 +35,26 @@ export interface UserInitEffects extends Effects {
   /** 用户列表 */
   getUserPageList?: Effect,
   getUserPageList_next?: Effect,
+  /** 创建用户 */
+  insert?: Effect,
   /** 修改用户 */
-  patchUser?: Effect,
+  update?: Effect,
 }
 
 export type UserEffects = UserInitEffects & UserCustomEffects;
 
 interface UserInitReducers<S extends UserState> extends Reducers<S> {
   setup_success?: Reducer<UserState>,
-  /** 创建用户  成功后 更新状态*/
-  createUser_success?: Reducer<UserState>,
   /** 删除用户  成功后 更新状态*/
   delete_success?: Reducer<UserState>,
   /** 批量删除用户  成功后 更新状态*/
   deleteByUserIds_success?: Reducer<UserState>,
   /** 用户列表  成功后 更新状态*/
   getUserPageList_success?: Reducer<UserState>,
+  /** 创建用户  成功后 更新状态*/
+  insert_success?: Reducer<UserState>,
   /** 修改用户  成功后 更新状态*/
-  patchUser_success?: Reducer<UserState>,
+  update_success?: Reducer<UserState>,
 }
 
 export type UserReducers = UserInitReducers<UserState> & UserCustomReducers;
@@ -76,7 +76,7 @@ export interface UserProps extends ConnectionPros {
   userState?: UserState,
 }
 
-export const userInitModel: UserModel = <UserModel>{
+export let userInitModel: UserModel = <UserModel>{
   namespace: 'user',
   pathname: '/user',
   state: {},
@@ -95,6 +95,7 @@ userInitModel.getInitState = () => {
 }
 
 userInitModel.state=userInitModel.getInitState();
+userInitModel = (mergeObjects(abstractModel, userInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const userEffects = modelPathsProxy<UserEffects>(userInitModel);
@@ -113,7 +114,7 @@ export class UserDispatch {
     return routerRedux.push(pushRoute);
   }
 
-  static setup_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static setup_effect(params: { userId?: string, userIds?: string[], usernameLike?: string, roleTypes?: string[], ageMin?: number, ageMax?: number, valiDatetimeMin?: Date, birthdayDateMin?: Date, workTimeMin?: Date, provinceId?: string, cityIds?: string[], statuss?: StatusEnum[], gradeMin?: number, postAddressId?: string, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/setup',
       payload: {
@@ -123,19 +124,6 @@ export class UserDispatch {
       }
     }
   }
-
-  /** 创建用户 */
-  static createUser_effect(user: User, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
-    return {
-      type: userInitModel.namespace + '/createUser',
-      payload: {
-        user,
-        areaExtraProps__,
-        stateExtraProps__,
-      }
-    }
-  };
-
 
   /** 删除用户 */
   static delete_effect(params: { userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
@@ -164,7 +152,7 @@ export class UserDispatch {
 
 
   /** 用户列表 */
-  static getUserPageList_effect(params: { userIds?: string[], usernameLike?: string, passwordLike?: string, roleTypes?: RoleType[], nameLike?: string, nickNameLike?: string, ageMin?: number, ageMax?: number, addressLike?: string, avatarLike?: string, emailLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  static getUserPageList_effect(params: { userId?: string, userIds?: string[], usernameLike?: string, roleTypes?: string[], ageMin?: number, ageMax?: number, valiDatetimeMin?: Date, birthdayDateMin?: Date, workTimeMin?: Date, provinceId?: string, cityIds?: string[], statuss?: StatusEnum[], gradeMin?: number, postAddressId?: string, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
       type: userInitModel.namespace + '/getUserPageList',
       payload: {
@@ -184,12 +172,25 @@ export class UserDispatch {
   };
 
 
-  /** 修改用户 */
-  static patchUser_effect(user: User, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+  /** 创建用户 */
+  static insert_effect(params: { hoppyIds?: number[], cascaderPostAddressIds?: number[], username?: string, password?: string, roleType?: string, name?: string, nickName?: string, age?: number, address?: string, avatarImgId?: string, email?: string, valiDatetime?: Date, birthdayDate?: Date, workTime?: Date, provinceId?: string, cityId?: string, status?: StatusEnum, grade?: number, sex?: boolean, postAddressId?: string, userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
     return {
-      type: userInitModel.namespace + '/patchUser',
+      type: userInitModel.namespace + '/insert',
       payload: {
-        user,
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
+  };
+
+
+  /** 修改用户 */
+  static update_effect(params: { hoppyIds?: number[], cascaderPostAddressIds?: number[], username?: string, password?: string, roleType?: string, name?: string, nickName?: string, age?: number, address?: string, avatarImgId?: string, email?: string, valiDatetime?: Date, birthdayDate?: Date, workTime?: Date, provinceId?: string, cityId?: string, status?: StatusEnum, grade?: number, sex?: boolean, postAddressId?: string, userId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: UserState) {
+    return {
+      type: userInitModel.namespace + '/update',
+      payload: {
+        ...params,
         areaExtraProps__,
         stateExtraProps__,
       }

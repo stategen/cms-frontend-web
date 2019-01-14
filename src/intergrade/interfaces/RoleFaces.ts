@@ -5,10 +5,10 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {roleCustomState,RoleCustomSubscriptions , RoleCustomEffects, RoleCustomReducers} from '@pages/role/RoleCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
-import {PaginationProps} from "antd/lib/pagination";
+import {PaginationProps} from 'antd/es/pagination';
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
 import {routerRedux} from 'dva/router';
@@ -76,7 +76,7 @@ export interface RoleProps extends ConnectionPros {
   roleState?: RoleState,
 }
 
-export const roleInitModel: RoleModel = <RoleModel>{
+export let roleInitModel: RoleModel = <RoleModel>{
   namespace: 'role',
   pathname: '/role',
   state: {},
@@ -95,6 +95,7 @@ roleInitModel.getInitState = () => {
 }
 
 roleInitModel.state=roleInitModel.getInitState();
+roleInitModel = (mergeObjects(abstractModel, roleInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const roleEffects = modelPathsProxy<RoleEffects>(roleInitModel);
@@ -172,7 +173,7 @@ export class RoleDispatch {
 
 
   /** 创建角色 */
-  static insert_effect(params: { role?: Role }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static insert_effect(params: { roleId?: string, roleName?: string, description?: string, roleType?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/insert',
       payload: {
@@ -185,7 +186,7 @@ export class RoleDispatch {
 
 
   /** 更新角色 */
-  static update_effect(params: { role?: Role }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
+  static update_effect(params: { roleName?: string, description?: string, roleType?: string, roleId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: RoleState) {
     return {
       type: roleInitModel.namespace + '/update',
       payload: {

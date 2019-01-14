@@ -4,24 +4,23 @@
  *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
  *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
  */
+import React from 'react';
 import {connect} from 'dva';
 import {UserDispatch, userEffects, UserProps, userReducers, UserState} from '@i/interfaces/UserFaces';
 import User from "@i/beans/User";
-import {userDefaultColumns} from "@i/columns/UserColumns";
-import {Table, Modal, Col, Button, Popconfirm, Form} from "antd";
+import {Table, Modal, Col, Button, Popconfirm} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
-import {getUserFormItemConfigMap, UserFormItemConfigMap} from "@i/forms/UserFormConfigs";
-import {ConnectionPros, operateOptions, cleanSelectRowsProps, KeyValue,} from "@utils/DvaUtil";
+import {ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
-import {UserApiForms} from "@i/forms/UserApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
-import UIUtil from "@utils/UIUtil";
-import FormItem, {FormItemProps} from "antd/es/form/FormItem";
-import {createModelPage} from "@components/QueryModal/QueryModal";
+import {FormItemProps} from "antd/es/form/FormItem";
+import {ModelPage, ModelPageProps} from "@components/QueryModal/QueryModal";
 import Link from "umi/link";
+import UserColumns from "@i/columns/UserColumns";
+import UserApiForms from "@i/forms/UserApiForms";
 
 
 const {confirm} = Modal;
@@ -32,7 +31,11 @@ interface HandleMenuClick {
   (e, record: User, index: number): any;
 }
 
-const userIdRender = (text: any, record: User, index: number) =>{
+const formItemProps: FormItemProps = {
+  labelCol: {span: 7},
+  wrapperCol: {span: 12},
+}
+const userIdRender = (text: any, record: User, index: number) => {
   return (
     <Link to={"#"} key={record.userId} title={text}>
       {text}
@@ -44,8 +47,9 @@ const userPage = (props: UserPageProps) => {
   const dispatch = props.dispatch;
   const userArea = props.userState.userArea;
   //自定义渲染
-  userDefaultColumns.userId.render=userIdRender;
-  const userColumns = Object.values(userDefaultColumns);
+  const renderColumns = UserColumns.renderColumns;
+  renderColumns.userId.render = userIdRender;
+  const userColumns = Object.values(renderColumns);
 
   const onAdd = () => {
     const userState: UserState = {
@@ -107,47 +111,145 @@ const userPage = (props: UserPageProps) => {
     },
   });
 
-  let UserEditorModalPage = null;
+  let EditorModalPage = null;
   if (userArea.doEdit) {
     const index = userArea.index;
     const isCreate = index < 0;
     const title = isCreate ? '创建' : '更新';
-    const currentUser: User = isCreate ? {} : userArea.list[index];
-    const userFormConfigMap = getUserFormItemConfigMap(currentUser);
-    //1.调整顺序，自动生成 1,2,3任选
-    const userFormConfigs = Object.values(userFormConfigMap);
-    //2.调整顺序
-    // const userFormConfigs: FormItemConfig[] = [];
-    // userFormConfigs.push(userFormConfigMap.UserName)
-    // userFormConfigs.push(userFormConfigMap.UserId)
-    // userFormConfigs.push(userFormConfigMap.UserType)
-    UserEditorModalPage = createModelPage(true, title, userArea, dispatch, userFormConfigs, null);
+    const current: User = isCreate ? {} : userArea.list[index];
+    let formItemConfigMap = null;
+    let getEditors = null;
+    if (isCreate) {
+      const insertFormItemConfigMap = UserApiForms.getInsertFormItemConfigMap(current, null, formItemProps);
+      //可选1,自动排版，不漂亮,调整顺序也可以
+      formItemConfigMap = insertFormItemConfigMap;
+    } else {
+      //点击 getUpdateFormItemConfigMap 进去即可将以下内容复制出来,然后自定义排版
+      const updateFormItemConfigMap = UserApiForms.getUpdateFormItemConfigMap(current, null, formItemProps);
+      formItemConfigMap = updateFormItemConfigMap;
+      //2.也可以自定义排版，属性可以提示
+      getEditors = () => {
+        const UserIdEditor = updateFormItemConfigMap.UserId.Editor;
+        const NameEditor = updateFormItemConfigMap.Name.Editor;
 
-    //3.写定义组件
-    // const customBuildFormItem: UIUtil.CustomBuildFormItem<UserFormItemConfigMap> = (formItemPropsMap: KeyValue<UserFormItemConfigMap, FormItemProps>) => {
-    //   return (
-    //     <>
-    //       <FormItem
-    //         {...formItemPropsMap.UserId}
-    //       >
-    //       </FormItem>
-    //
-    //       <FormItem
-    //         {...formItemPropsMap.UserType}
-    //       >
-    //       </FormItem>
-    //       <FormItem
-    //         {...formItemPropsMap.UserName}
-    //       >
-    //       </FormItem>
-    //       <FormItem
-    //         {...formItemPropsMap.Description}
-    //       >
-    //       </FormItem>
-    //     </>
-    //   )
-    // }
-    // UserEditorModalPage = createModelPage(true, title, userArea, dispatch, userFormConfigMap, customBuildFormItem);
+        //<#--
+        const HoppyIdsEditor = updateFormItemConfigMap.HoppyIds.Editor;
+        const CascaderPostAddressIdsEditor = updateFormItemConfigMap.CascaderPostAddressIds.Editor;
+        const UsernameEditor = updateFormItemConfigMap.Username.Editor;
+        const PasswordEditor = updateFormItemConfigMap.Password.Editor;
+        const RoleTypeEditor = updateFormItemConfigMap.RoleType.Editor;
+        const NickNameEditor = updateFormItemConfigMap.NickName.Editor;
+        const AgeEditor = updateFormItemConfigMap.Age.Editor;
+        const AddressEditor = updateFormItemConfigMap.Address.Editor;
+        const AvatarImgIdEditor = updateFormItemConfigMap.AvatarImgId.Editor;
+        const EmailEditor = updateFormItemConfigMap.Email.Editor;
+        const ValiDatetimeEditor = updateFormItemConfigMap.ValiDatetime.Editor;
+        const BirthdayDateEditor = updateFormItemConfigMap.BirthdayDate.Editor;
+        const WorkTimeEditor = updateFormItemConfigMap.WorkTime.Editor;
+        const ProvinceIdEditor = updateFormItemConfigMap.ProvinceId.Editor;
+        const CityIdEditor = updateFormItemConfigMap.CityId.Editor;
+        const StatusEditor = updateFormItemConfigMap.Status.Editor;
+        const GradeEditor = updateFormItemConfigMap.Grade.Editor;
+        const SexEditor = updateFormItemConfigMap.Sex.Editor;
+        const PostAddressIdEditor = updateFormItemConfigMap.PostAddressId.Editor;
+        //-->
+        //
+        return (
+          <>
+            <UserIdEditor
+              readOnly
+            >
+            </UserIdEditor>
+            <NameEditor
+            >
+            </NameEditor>
+            //{/*<#--*/}
+            <HoppyIdsEditor
+            >
+            </HoppyIdsEditor>
+            <CascaderPostAddressIdsEditor
+            >
+            </CascaderPostAddressIdsEditor>
+            <UsernameEditor
+            >
+            </UsernameEditor>
+            <PasswordEditor
+            >
+            </PasswordEditor>
+            <RoleTypeEditor
+            >
+            </RoleTypeEditor>
+
+            <NickNameEditor
+            >
+            </NickNameEditor>
+            <AgeEditor
+            >
+            </AgeEditor>
+            <AddressEditor
+            >
+            </AddressEditor>
+            <AvatarImgIdEditor
+            >
+            </AvatarImgIdEditor>
+            <EmailEditor
+            >
+            </EmailEditor>
+            <ValiDatetimeEditor
+            >
+            </ValiDatetimeEditor>
+            <BirthdayDateEditor
+            >
+            </BirthdayDateEditor>
+            <WorkTimeEditor
+            >
+            </WorkTimeEditor>
+            <ProvinceIdEditor
+            >
+            </ProvinceIdEditor>
+            <CityIdEditor
+            >
+            </CityIdEditor>
+            <StatusEditor
+            >
+            </StatusEditor>
+            <GradeEditor
+            >
+            </GradeEditor>
+            <SexEditor
+            >
+            </SexEditor>
+            <PostAddressIdEditor
+            >
+            </PostAddressIdEditor>
+            // --> */};
+            //
+          </>
+        )
+
+      }
+    }
+
+
+    /*1.调整顺序，自动生成 1,2,3任选*/
+    const userFormConfigs = Object.values(formItemConfigMap);
+    /*2.或者 调整顺序 */
+    // const userFormConfigs: FormItemConfig[] = [];
+    // userFormConfigs.push(formItemConfigMap.UserName)
+    // userFormConfigs.push(formItemConfigMap.UserId)
+    // userFormConfigs.push(formItemConfigMap.UserType)
+    /* 自定义排序*/
+
+    const modelPageProps: ModelPageProps<User> = {
+      record: current,
+      isEditor: true,
+      title,
+      areaState: userArea,
+      dispatch,
+      formItemConfigs: userFormConfigs,
+      getEditors,
+    };
+    EditorModalPage = <ModelPage {...modelPageProps} />;
   }
 
   const onFilter = () => {
@@ -166,10 +268,12 @@ const userPage = (props: UserPageProps) => {
 
   let UserQueryForm = null;
   if (userArea.doQuery) {
-    const title = 'Query';
-    const userPageListFormItemConfigMap = UserApiForms.getGetUserPageListFormItemConfigMap(userArea.queryRule ? userArea.queryRule : {});
+    const title = '查询';
+    const record = userArea.queryRule || {};
+    const userPageListFormItemConfigMap = UserApiForms.getUserPageListFormItemConfigMap(record);
     const formItemConfigs = Object.values(userPageListFormItemConfigMap);
-    UserQueryForm = createModelPage(false, title, userArea, dispatch, formItemConfigs);
+    const modelPageProps = {record, isEditor: false, title, areaState: userArea, dispatch, formItemConfigs}
+    UserQueryForm = <ModelPage {...modelPageProps}/>;
   }
 
   const rowSelection: TableRowSelection<User> = {
@@ -221,14 +325,14 @@ const userPage = (props: UserPageProps) => {
             userArea.selectedRowKeys.length > 0 &&
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
               <Button type="primary" style={{marginLeft: 8}}>删除</Button>
-              {'Selected '+userArea.selectedRowKeys.length+' items' }
+              {'Selected ' + userArea.selectedRowKeys.length + ' items'}
             </Popconfirm>
           }
         </Col>
       </Row>
       <Table {...tableProps} />
-      {UserEditorModalPage && <UserEditorModalPage/>}
-      {UserQueryForm && <UserQueryForm/>}
+      {EditorModalPage && {...EditorModalPage}}
+      {UserQueryForm && {...UserQueryForm}}
     </Page>
   )
 };

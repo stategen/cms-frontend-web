@@ -9,17 +9,6 @@ import SimpleResponse from "../beans/SimpleResponse";
 import {Bean} from "@utils/DvaUtil";
 
 
-export enum ResponseFields {
-  /** code */
-  code = 'code',
-  /** exeptionClass */
-  exeptionClass = 'exeptionClass',
-  /** data */
-  data = 'data',
-  /** status */
-  status = 'status',
-}
-
 export default interface Response<T> extends Bean, SimpleResponse {
 
   /** code */

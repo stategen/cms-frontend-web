@@ -9,23 +9,6 @@ import {Bean} from "@utils/DvaUtil";
 /** roleId */
 export const Role_ID: string = 'roleId';
 
-export enum RoleFields {
-  /** roleId */
-  roleId = 'roleId',
-  /** roleName */
-  roleName = 'roleName',
-  /** description */
-  description = 'description',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-  /** roleType */
-  roleType = 'roleType',
-}
-
 export default interface Role extends Bean {
 
   /** 角色ID */
@@ -46,8 +29,32 @@ export default interface Role extends Bean {
   /** 是否删除(0:正常，1删除) */
   deleteFlag?: number;
 
-  /** roleType */
+  /** 角色类型 enum */
   roleType?: string;
+
+  /** 角色ID s */
+  roleIds?: string[];
+
+  /** 角色名称Like */
+  roleNameLike?: string;
+
+  /** 描述Like */
+  descriptionLike?: string;
+
+  /** 创建时间Min */
+  createTimeMin?: Date;
+
+  /** 创建时间Max */
+  createTimeMax?: Date;
+
+  /** 更新时间Min */
+  updateTimeMin?: Date;
+
+  /** 更新时间Max */
+  updateTimeMax?: Date;
+
+  /** 角色类型 s */
+  roleTypes?: string[];
 
 }
 

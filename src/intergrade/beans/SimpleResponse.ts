@@ -7,13 +7,6 @@
 import {Bean} from "@utils/DvaUtil";
 
 
-export enum SimpleResponseFields {
-  /** message */
-  message = 'message',
-  /** success */
-  success = 'success',
-}
-
 export default interface SimpleResponse extends Bean {
 
   /** message */

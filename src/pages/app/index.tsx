@@ -19,7 +19,7 @@ import {TabsProps} from "antd/lib/tabs";
 import {routerRedux} from 'dva/router'
 import User from "@i/beans/User";
 import RouteUtil from "@utils/RouteUtil";
-import UIUtil from "@utils/UIUtil";
+import UIEditors from "@utils/UIEditors";
 import MenuUtil from "@utils/MenuUtil";
 import Loader from "@components/Loader/Loader";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
@@ -120,7 +120,7 @@ const appPage = ({children, dispatch, appState, loading, location}: AppPagesProp
 
     const tabPanes = hasOpenedMenus.map((menu: Menu) => {
       const panelPros: TabPaneProps = {
-        tab: UIUtil.buildLink(menu),
+        tab: UIEditors.buildLink(menu),
         key: menu.route,
         closable: menu.menuId != homeMenu.menuId,
       };

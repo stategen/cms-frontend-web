@@ -6,11 +6,11 @@
  */
 import {userInitModel, UserModel, UserState} from "../interfaces/UserFaces";
 import UserApis from "../apis/UserApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
-import {PaginationProps} from "antd/lib/pagination";
-import RoleType from "../enums/RoleType";
+import {PaginationProps} from 'antd/es/pagination';
+import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
 
 
@@ -28,33 +28,6 @@ export class UserCommand extends BaseCommand {
     return {type: "setup_success", payload: payload};
   }
 
-  /** 创建用户 */
-  static * createUser_effect({payload}, {call, put, select}) {
-    const user: User = yield call(UserApis.createUser, payload);
-    const oldUserArea = yield select((_) => _.user.userArea);
-    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
-
-    const newPayload: UserState = {
-      userArea: {
-        list: users,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static createUser_success_type(payload) {
-    return {type: "createUser_success", payload: payload};
-  }
-
-  /** 创建用户  成功后 更新状态*/
-  static createUser_success_reducer = (state: UserState, payload): UserState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
 
   /** 删除用户 */
   static * delete_effect({payload}, {call, put, select}) {
@@ -118,11 +91,10 @@ export class UserCommand extends BaseCommand {
     payload = {page: 1, pageSize: 10, ...oldUserArea.queryRule, ...payload};
     const userPageList: AntdPageList<User> = yield call(UserApis.getUserPageList, payload);
     const pagination = userPageList ? userPageList.pagination : null;
-    const users = updateArray(oldUserArea.list, userPageList ? userPageList.list : null, "userId");
 
     const newPayload: UserState = {
       userArea: {
-        list: users,
+        list: userPageList ? userPageList.list : [],
         pagination,
         queryRule: payload,
         ...payload ? payload.areaExtraProps__ : null,
@@ -156,9 +128,9 @@ export class UserCommand extends BaseCommand {
     );
   };
 
-  /** 修改用户 */
-  static * patchUser_effect({payload}, {call, put, select}) {
-    const user: User = yield call(UserApis.patchUser, payload);
+  /** 创建用户 */
+  static * insert_effect({payload}, {call, put, select}) {
+    const user: User = yield call(UserApis.insert, payload);
     const oldUserArea = yield select((_) => _.user.userArea);
     const users = updateArray(oldUserArea.list, user ? user : null, "userId");
 
@@ -172,32 +144,59 @@ export class UserCommand extends BaseCommand {
     return newPayload;
   };
 
-  static patchUser_success_type(payload) {
-    return {type: "patchUser_success", payload: payload};
+  static insert_success_type(payload) {
+    return {type: "insert_success", payload: payload};
   }
 
-  /** 修改用户  成功后 更新状态*/
-  static patchUser_success_reducer = (state: UserState, payload): UserState => {
+  /** 创建用户  成功后 更新状态*/
+  static insert_success_reducer = (state: UserState, payload): UserState => {
     return mergeObjects(
       state,
       payload,
     );
   };
 
+  /** 修改用户 */
+  static * update_effect({payload}, {call, put, select}) {
+    const user: User = yield call(UserApis.update, payload);
+    const oldUserArea = yield select((_) => _.user.userArea);
+    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
+
+    const newPayload: UserState = {
+      userArea: {
+        list: users,
+        ...payload ? payload.areaExtraProps__ : null,
+      },
+      ...payload ? payload.stateExtraProps__ : null,
+    };
+    return newPayload;
+  };
+
+  static update_success_type(payload) {
+    return {type: "update_success", payload: payload};
+  }
+
+  /** 修改用户  成功后 更新状态*/
+  static update_success_reducer = (state: UserState, payload): UserState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
 }
 
-export const userDefaultModel: UserModel = <UserModel>(mergeObjects(abstractModel, userInitModel));
+export const userModel: UserModel = userInitModel;
 
-userDefaultModel.subscriptions.setup = ({dispatch, history}) => {
+userModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
     const keys = [];
-    const match = RouteUtil.getMatch(userDefaultModel.pathname, pathname,keys);
+    const match = RouteUtil.getMatch(userModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
     let payload = {...RouteUtil.getQuery(listener)} ;
-    const getUserPageListParams = userDefaultModel.getUserPageListInitParamsFn ? userDefaultModel.getUserPageListInitParamsFn({pathname, match, keys}) : null;
+    const getUserPageListParams = userModel.getUserPageListInitParamsFn ? userModel.getUserPageListInitParamsFn({pathname, match, keys}) : null;
     payload = {...payload, ...getUserPageListParams}
     dispatch({
       type: 'user/setup',
@@ -206,15 +205,15 @@ userDefaultModel.subscriptions.setup = ({dispatch, history}) => {
   })
 };
 
-userDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
+userModel.effects.setup = function* ({payload}, {call, put, select}) {
   const appState = yield select(_ => _.app);
-  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, userDefaultModel.pathname);
+  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, userModel.pathname);
   if (!routeOpend) {
     return;
   }
 
-  if (userDefaultModel.getInitState) {
-    const initState = userDefaultModel.getInitState();
+  if (userModel.getInitState) {
+    const initState = userModel.getInitState();
     yield put(UserCommand.updateState_type(initState));
   }
 
@@ -222,65 +221,64 @@ userDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
   yield put(UserCommand.setup_success_type(newPayload));
 };
 
-userDefaultModel.reducers.setup_success = (state: UserState, {payload}): UserState => {
+userModel.reducers.setup_success = (state: UserState, {payload}): UserState => {
   return mergeObjects(
     state,
     payload,
   );
 };
 
-/** 创建用户 */
-userDefaultModel.effects.createUser = function* ({payload}, {call, put, select}) {
-  const newPayload = yield UserCommand.createUser_effect({payload}, {call, put, select});
-  yield put(UserCommand.createUser_success_type(newPayload));
-};
-
-userDefaultModel.reducers.createUser_success = (state: UserState, {payload}): UserState => {
-  return UserCommand.createUser_success_reducer(state, payload);
-};
-
 /** 删除用户 */
-userDefaultModel.effects.delete = function* ({payload}, {call, put, select}) {
+userModel.effects.delete = function* ({payload}, {call, put, select}) {
   const newPayload = yield UserCommand.delete_effect({payload}, {call, put, select});
   yield put(UserCommand.delete_success_type(newPayload));
 };
 
-userDefaultModel.reducers.delete_success = (state: UserState, {payload}): UserState => {
+userModel.reducers.delete_success = (state: UserState, {payload}): UserState => {
   return UserCommand.delete_success_reducer(state, payload);
 };
 
 /** 批量删除用户 */
-userDefaultModel.effects.deleteByUserIds = function* ({payload}, {call, put, select}) {
+userModel.effects.deleteByUserIds = function* ({payload}, {call, put, select}) {
   const newPayload = yield UserCommand.deleteByUserIds_effect({payload}, {call, put, select});
   yield put(UserCommand.deleteByUserIds_success_type(newPayload));
 };
 
-userDefaultModel.reducers.deleteByUserIds_success = (state: UserState, {payload}): UserState => {
+userModel.reducers.deleteByUserIds_success = (state: UserState, {payload}): UserState => {
   return UserCommand.deleteByUserIds_success_reducer(state, payload);
 };
 
 /** 用户列表 */
-userDefaultModel.effects.getUserPageList = function* ({payload}, {call, put, select}) {
+userModel.effects.getUserPageList = function* ({payload}, {call, put, select}) {
   const newPayload = yield UserCommand.getUserPageList_effect({payload}, {call, put, select});
   yield put(UserCommand.getUserPageList_success_type(newPayload));
 };
 
-userDefaultModel.effects.getUserPageList_next = function* ({payload}, {call, put, select}) {
+userModel.effects.getUserPageList_next = function* ({payload}, {call, put, select}) {
   const newPayload = yield UserCommand.getUserPageList_next_effect({payload}, {call, put, select});
   yield put(UserCommand.getUserPageList_success_type(newPayload));
 };
 
-userDefaultModel.reducers.getUserPageList_success = (state: UserState, {payload}): UserState => {
+userModel.reducers.getUserPageList_success = (state: UserState, {payload}): UserState => {
   return UserCommand.getUserPageList_success_reducer(state, payload);
 };
 
+/** 创建用户 */
+userModel.effects.insert = function* ({payload}, {call, put, select}) {
+  const newPayload = yield UserCommand.insert_effect({payload}, {call, put, select});
+  yield put(UserCommand.insert_success_type(newPayload));
+};
+
+userModel.reducers.insert_success = (state: UserState, {payload}): UserState => {
+  return UserCommand.insert_success_reducer(state, payload);
+};
+
 /** 修改用户 */
-userDefaultModel.effects.patchUser = function* ({payload}, {call, put, select}) {
-  const newPayload = yield UserCommand.patchUser_effect({payload}, {call, put, select});
-  yield put(UserCommand.patchUser_success_type(newPayload));
+userModel.effects.update = function* ({payload}, {call, put, select}) {
+  const newPayload = yield UserCommand.update_effect({payload}, {call, put, select});
+  yield put(UserCommand.update_success_type(newPayload));
 };
 
-userDefaultModel.reducers.patchUser_success = (state: UserState, {payload}): UserState => {
-  return UserCommand.patchUser_success_reducer(state, payload);
+userModel.reducers.update_success = (state: UserState, {payload}): UserState => {
+  return UserCommand.update_success_reducer(state, payload);
 };
-

@@ -5,7 +5,7 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {loginCustomState,LoginCustomSubscriptions , LoginCustomEffects, LoginCustomReducers} from '@pages/login/LoginCustomFaces'
 import SimpleResponse from "../beans/SimpleResponse";
 import {routerRedux} from 'dva/router';
@@ -50,7 +50,7 @@ export interface LoginProps extends ConnectionPros {
   loginState?: LoginState,
 }
 
-export const loginInitModel: LoginModel = <LoginModel>{
+export let loginInitModel: LoginModel = <LoginModel>{
   namespace: 'login',
   pathname: '/login',
   state: {},
@@ -65,6 +65,7 @@ loginInitModel.getInitState = () => {
 }
 
 loginInitModel.state=loginInitModel.getInitState();
+loginInitModel = (mergeObjects(abstractModel, loginInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const loginEffects = modelPathsProxy<LoginEffects>(loginInitModel);

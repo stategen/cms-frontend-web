@@ -1,24 +1,29 @@
-/** ---
- *
- *  created by progen ,do not edit it manually otherwise your code will be override by next call progen,
- *  由 progen代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
+/**
+ *  Do not remove this unless you get business authorization.
+ *  Login
+ *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
+ *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
  */
-import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, BaseProps, Subscriptions, Reducer, AreaState, mergeObjects} from '@utils/DvaUtil';
+import {Effect, Effects, Reducers, Subscriptions} from '@utils/DvaUtil';
 import SimpleResponse from "@i/beans/SimpleResponse";
 import {LoginState} from '@i/interfaces/LoginFaces';
 
+/*** keep this export */
 export const loginCustomState = {
 
 }
 
+/*** keep this export */
 export interface LoginCustomSubscriptions extends Subscriptions {
 
 }
 
+/*** keep this export */
 export interface LoginCustomEffects extends Effects {
 
 }
 
+/*** keep this export */
 export interface LoginCustomReducers extends Reducers<LoginState> {
 
 }

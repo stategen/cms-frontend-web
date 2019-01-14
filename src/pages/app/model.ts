@@ -10,7 +10,7 @@ import AppApis from '@i/apis/AppApis';
 import {loginInitModel} from "@i/interfaces/LoginFaces";
 import Menu from "@i/beans/Menu";
 import {BaseState, mergeObjects} from "@utils/DvaUtil";
-import {AppCommand, appDefaultModel} from "@i/models/AppDefaultModel";
+import {AppCommand, appModel} from "@i/models/AppModel";
 import {appCustomState, Permission} from "@pages/app/AppCustomFaces";
 import RouteUtil from "@utils/RouteUtil";
 import MenuUtil from "@utils/MenuUtil";
@@ -18,8 +18,6 @@ import {homeInitModel} from "@i/interfaces/HomeFaces";
 
 const {prefix} = config;
 
-const appModel: AppModel = appDefaultModel;
-appModel.state = mergeObjects(appInitModel.state, appCustomState);
 
 appModel.subscriptions.setupHistory = ({dispatch, history}) => {
   history.listen((location) => {
@@ -205,8 +203,5 @@ appModel.reducers.handleNavOpenKeys = (state, {payload: navOpenKeys}) => {
   }
 };
 
-
-/*mergeObjects(abstractModel, appModel);*/
-
-// export default appModel;
-export default appModel;
+//不用 default,在layouts中，以更作为默认model
+export const appDefaultModel =appModel;

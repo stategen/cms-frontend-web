@@ -5,7 +5,7 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {user_$userIdCustomState,User_$userIdCustomSubscriptions , User_$userIdCustomEffects, User_$userIdCustomReducers} from '@pages/user/$userId/User_$userIdCustomFaces'
 import User from "../beans/User";
 import {routerRedux} from 'dva/router';
@@ -56,7 +56,7 @@ export interface User_$userIdProps extends ConnectionPros {
   user_$userIdState?: User_$userIdState,
 }
 
-export const user_$userIdInitModel: User_$userIdModel = <User_$userIdModel>{
+export let user_$userIdInitModel: User_$userIdModel = <User_$userIdModel>{
   namespace: 'user_$userId',
   pathname: '/user/:userId',
   state: {},
@@ -75,6 +75,7 @@ user_$userIdInitModel.getInitState = () => {
 }
 
 user_$userIdInitModel.state=user_$userIdInitModel.getInitState();
+user_$userIdInitModel = (mergeObjects(abstractModel, user_$userIdInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const user_$userIdEffects = modelPathsProxy<User_$userIdEffects>(user_$userIdInitModel);

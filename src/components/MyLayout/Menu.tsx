@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Menu, Icon} from 'antd'
 import {Link} from 'react-router-dom'
-import {arrayToTree, queryArray} from '@utils/index'
+import {queryArray} from '@utils/index'
 import pathToRegexp from 'path-to-regexp'
+import {arrayToTree} from "@utils/DvaUtil";
 
 const {SubMenu} = Menu
 let openKeysFlag = false
@@ -12,7 +13,7 @@ const Menus = ({
                  siderFold, darkTheme, navOpenKeys, changeOpenKeys, menus, location,
                }) => {
   // 生成树状
-  const menuTree = arrayToTree(menus.filter(_ => _.mpid !== '-1'), 'id', 'mpid')
+  const menuTree = arrayToTree(menus.filter(_ => _.mpid !== '-1'), 'id', 'mpid').tree;
   const levelMap = {}
 
   // 递归生成菜单

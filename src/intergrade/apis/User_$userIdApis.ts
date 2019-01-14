@@ -11,15 +11,16 @@ import {apiUrlKey} from "../configs/tradeCms-config";
 
 export default class User_$userIdApis {
   /**
-   * GET /api/user/:userId
+   * POST /api/user/:userId
    * 获取用户详情
    */
-  static getUserById(params: { userId: string }): User {
+  static getUserById(params: { userId: string } | string): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/user/:userId';
-    requestInit.data = params;
-    requestInit.method = Method.GET;
+    requestInit.mediaType = MediaType.FORM;
+    requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {userId: params};
+    requestInit.method = Method.POST;
     return Net.fetch(requestInit);
   }
 

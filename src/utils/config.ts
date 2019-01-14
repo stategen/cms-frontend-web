@@ -3,6 +3,12 @@
 
 
 
+import AppApis from "@i/apis/AppApis";
+import FileSummaryApis from "@i/apis/FileSummaryApis";
+//typecript
+let uploadApi=null;
+uploadApi=FileSummaryApis.upload;
+
 const config = {
   name: 'AntD Admin',
   prefix: 'antdAdmin',
@@ -10,9 +16,9 @@ const config = {
   logo: './static/public/logo.svg',
   iconFontCSS: './static/public/iconfont.css',
   iconFontJS: './static/public/iconfont.js',
-  CORS: [],
   openPages: ['/login'],
-  apiPrefix: '/api/v1',
+  optionsApis:AppApis,
+  uploadApi,
 }
 
 export  default  config;

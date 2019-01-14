@@ -8,7 +8,7 @@ export default class RouteUtil {
     return pathname;
   }
 
-  static getMatch(route, pathname: string, keys?: []): RegExpExecArray {
+  static getMatch(route:string, pathname: string, keys?: any[]): RegExpExecArray {
     keys = keys || [];
     const regEx = pathToRegexp(route || '', keys, {end: false});
     const match = regEx.exec(pathname);
@@ -17,13 +17,12 @@ export default class RouteUtil {
 
   static getParams({pathname, match, keys}: SetupProps) {
     if (match) {
-      const names = keys.map(key => key.name)
-      const parmas = names.reduce((memo, name, idx) => {
-        memo[name] = match[idx + 1]
+      const names = keys.map(key => key.name);
+      const params = names.reduce((memo, name, idx) => {
+        memo[name] = match[idx + 1];
         return memo
-      }, {})
-      console.log(parmas)
-      return parmas;
+      }, {});
+      return params;
     }
     return null;
   };
@@ -41,9 +40,9 @@ export default class RouteUtil {
       }
       const routes = Object.keys(routeOrders);
       for (let i = 0; i < routes.length; i++) {
-        const route = routes[i]
+        const route = routes[i];
         if (this.getMatch(route, pathname)) {
-          return true
+          return true;
         }
       }
     }
@@ -89,9 +88,10 @@ export default class RouteUtil {
   static getQuery(listener) {
     const query = listener.query;
     if (query && query instanceof Object) {
-      for (let i in query) {
-        return query;
-      }
+      return query;
+      // for (let i in query) {
+      //   return query;
+      // }
     }
     return null;
   }

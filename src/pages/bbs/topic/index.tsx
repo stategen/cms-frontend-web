@@ -1,27 +1,26 @@
 /**
  *  Do not remove this unless you get business authorization.
- *  Bbs_topic
+ *  Topic
  *  init by [stategen.progen] ,can be edit manually ,keep when "keep this"
  *  由 [stategen.progen]代码生成器初始化，可以手工修改,但如果遇到 keep this ,请保留导出设置以备外部自动化调用
  */
+import React from 'react';
 import {connect} from 'dva';
 import {Bbs_topicDispatch, bbs_topicEffects, Bbs_topicProps, bbs_topicReducers, Bbs_topicState} from '@i/interfaces/Bbs_topicFaces';
 import Topic from "@i/beans/Topic";
-import {topicDefaultColumns} from "@i/columns/TopicColumns";
-import {Table, Modal, Col, Button, Popconfirm, Form} from "antd";
+import {Table, Modal, Col, Button, Popconfirm} from "antd";
 import Page from "@components/Page/Page";
 import DropOption from "@components/DropOption/DropOption";
-import {getTopicFormItemConfigMap, TopicFormItemConfigMap} from "@i/forms/TopicFormConfigs";
-import {ConnectionPros, operateOptions, cleanSelectRowsProps, KeyValue,} from "@utils/DvaUtil";
+import {ConnectionPros, operateOptions, cleanSelectRowsProps} from "@utils/DvaUtil";
 import {AppProps} from "@i/interfaces/AppFaces";
 import {TableProps, TableRowSelection} from "antd/lib/table";
 import Row from "antd/lib/grid/row";
-import {Bbs_topicApiForms} from "@i/forms/Bbs_topicApiForms";
 import StatesAlias from "@i/configs/tradeCms-statesAlias";
-import UIUtil from "@utils/UIUtil";
-import FormItem, {FormItemProps} from "antd/es/form/FormItem";
-import {createModelPage} from "@components/QueryModal/QueryModal";
+import {FormItemProps} from "antd/es/form/FormItem";
+import {ModelPage, ModelPageProps} from "@components/QueryModal/QueryModal";
 import Link from "umi/link";
+import TopicColumns from "@i/columns/TopicColumns";
+import Bbs_topicApiForms from "@i/forms/Bbs_topicApiForms";
 
 
 const {confirm} = Modal;
@@ -32,7 +31,11 @@ interface HandleMenuClick {
   (e, record: Topic, index: number): any;
 }
 
-const topicIdRender = (text: any, record: Topic, index: number) =>{
+const formItemProps: FormItemProps = {
+  labelCol: {span: 7},
+  wrapperCol: {span: 12},
+}
+const bbs_topicIdRender = (text: any, record: Topic, index: number) => {
   return (
     <Link to={"#"} key={record.topicId} title={text}>
       {text}
@@ -44,8 +47,9 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
   const dispatch = props.dispatch;
   const topicArea = props.bbs_topicState.topicArea;
   //自定义渲染
-  topicDefaultColumns.topicId.render=topicIdRender;
-  const topicColumns = Object.values(topicDefaultColumns);
+  const renderColumns = TopicColumns.renderColumns;
+  renderColumns.topicId.render = bbs_topicIdRender;
+  const bbs_topicColumns = Object.values(renderColumns);
 
   const onAdd = () => {
     const bbs_topicState: Bbs_topicState = {
@@ -63,9 +67,9 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
   };
 
   const onDeleteItem = (index) => {
-    const topic = props.bbs_topicState.topicArea.list[index];
-    if (topic) {
-      dispatch(Bbs_topicDispatch.delete_effect({topicId: topic.topicId}, cleanSelectRowsProps))
+    const bbs_topic = props.bbs_topicState.topicArea.list[index];
+    if (bbs_topic) {
+      dispatch(Bbs_topicDispatch.delete_effect({topicId: bbs_topic.topicId}, cleanSelectRowsProps))
     }
   };
 
@@ -98,7 +102,7 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
     }
   } as HandleMenuClick;
 
-  topicColumns.push({
+  bbs_topicColumns.push({
     title: 'Operation',
     key: 'operation',
     width: 100,
@@ -107,47 +111,65 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
     },
   });
 
-  let TopicEditorModalPage = null;
+  let EditorModalPage = null;
   if (topicArea.doEdit) {
     const index = topicArea.index;
     const isCreate = index < 0;
     const title = isCreate ? '创建' : '更新';
-    const currentTopic: Topic = isCreate ? {} : topicArea.list[index];
-    const topicFormConfigMap = getTopicFormItemConfigMap(currentTopic);
-    //1.调整顺序，自动生成 1,2,3任选
-    const topicFormConfigs = Object.values(topicFormConfigMap);
-    //2.调整顺序
-    // const topicFormConfigs: FormItemConfig[] = [];
-    // topicFormConfigs.push(topicFormConfigMap.TopicName)
-    // topicFormConfigs.push(topicFormConfigMap.TopicId)
-    // topicFormConfigs.push(topicFormConfigMap.TopicType)
-    TopicEditorModalPage = createModelPage(true, title, topicArea, dispatch, topicFormConfigs, null);
+    const current: Topic = isCreate ? {} : topicArea.list[index];
+    let formItemConfigMap = null;
+    let getEditors = null;
+    if (isCreate) {
+      const insertFormItemConfigMap = Bbs_topicApiForms.getInsertFormItemConfigMap(current, null, formItemProps);
+      //可选1,自动排版，不漂亮,调整顺序也可以
+      formItemConfigMap = insertFormItemConfigMap;
+    } else {
+      //点击 getUpdateFormItemConfigMap 进去即可将以下内容复制出来,然后自定义排版
+      const updateFormItemConfigMap = Bbs_topicApiForms.getUpdateFormItemConfigMap(current, null, formItemProps);
+      formItemConfigMap = updateFormItemConfigMap;
+      //2.也可以自定义排版，属性可以提示
+      getEditors = () => {
+        const Bbs_topicIdEditor = updateFormItemConfigMap.TopicId.Editor;
+        const TitleEditor = updateFormItemConfigMap.Title.Editor;
 
-    //3.写定义组件
-    // const customBuildFormItem: UIUtil.CustomBuildFormItem<TopicFormItemConfigMap> = (formItemPropsMap: KeyValue<TopicFormItemConfigMap, FormItemProps>) => {
-    //   return (
-    //     <>
-    //       <FormItem
-    //         {...formItemPropsMap.Bbs_topicId}
-    //       >
-    //       </FormItem>
-    //
-    //       <FormItem
-    //         {...formItemPropsMap.Bbs_topicType}
-    //       >
-    //       </FormItem>
-    //       <FormItem
-    //         {...formItemPropsMap.Bbs_topicName}
-    //       >
-    //       </FormItem>
-    //       <FormItem
-    //         {...formItemPropsMap.Description}
-    //       >
-    //       </FormItem>
-    //     </>
-    //   )
-    // }
-    // TopicEditorModalPage = createModelPage(true, title, topicArea, dispatch, topicFormConfigMap, customBuildFormItem);
+        //        //
+        return (
+          <>
+            <Bbs_topicIdEditor
+              readOnly
+            >
+            </Bbs_topicIdEditor>
+            <TitleEditor
+            >
+            </TitleEditor>
+            //{/* */};
+            //
+          </>
+        )
+
+      }
+    }
+
+
+    /*1.调整顺序，自动生成 1,2,3任选*/
+    const bbs_topicFormConfigs = Object.values(formItemConfigMap);
+    /*2.或者 调整顺序 */
+    // const bbs_topicFormConfigs: FormItemConfig[] = [];
+    // bbs_topicFormConfigs.push(formItemConfigMap.Bbs_topicName)
+    // bbs_topicFormConfigs.push(formItemConfigMap.TopicId)
+    // bbs_topicFormConfigs.push(formItemConfigMap.Bbs_topicType)
+    /* 自定义排序*/
+
+    const modelPageProps: ModelPageProps<Topic> = {
+      record: current,
+      isEditor: true,
+      title,
+      areaState: topicArea,
+      dispatch,
+      formItemConfigs: bbs_topicFormConfigs,
+      getEditors,
+    };
+    EditorModalPage = <ModelPage {...modelPageProps} />;
   }
 
   const onFilter = () => {
@@ -164,12 +186,14 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
   }
 
 
-  let TopicQueryForm = null;
+  let Bbs_topicQueryForm = null;
   if (topicArea.doQuery) {
-    const title = 'Query';
-    const topicPageListFormItemConfigMap = Bbs_topicApiForms.getGetTopicPageListFormItemConfigMap(topicArea.queryRule ? topicArea.queryRule : {});
-    const formItemConfigs = Object.values(topicPageListFormItemConfigMap);
-    TopicQueryForm = createModelPage(false, title, topicArea, dispatch, formItemConfigs);
+    const title = '查询';
+    const record = topicArea.queryRule || {};
+    const bbs_topicPageListFormItemConfigMap = Bbs_topicApiForms.getTopicPageListFormItemConfigMap(record);
+    const formItemConfigs = Object.values(bbs_topicPageListFormItemConfigMap);
+    const modelPageProps = {record, isEditor: false, title, areaState: topicArea, dispatch, formItemConfigs}
+    Bbs_topicQueryForm = <ModelPage {...modelPageProps}/>;
   }
 
   const rowSelection: TableRowSelection<Topic> = {
@@ -202,10 +226,10 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
   const tableProps: TableProps<Topic> = {
     rowSelection: rowSelection,
     bordered: true,
-    rowKey: (topic: Topic) => topic.topicId,
+    rowKey: (bbs_topic: Topic) => bbs_topic.topicId,
     dataSource: topicArea.list,
     loading: loading.effects[bbs_topicEffects.getTopicPageList.toString()],
-    columns: topicColumns,
+    columns: bbs_topicColumns,
     pagination: pagination,
   }
 
@@ -221,14 +245,14 @@ const bbs_topicPage = (props: Bbs_topicPageProps) => {
             topicArea.selectedRowKeys.length > 0 &&
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
               <Button type="primary" style={{marginLeft: 8}}>删除</Button>
-              {'Selected '+topicArea.selectedRowKeys.length+' items' }
+              {'Selected ' + topicArea.selectedRowKeys.length + ' items'}
             </Popconfirm>
           }
         </Col>
       </Row>
       <Table {...tableProps} />
-      {TopicEditorModalPage && <TopicEditorModalPage/>}
-      {TopicQueryForm && <TopicQueryForm/>}
+      {EditorModalPage && {...EditorModalPage}}
+      {Bbs_topicQueryForm && {...Bbs_topicQueryForm}}
     </Page>
   )
 };

@@ -11,49 +11,6 @@ import {Bean} from "@utils/DvaUtil";
 /** menuId */
 export const Menu_ID: string = 'menuId';
 
-export enum MenuFields {
-  /** roleId */
-  roleId = 'roleId',
-  /** checked */
-  checked = 'checked',
-  /** menuId */
-  menuId = 'menuId',
-  /** bpid */
-  bpid = 'bpid',
-  /** mpid */
-  mpid = 'mpid',
-  /** projectName */
-  projectName = 'projectName',
-  /** controllerName */
-  controllerName = 'controllerName',
-  /** methodName */
-  methodName = 'methodName',
-  /** url */
-  url = 'url',
-  /** icon */
-  icon = 'icon',
-  /** name */
-  name = 'name',
-  /** route */
-  route = 'route',
-  /** menuType */
-  menuType = 'menuType',
-  /** checkType */
-  checkType = 'checkType',
-  /** createTime */
-  createTime = 'createTime',
-  /** updateTime */
-  updateTime = 'updateTime',
-  /** deleteFlag */
-  deleteFlag = 'deleteFlag',
-  /** id */
-  id = 'id',
-  /** opendOrder */
-  opendOrder = 'opendOrder',
-  /** menuChildren */
-  menuChildren = 'menuChildren',
-}
-
 export default interface Menu extends Bean {
 
   /** roleId */
@@ -62,13 +19,16 @@ export default interface Menu extends Bean {
   /** checked */
   checked?: boolean;
 
-  /** 菜单ID */
+  /** menuId */
   menuId?: number;
 
-  /** 面包屑父ID menuId与bpid组成树图 */
+  /** morder */
+  morder?: number;
+
+  /** menuId与bpid组成树图 */
   bpid?: number;
 
-  /** 菜单父ID 大部分情况下与bpid相同，当为动态目录时，mpid=-1 */
+  /** 大部分情况下与bpid相同，当为动态目录时，mpid=-1 */
   mpid?: number;
 
   /** 对应的项目id */
@@ -86,10 +46,10 @@ export default interface Menu extends Bean {
   /** icon */
   icon?: string;
 
-  /** 名称 */
+  /** name */
   name?: string;
 
-  /** 路由路径 */
+  /** route */
   route?: string;
 
   /** menuType */
@@ -98,23 +58,71 @@ export default interface Menu extends Bean {
   /** checkType */
   checkType?: VisitCheckType;
 
-  /** 创建时间 */
+  /** 数据创建时间 */
   createTime?: Date;
 
-  /** 更新时间 */
+  /** 数据更新时间 */
   updateTime?: Date;
 
   /** 是否删除(0:正常，1删除) */
   deleteFlag?: number;
 
+  /** menuId s */
+  menuIds?: number[];
+
+  /** morderMin */
+  morderMin?: number;
+
+  /** morderMax */
+  morderMax?: number;
+
+  /** menuId与bpid组成树图 s */
+  bpids?: number[];
+
+  /** 大部分情况下与bpid相同 s */
+  mpids?: number[];
+
+  /** 对应的项目idLike */
+  projectNameLike?: string;
+
+  /** 对应后台系统controlle名称Like */
+  controllerNameLike?: string;
+
+  /** 对应后台系统method名称Like */
+  methodNameLike?: string;
+
+  /** 对应的项目idnameLike */
+  nameLike?: string;
+
+  /** routeLike */
+  routeLike?: string;
+
+  /** menuType s */
+  menuTypes?: MenuType[];
+
+  /** checkType s */
+  checkTypes?: VisitCheckType[];
+
+  /** 数据创建时间Min */
+  createTimeMin?: Date;
+
+  /** 数据创建时间Max */
+  createTimeMax?: Date;
+
+  /** 数据更新时间Min */
+  updateTimeMin?: Date;
+
+  /** 数据更新时间Max */
+  updateTimeMax?: Date;
+
   /** id,和MenuId相同，为了生成树 */
   id?: number;
 
-  /** 打开顺序，前端model存储用 */
-  opendOrder?: number;
-
   /** menuChildren */
   menuChildren?: Menu[];
+
+  /** 打开顺序，前端model存储用 */
+  opendOrder?: number;
 
 }
 

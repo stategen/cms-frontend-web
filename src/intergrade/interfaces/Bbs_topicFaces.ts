@@ -5,17 +5,17 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
-        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState} from '@utils/DvaUtil';
+        Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {bbs_topicCustomState,Bbs_topicCustomSubscriptions , Bbs_topicCustomEffects, Bbs_topicCustomReducers} from '@pages/bbs/topic/Bbs_topicCustomFaces'
 import AntdPageList from "../beans/AntdPageList";
-import {PaginationProps} from "antd/lib/pagination";
+import {PaginationProps} from 'antd/es/pagination';
 import Topic from "../beans/Topic";
+import TopicType from "../enums/TopicType";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface Bbs_topicInitState extends BaseState {
   topicArea?: AreaState<Topic>;
-  stringArea?: AreaState<string>;
 }
 
 export type Bbs_topicState = Bbs_topicInitState & Partial<typeof bbs_topicCustomState>;
@@ -76,7 +76,7 @@ export interface Bbs_topicProps extends ConnectionPros {
   bbs_topicState?: Bbs_topicState,
 }
 
-export const bbs_topicInitModel: Bbs_topicModel = <Bbs_topicModel>{
+export let bbs_topicInitModel: Bbs_topicModel = <Bbs_topicModel>{
   namespace: 'bbs_topic',
   pathname: '/bbs/topic',
   state: {},
@@ -89,16 +89,13 @@ export const bbs_topicTopicAreaState = {
   areaName: 'topicArea',
 };
 
-export const bbs_topicStringAreaState = {
-  areaName: 'stringArea',
-};
-
 bbs_topicInitModel.getInitState = () => {
-  const initState = mergeObjects({topicArea: {...bbs_topicTopicAreaState, ...initAreaState}, stringArea: {...bbs_topicStringAreaState, ...initAreaState}},bbs_topicCustomState);
+  const initState = mergeObjects({topicArea: {...bbs_topicTopicAreaState, ...initAreaState}},bbs_topicCustomState);
   return initState;
 }
 
 bbs_topicInitModel.state=bbs_topicInitModel.getInitState();
+bbs_topicInitModel = (mergeObjects(abstractModel, bbs_topicInitModel));
 
 /***把 namespace 带过来，以便生成路径*/
 export const bbs_topicEffects = modelPathsProxy<Bbs_topicEffects>(bbs_topicInitModel);
@@ -117,7 +114,7 @@ export class Bbs_topicDispatch {
     return routerRedux.push(pushRoute);
   }
 
-  static setup_effect(params: { topicId?: string, topicIds?: string[], authorId?: string, authorIds?: string[], topicType?: string, topicTypes?: string[], content?: string, contentLike?: string, title?: string, titleLike?: string, lastReplyAtMin?: Date, lastReplyAtMax?: Date, goodMin?: number, goodMax?: number, topMin?: number, topMax?: number, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static setup_effect(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: TopicType[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/setup',
       payload: {
@@ -155,7 +152,7 @@ export class Bbs_topicDispatch {
 
 
   /**  */
-  static getTopicPageList_effect(params: { topicId?: string, topicIds?: string[], authorId?: string, authorIds?: string[], topicType?: string, topicTypes?: string[], content?: string, contentLike?: string, title?: string, titleLike?: string, lastReplyAtMin?: Date, lastReplyAtMax?: Date, goodMin?: number, goodMax?: number, topMin?: number, topMax?: number, visitCountMin?: number, visitCountMax?: number, testTimestampMin?: Date, testTimestampMax?: Date, testDatetimeMin?: Date, testDatetimeMax?: Date, testDateMin?: Date, testDateMax?: Date, testTimeMin?: Date, testTimeMax?: Date, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static getTopicPageList_effect(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: TopicType[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, page?: number, pageSize?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/getTopicPageList',
       payload: {
@@ -176,7 +173,7 @@ export class Bbs_topicDispatch {
 
 
   /**  */
-  static insert_effect(params: { topicId?: string, authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static insert_effect(params: { topicId?: string, authorId?: string, topicType?: TopicType, content?: string, title?: string, lastReplyAt?: Date, good?: number, top?: number, visitCount?: number }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/insert',
       payload: {
@@ -189,7 +186,7 @@ export class Bbs_topicDispatch {
 
 
   /**  */
-  static update_effect(params: { authorId?: string, topicType?: string, content?: string, title?: string, lastReplyAt?: string, good?: string, top?: string, visitCount?: number, createAt?: string, testTimestamp?: Date, testDatetime?: Date, testDate?: Date, testTime?: Date, topicId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
+  static update_effect(params: { authorId?: string, topicType?: TopicType, content?: string, title?: string, lastReplyAt?: Date, good?: number, top?: TopicType, visitCount?: number, topicId?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: Bbs_topicState) {
     return {
       type: bbs_topicInitModel.namespace + '/update',
       payload: {

@@ -6,7 +6,7 @@
  */
 import {user_$userIdInitModel, User_$userIdModel, User_$userIdState} from "../interfaces/User_$userIdFaces";
 import User_$userIdApis from "../apis/User_$userIdApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import User from "../beans/User";
 
@@ -24,6 +24,7 @@ export class User_$userIdCommand extends BaseCommand {
   static setup_success_type(payload) {
     return {type: "setup_success", payload: payload};
   }
+
 
   /** 获取用户详情 */
   static * getUserById_effect({payload}, {call, put, select}) {
@@ -50,21 +51,20 @@ export class User_$userIdCommand extends BaseCommand {
       payload,
     );
   };
-
 }
 
-export const user_$userIdDefaultModel: User_$userIdModel = <User_$userIdModel>(mergeObjects(abstractModel, user_$userIdInitModel));
+export const user_$userIdModel: User_$userIdModel = user_$userIdInitModel;
 
-user_$userIdDefaultModel.subscriptions.setup = ({dispatch, history}) => {
+user_$userIdModel.subscriptions.setup = ({dispatch, history}) => {
   history.listen((listener) => {
     const pathname = listener.pathname;
     const keys = [];
-    const match = RouteUtil.getMatch(user_$userIdDefaultModel.pathname, pathname,keys);
+    const match = RouteUtil.getMatch(user_$userIdModel.pathname, pathname,keys);
     if (!match) {
       return;
     }
     let payload = {...RouteUtil.getQuery(listener)} ;
-    const getUserByIdParams = user_$userIdDefaultModel.getUserByIdInitParamsFn ? user_$userIdDefaultModel.getUserByIdInitParamsFn({pathname, match, keys}) : null;
+    const getUserByIdParams = user_$userIdModel.getUserByIdInitParamsFn ? user_$userIdModel.getUserByIdInitParamsFn({pathname, match, keys}) : null;
     payload = {...payload, ...getUserByIdParams}
     dispatch({
       type: 'user_$userId/setup',
@@ -72,17 +72,17 @@ user_$userIdDefaultModel.subscriptions.setup = ({dispatch, history}) => {
     })
   })
 };
-user_$userIdDefaultModel.getUserByIdInitParamsFn = RouteUtil.getParams;
+user_$userIdModel.getUserByIdInitParamsFn = RouteUtil.getParams;
 
-user_$userIdDefaultModel.effects.setup = function* ({payload}, {call, put, select}) {
+user_$userIdModel.effects.setup = function* ({payload}, {call, put, select}) {
   const appState = yield select(_ => _.app);
-  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, user_$userIdDefaultModel.pathname);
+  const routeOpend = RouteUtil.isRouteOpend(appState.routeOrders, user_$userIdModel.pathname);
   if (!routeOpend) {
     return;
   }
 
-  if (user_$userIdDefaultModel.getInitState) {
-    const initState = user_$userIdDefaultModel.getInitState();
+  if (user_$userIdModel.getInitState) {
+    const initState = user_$userIdModel.getInitState();
     yield put(User_$userIdCommand.updateState_type(initState));
   }
 
@@ -90,7 +90,7 @@ user_$userIdDefaultModel.effects.setup = function* ({payload}, {call, put, selec
   yield put(User_$userIdCommand.setup_success_type(newPayload));
 };
 
-user_$userIdDefaultModel.reducers.setup_success = (state: User_$userIdState, {payload}): User_$userIdState => {
+user_$userIdModel.reducers.setup_success = (state: User_$userIdState, {payload}): User_$userIdState => {
   return mergeObjects(
     state,
     payload,
@@ -98,12 +98,11 @@ user_$userIdDefaultModel.reducers.setup_success = (state: User_$userIdState, {pa
 };
 
 /** 获取用户详情 */
-user_$userIdDefaultModel.effects.getUserById = function* ({payload}, {call, put, select}) {
+user_$userIdModel.effects.getUserById = function* ({payload}, {call, put, select}) {
   const newPayload = yield User_$userIdCommand.getUserById_effect({payload}, {call, put, select});
   yield put(User_$userIdCommand.getUserById_success_type(newPayload));
 };
 
-user_$userIdDefaultModel.reducers.getUserById_success = (state: User_$userIdState, {payload}): User_$userIdState => {
+user_$userIdModel.reducers.getUserById_success = (state: User_$userIdState, {payload}): User_$userIdState => {
   return User_$userIdCommand.getUserById_success_reducer(state, payload);
 };
-

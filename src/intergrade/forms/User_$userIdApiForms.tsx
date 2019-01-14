@@ -5,10 +5,16 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import User from "../beans/User";
-import UIUtil from "@utils/UIUtil";
-import {FormItemConfig, FormItemConfigMap, ObjectMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, FormPropsUtils, TemporalType} from "@utils/DvaUtil";
-import moment from 'moment';
+import UIEditors from "@utils/UIEditors";
+import {
+  FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
+  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+} from "@utils/DvaUtil";
+import UIColumns from "@utils/UIColumns";
+import UserColumns from '../columns/UserColumns';
 
 
-export namespace User_$userIdApiForms {
+namespace User_$userIdApiForms {
+
 }
+export default User_$userIdApiForms;

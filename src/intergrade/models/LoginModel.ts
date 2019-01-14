@@ -6,12 +6,13 @@
  */
 import {loginInitModel, LoginModel, LoginState} from "../interfaces/LoginFaces";
 import LoginApis from "../apis/LoginApis";
-import {abstractModel, updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import SimpleResponse from "../beans/SimpleResponse";
 
 
 export class LoginCommand extends BaseCommand {
+
   /**  */
   static * login_effect({payload}, {call, put, select}) {
     const simpleResponse: SimpleResponse = yield call(LoginApis.login, payload);
@@ -37,17 +38,16 @@ export class LoginCommand extends BaseCommand {
       payload,
     );
   };
-
 }
 
-export const loginDefaultModel: LoginModel = <LoginModel>(mergeObjects(abstractModel, loginInitModel));
+export const loginModel: LoginModel = loginInitModel;
+
 /**  */
-loginDefaultModel.effects.login = function* ({payload}, {call, put, select}) {
+loginModel.effects.login = function* ({payload}, {call, put, select}) {
   const newPayload = yield LoginCommand.login_effect({payload}, {call, put, select});
   yield put(LoginCommand.login_success_type(newPayload));
 };
 
-loginDefaultModel.reducers.login_success = (state: LoginState, {payload}): LoginState => {
+loginModel.reducers.login_success = (state: LoginState, {payload}): LoginState => {
   return LoginCommand.login_success_reducer(state, payload);
 };
-

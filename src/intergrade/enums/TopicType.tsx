@@ -21,50 +21,30 @@ enum TopicType {
 }
 
 export const topicTypeOptions = {
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** 精华 */
   good: {
     value: TopicType.good,
     title: '精华',
   },
 
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** 分享 */
   share: {
     value: TopicType.share,
     title: '分享',
   },
 
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** 问答 */
   ask: {
     value: TopicType.ask,
     title: '问答',
   },
 
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** 招聘 */
   job: {
     value: TopicType.job,
     title: '招聘',
   },
 
-  _None:{
-    value: null,
-    title: '请选择',
-  },
   /** 测试 */
   dev: {
     value: TopicType.dev,
