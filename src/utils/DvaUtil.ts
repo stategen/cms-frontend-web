@@ -28,7 +28,7 @@ export const moment = _moment;
 
 export enum TemporalType {
   TIME = "TIME",
-  DATE = "",
+  DATE = "DATE",
   TIMESTAMP = "TIMESTAMP",
 }
 
