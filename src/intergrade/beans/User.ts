@@ -54,6 +54,12 @@ export default interface User extends Bean {
   /** 别名 */
   nickName?: string;
 
+  /** 国际区号 */
+  interCode?: string;
+
+  /** 手机号 */
+  mobile?: string;
+
   /** 年龄 */
   age?: number;
 
@@ -122,6 +128,12 @@ export default interface User extends Bean {
 
   /** 别名Like */
   nickNameLike?: string;
+
+  /** 国际区号Like */
+  interCodeLike?: string;
+
+  /** 手机号Like */
+  mobileLike?: string;
 
   /** 年龄Min */
   ageMin?: number;

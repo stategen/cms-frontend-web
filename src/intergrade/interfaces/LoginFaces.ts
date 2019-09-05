@@ -8,10 +8,12 @@ import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, Connectio
         Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {loginCustomState,LoginCustomSubscriptions , LoginCustomEffects, LoginCustomReducers} from '@pages/login/LoginCustomFaces'
 import SimpleResponse from "../beans/SimpleResponse";
+import User from "../beans/User";
 import {routerRedux} from 'dva/router';
 import queryString from 'query-string';
 
 export interface LoginInitState extends BaseState {
+  userArea?: AreaState<User>;
 }
 
 export type LoginState = LoginInitState & Partial<typeof loginCustomState>;
@@ -24,6 +26,8 @@ export type LoginSubscriptions = LoginInitSubscriptions & LoginCustomSubscriptio
 export interface LoginInitEffects extends Effects {
   /**  */
   login?: Effect,
+  /**  */
+  loginByMobile?: Effect,
 }
 
 export type LoginEffects = LoginInitEffects & LoginCustomEffects;
@@ -31,6 +35,8 @@ export type LoginEffects = LoginInitEffects & LoginCustomEffects;
 interface LoginInitReducers<S extends LoginState> extends Reducers<S> {
   /**   成功后 更新状态*/
   login_success?: Reducer<LoginState>,
+  /**   成功后 更新状态*/
+  loginByMobile_success?: Reducer<LoginState>,
 }
 
 export type LoginReducers = LoginInitReducers<LoginState> & LoginCustomReducers;
@@ -59,8 +65,12 @@ export let loginInitModel: LoginModel = <LoginModel>{
   effects: <LoginEffects>{},
 };
 
+export const loginUserAreaState = {
+  areaName: 'userArea',
+};
+
 loginInitModel.getInitState = () => {
-  const initState = loginCustomState;
+  const initState = mergeObjects({userArea: {...loginUserAreaState, ...initAreaState}},loginCustomState);
   return initState;
 }
 
@@ -88,6 +98,19 @@ export class LoginDispatch {
   static login_effect(params: { username?: string, password?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: LoginState) {
     return {
       type: loginInitModel.namespace + '/login',
+      payload: {
+        ...params,
+        areaExtraProps__,
+        stateExtraProps__,
+      }
+    }
+  };
+
+
+  /**  */
+  static loginByMobile_effect(params: { interCode?: string, mobile?: string, password?: string }, areaExtraProps__?: AreaState<any>, stateExtraProps__?: LoginState) {
+    return {
+      type: loginInitModel.namespace + '/loginByMobile',
       payload: {
         ...params,
         areaExtraProps__,

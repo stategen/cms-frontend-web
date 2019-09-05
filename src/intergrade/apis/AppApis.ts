@@ -17,16 +17,15 @@ import {apiUrlKey} from "../configs/tradeCms-config";
 
 export default class AppApis {
   /**
-   * POST /api/app/getAllMenus
+   * GET /api/app/getAllMenus
    * 获所所有菜单
    */
   static getAllMenus(params?: {}): Menu[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/app/getAllMenus';
-    requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
-    requestInit.method = Method.POST;
+    requestInit.method = Method.GET;
     return Net.fetch(requestInit);
   }
 
@@ -59,16 +58,15 @@ export default class AppApis {
   }
 
   /**
-   * POST /api/app/getHoppyOptions
+   * GET /api/app/getHoppyOptions
    * 爱好
    */
   static getHoppyOptions(params?: {}): Hoppy[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/app/getHoppyOptions';
-    requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
-    requestInit.method = Method.POST;
+    requestInit.method = Method.GET;
     return Net.fetch(requestInit);
   }
 

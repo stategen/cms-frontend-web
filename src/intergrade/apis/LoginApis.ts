@@ -7,6 +7,7 @@
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import SimpleResponse from "../beans/SimpleResponse";
+import User from "../beans/User";
 import {apiUrlKey} from "../configs/tradeCms-config";
 
 export default class LoginApis {
@@ -18,6 +19,20 @@ export default class LoginApis {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = apiUrlKey;
     requestInit.url = '/api/login/login';
+    requestInit.mediaType = MediaType.FORM;
+    requestInit.data = params;
+    requestInit.method = Method.POST;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * POST /api/login/loginByMobile
+   * 
+   */
+  static loginByMobile(params: { interCode: string, mobile: string, password: string }): User {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.url = '/api/login/loginByMobile';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
     requestInit.method = Method.POST;

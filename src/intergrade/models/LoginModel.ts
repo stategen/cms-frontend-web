@@ -9,6 +9,7 @@ import LoginApis from "../apis/LoginApis";
 import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import SimpleResponse from "../beans/SimpleResponse";
+import User from "../beans/User";
 
 
 export class LoginCommand extends BaseCommand {
@@ -38,6 +39,34 @@ export class LoginCommand extends BaseCommand {
       payload,
     );
   };
+
+  /**  */
+  static * loginByMobile_effect({payload}, {call, put, select}) {
+    const user: User = yield call(LoginApis.loginByMobile, payload);
+    const oldUserArea = yield select((_) => _.login.userArea);
+    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
+
+    const newPayload: LoginState = {
+      userArea: {
+        list: users,
+        ...payload ? payload.areaExtraProps__ : null,
+      },
+      ...payload ? payload.stateExtraProps__ : null,
+    };
+    return newPayload;
+  };
+
+  static loginByMobile_success_type(payload) {
+    return {type: "loginByMobile_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static loginByMobile_success_reducer = (state: LoginState, payload): LoginState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
 }
 
 export const loginModel: LoginModel = loginInitModel;
@@ -50,4 +79,14 @@ loginModel.effects.login = function* ({payload}, {call, put, select}) {
 
 loginModel.reducers.login_success = (state: LoginState, {payload}): LoginState => {
   return LoginCommand.login_success_reducer(state, payload);
+};
+
+/**  */
+loginModel.effects.loginByMobile = function* ({payload}, {call, put, select}) {
+  const newPayload = yield LoginCommand.loginByMobile_effect({payload}, {call, put, select});
+  yield put(LoginCommand.loginByMobile_success_type(newPayload));
+};
+
+loginModel.reducers.loginByMobile_success = (state: LoginState, {payload}): LoginState => {
+  return LoginCommand.loginByMobile_success_reducer(state, payload);
 };

@@ -215,6 +215,44 @@ namespace UserColumns {
     },
   } as ColumnConfig<User>;
 
+  /** 国际区号  */
+  export const interCode = {
+    key: 'interCode',
+    dataIndex: 'interCode',
+    title: '国际区号',
+    renderColumn: UIColumns.InputRender,
+    config: {
+      rules: [
+        {
+          max: 16,
+          message: "最大不能超过{max}",
+        },
+      ],
+    },
+    render: (text: any, record: User, index: number) =>{
+      return interCode.renderColumn(record, null, text, index, interCode);
+    },
+  } as ColumnConfig<User>;
+
+  /** 手机号  */
+  export const mobile = {
+    key: 'mobile',
+    dataIndex: 'mobile',
+    title: '手机号',
+    renderColumn: UIColumns.InputRender,
+    config: {
+      rules: [
+        {
+          max: 16,
+          message: "最大不能超过{max}",
+        },
+      ],
+    },
+    render: (text: any, record: User, index: number) =>{
+      return mobile.renderColumn(record, null, text, index, mobile);
+    },
+  } as ColumnConfig<User>;
+
   /** 年龄  */
   export const age = {
     key: 'age',
@@ -602,6 +640,26 @@ namespace UserColumns {
     },
   } as ColumnConfig<User>;
 
+  /** 国际区号Like  */
+  export const interCodeLike = {
+    key: 'interCodeLike',
+    dataIndex: 'interCodeLike',
+    title: '国际区号Like',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<User>;
+
+  /** 手机号Like  */
+  export const mobileLike = {
+    key: 'mobileLike',
+    dataIndex: 'mobileLike',
+    title: '手机号Like',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<User>;
+
   /** 年龄Min  */
   export const ageMin = {
     key: 'ageMin',
@@ -894,6 +952,8 @@ namespace UserColumns {
     roleType,
     name,
     nickName,
+    interCode,
+    mobile,
     age,
     address,
     avatarImgId,
