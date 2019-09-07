@@ -6,52 +6,9 @@
  */
 import {user_$userIdInitModel, User_$userIdModel, User_$userIdState} from "../interfaces/User_$userIdFaces";
 import User_$userIdApis from "../apis/User_$userIdApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import User from "../beans/User";
-
-
-export class User_$userIdCommand extends BaseCommand {
-  static * setup_effect({payload}, {call, put, select}) {
-    let newPayload = {};
-
-    /** 获取用户详情 */
-    const getUserByIdPayload = yield User_$userIdCommand.getUserById_effect({payload}, {call, put, select});
-    newPayload = User_$userIdCommand.getUserById_success_reducer(<User_$userIdState>newPayload, getUserByIdPayload);
-    return newPayload;
-  };
-
-  static setup_success_type(payload) {
-    return {type: "setup_success", payload: payload};
-  }
-
-
-  /** 获取用户详情 */
-  static * getUserById_effect({payload}, {call, put, select}) {
-    const user: User = yield call(User_$userIdApis.getUserById, payload);
-
-    const newPayload: User_$userIdState = {
-      userArea: {
-        list: user ? [user] : [],
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getUserById_success_type(payload) {
-    return {type: "getUserById_success", payload: payload};
-  }
-
-  /** 获取用户详情  成功后 更新状态*/
-  static getUserById_success_reducer = (state: User_$userIdState, payload): User_$userIdState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const user_$userIdModel: User_$userIdModel = user_$userIdInitModel;
 
@@ -106,3 +63,45 @@ user_$userIdModel.effects.getUserById = function* ({payload}, {call, put, select
 user_$userIdModel.reducers.getUserById_success = (state: User_$userIdState, {payload}): User_$userIdState => {
   return User_$userIdCommand.getUserById_success_reducer(state, payload);
 };
+
+export class User_$userIdCommand extends BaseCommand {
+  static * setup_effect({payload}, {call, put, select}) {
+    let newPayload = {};
+
+    /** 获取用户详情 */
+    const getUserByIdPayload = yield User_$userIdCommand.getUserById_effect({payload}, {call, put, select});
+    newPayload = User_$userIdCommand.getUserById_success_reducer(<User_$userIdState>newPayload, getUserByIdPayload);
+    return newPayload;
+  };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
+
+
+  /** 获取用户详情 */
+  static * getUserById_effect({payload}, {call, put, select}) {
+    const user: User = yield call(User_$userIdApis.getUserById, payload);
+
+    const newPayload: User_$userIdState = {
+      userArea: {
+        list: user ? [user] : [],
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getUserById_success_type(payload) {
+    return {type: "getUserById_success", payload: payload};
+  }
+
+  /** 获取用户详情  成功后 更新状态*/
+  static getUserById_success_reducer = (state: User_$userIdState, payload): User_$userIdState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

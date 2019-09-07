@@ -6,48 +6,8 @@
  */
 import {homeInitModel, HomeModel, HomeState} from "../interfaces/HomeFaces";
 import HomeApis from "../apis/HomeApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
-
-
-export class HomeCommand extends BaseCommand {
-  static * setup_effect({payload}, {call, put, select}) {
-    let newPayload = {};
-
-    /**  */
-    const getDashboardPayload = yield HomeCommand.getDashboard_effect({payload}, {call, put, select});
-    newPayload = HomeCommand.getDashboard_success_reducer(<HomeState>newPayload, getDashboardPayload);
-    return newPayload;
-  };
-
-  static setup_success_type(payload) {
-    return {type: "setup_success", payload: payload};
-  }
-
-
-  /**  */
-  static * getDashboard_effect({payload}, {call, put, select}) {
-    const result: any = yield call(HomeApis.getDashboard, payload);
-
-    const newPayload: HomeState = {
-      ...result,
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getDashboard_success_type(payload) {
-    return {type: "getDashboard_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static getDashboard_success_reducer = (state: HomeState, payload): HomeState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const homeModel: HomeModel = homeInitModel;
 
@@ -101,3 +61,42 @@ homeModel.effects.getDashboard = function* ({payload}, {call, put, select}) {
 homeModel.reducers.getDashboard_success = (state: HomeState, {payload}): HomeState => {
   return HomeCommand.getDashboard_success_reducer(state, payload);
 };
+
+export class HomeCommand extends BaseCommand {
+  static * setup_effect({payload}, {call, put, select}) {
+    let newPayload = {};
+
+    /**  */
+    const getDashboardPayload = yield HomeCommand.getDashboard_effect({payload}, {call, put, select});
+    newPayload = HomeCommand.getDashboard_success_reducer(<HomeState>newPayload, getDashboardPayload);
+    return newPayload;
+  };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
+
+
+  /**  */
+  static * getDashboard_effect({payload}, {call, put, select}) {
+    const result: any = yield call(HomeApis.getDashboard, payload);
+
+    const newPayload: HomeState = {
+      ...result,
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getDashboard_success_type(payload) {
+    return {type: "getDashboard_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static getDashboard_success_reducer = (state: HomeState, payload): HomeState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

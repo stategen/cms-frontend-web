@@ -10,11 +10,11 @@ import {Bean} from "@utils/DvaUtil";
 
 export default interface AntdPageList<E> extends Bean {
 
-  /** list */
-  list?: E[];
-
   /** pagination */
   pagination?: PaginationProps;
+
+  /** list */
+  list?: E[];
 
 }
 

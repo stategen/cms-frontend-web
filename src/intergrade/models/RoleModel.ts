@@ -6,193 +6,12 @@
  */
 import {roleInitModel, RoleModel, RoleState} from "../interfaces/RoleFaces";
 import RoleApis from "../apis/RoleApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from 'antd/es/pagination';
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
-
-
-export class RoleCommand extends BaseCommand {
-  static * setup_effect({payload}, {call, put, select}) {
-    let newPayload = {};
-
-    /** 角色分页列表,多条件 */
-    const getRolePageListPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
-    newPayload = RoleCommand.getRolePageList_success_reducer(<RoleState>newPayload, getRolePageListPayload);
-    return newPayload;
-  };
-
-  static setup_success_type(payload) {
-    return {type: "setup_success", payload: payload};
-  }
-
-
-  /** 删除角色 */
-  static * delete_effect({payload}, {call, put, select}) {
-    const result: string = yield call(RoleApis.delete, payload);
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    const roles = delateArray(oldRoleArea.list, result ? result : null, "roleId");
-
-    const newPayload: RoleState = {
-      roleArea: {
-        list: roles,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static delete_success_type(payload) {
-    return {type: "delete_success", payload: payload};
-  }
-
-  /** 删除角色  成功后 更新状态*/
-  static delete_success_reducer = (state: RoleState, payload): RoleState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /** 批量删除角色 */
-  static * deleteByRoleIds_effect({payload}, {call, put, select}) {
-    const result: string[] = yield call(RoleApis.deleteByRoleIds, payload);
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    const roles = delateArray(oldRoleArea.list, result ? result : null, "roleId");
-
-    const newPayload: RoleState = {
-      roleArea: {
-        list: roles,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static deleteByRoleIds_success_type(payload) {
-    return {type: "deleteByRoleIds_success", payload: payload};
-  }
-
-  /** 批量删除角色  成功后 更新状态*/
-  static deleteByRoleIds_success_reducer = (state: RoleState, payload): RoleState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /** 角色分页列表,多条件 */
-  static * getRolePageList_effect({payload}, {call, put, select}) {
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    payload = {page: 1, pageSize: 10, ...oldRoleArea.queryRule, ...payload};
-    const rolePageList: AntdPageList<Role> = yield call(RoleApis.getRolePageList, payload);
-    const pagination = rolePageList ? rolePageList.pagination : null;
-
-    const newPayload: RoleState = {
-      roleArea: {
-        list: rolePageList ? rolePageList.list : [],
-        pagination,
-        queryRule: payload,
-        ...{
-          doEdit: false,
-        },
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getRolePageList_success_type(payload) {
-    return {type: "getRolePageList_success", payload: payload};
-  }
-
-  static * getRolePageList_next_effect({payload}, {call, put, select}) {
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    const pagination = oldRoleArea.pagination;
-    let page = pagination.current;
-    page = (page ? page : 0) + 1;
-    const totalPages = Math.trunc(pagination.total / (pagination.pageSize || 10)) + 1;
-    page = Math.min(page, totalPages)
-    payload = {...oldRoleArea.queryRule, page};
-    const newPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
-    return newPayload;
-  }
-
-  /** 角色分页列表,多条件  成功后 更新状态*/
-  static getRolePageList_success_reducer = (state: RoleState, payload): RoleState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /** 创建角色 */
-  static * insert_effect({payload}, {call, put, select}) {
-    const role: Role = yield call(RoleApis.insert, payload);
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    const roles = updateArray(oldRoleArea.list, role ? role : null, "roleId");
-
-    const newPayload: RoleState = {
-      roleArea: {
-        list: roles,
-        ...{
-          doEdit: false,
-        },
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static insert_success_type(payload) {
-    return {type: "insert_success", payload: payload};
-  }
-
-  /** 创建角色  成功后 更新状态*/
-  static insert_success_reducer = (state: RoleState, payload): RoleState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /** 更新角色 */
-  static * update_effect({payload}, {call, put, select}) {
-    const role: Role = yield call(RoleApis.update, payload);
-    const oldRoleArea = yield select((_) => _.role.roleArea);
-    const roles = updateArray(oldRoleArea.list, role ? role : null, "roleId");
-
-    const newPayload: RoleState = {
-      roleArea: {
-        list: roles,
-        ...{
-          doEdit: false,
-        },
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static update_success_type(payload) {
-    return {type: "update_success", payload: payload};
-  }
-
-  /** 更新角色  成功后 更新状态*/
-  static update_success_reducer = (state: RoleState, payload): RoleState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const roleModel: RoleModel = roleInitModel;
 
@@ -291,3 +110,183 @@ roleModel.effects.update = function* ({payload}, {call, put, select}) {
 roleModel.reducers.update_success = (state: RoleState, {payload}): RoleState => {
   return RoleCommand.update_success_reducer(state, payload);
 };
+
+export class RoleCommand extends BaseCommand {
+  static * setup_effect({payload}, {call, put, select}) {
+    let newPayload = {};
+
+    /** 角色分页列表,多条件 */
+    const getRolePageListPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
+    newPayload = RoleCommand.getRolePageList_success_reducer(<RoleState>newPayload, getRolePageListPayload);
+    return newPayload;
+  };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
+
+
+  /** 删除角色 */
+  static * delete_effect({payload}, {call, put, select}) {
+    const result: string = yield call(RoleApis.delete, payload);
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    const roles = delateArray(oldRoleArea.list, result, "roleId");
+
+    const newPayload: RoleState = {
+      roleArea: {
+        list: roles,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static delete_success_type(payload) {
+    return {type: "delete_success", payload: payload};
+  }
+
+  /** 删除角色  成功后 更新状态*/
+  static delete_success_reducer = (state: RoleState, payload): RoleState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /** 批量删除角色 */
+  static * deleteByRoleIds_effect({payload}, {call, put, select}) {
+    const result: string[] = yield call(RoleApis.deleteByRoleIds, payload);
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    const roles = delateArray(oldRoleArea.list, result, "roleId");
+
+    const newPayload: RoleState = {
+      roleArea: {
+        list: roles,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static deleteByRoleIds_success_type(payload) {
+    return {type: "deleteByRoleIds_success", payload: payload};
+  }
+
+  /** 批量删除角色  成功后 更新状态*/
+  static deleteByRoleIds_success_reducer = (state: RoleState, payload): RoleState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /** 角色分页列表,多条件 */
+  static * getRolePageList_effect({payload}, {call, put, select}) {
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    payload = {page: DEFAULT_PAGE_NUM, pageSize: DEFAULT_PAGE_SIZE, ...payload};
+    const rolePageList: AntdPageList<Role> = yield call(RoleApis.getRolePageList, payload);
+    const pagination =rolePageList!.pagination;
+
+    const newPayload: RoleState = {
+      roleArea: {
+        list: rolePageList!.list || [],
+        pagination,
+        queryRule: payload,
+        ...{
+          doEdit: false,
+        },
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getRolePageList_success_type(payload) {
+    return {type: "getRolePageList_success", payload: payload};
+  }
+
+  static * getRolePageList_next_effect({payload}, {call, put, select}) {
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    const pagination = oldRoleArea!.pagination;
+    let page = pagination!.current;
+    page = (page || 0) + 1;
+    const totalPages = Math.trunc(pagination!.total / (pagination!.pageSize || 10)) + 1;
+    page = Math.min(page, totalPages)
+    payload = {...oldRoleArea!.queryRule, page};
+    const newPayload = yield RoleCommand.getRolePageList_effect({payload}, {call, put, select});
+    return newPayload;
+  }
+
+  /** 角色分页列表,多条件  成功后 更新状态*/
+  static getRolePageList_success_reducer = (state: RoleState, payload): RoleState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /** 创建角色 */
+  static * insert_effect({payload}, {call, put, select}) {
+    const role: Role = yield call(RoleApis.insert, payload);
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    const roles = updateArray(oldRoleArea.list, role, "roleId");
+
+    const newPayload: RoleState = {
+      roleArea: {
+        list: roles,
+        ...{
+          doEdit: false,
+        },
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static insert_success_type(payload) {
+    return {type: "insert_success", payload: payload};
+  }
+
+  /** 创建角色  成功后 更新状态*/
+  static insert_success_reducer = (state: RoleState, payload): RoleState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /** 更新角色 */
+  static * update_effect({payload}, {call, put, select}) {
+    const role: Role = yield call(RoleApis.update, payload);
+    const oldRoleArea = yield select((_) => _.role.roleArea);
+    const roles = updateArray(oldRoleArea.list, role, "roleId");
+
+    const newPayload: RoleState = {
+      roleArea: {
+        list: roles,
+        ...{
+          doEdit: false,
+        },
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static update_success_type(payload) {
+    return {type: "update_success", payload: payload};
+  }
+
+  /** 更新角色  成功后 更新状态*/
+  static update_success_reducer = (state: RoleState, payload): RoleState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

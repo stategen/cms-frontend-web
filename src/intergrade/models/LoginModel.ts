@@ -6,68 +6,10 @@
  */
 import {loginInitModel, LoginModel, LoginState} from "../interfaces/LoginFaces";
 import LoginApis from "../apis/LoginApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
-
-
-export class LoginCommand extends BaseCommand {
-
-  /**  */
-  static * login_effect({payload}, {call, put, select}) {
-    const simpleResponse: SimpleResponse = yield call(LoginApis.login, payload);
-    if (simpleResponse && !simpleResponse.success) {
-      throw simpleResponse.message;
-    }
-
-    const newPayload: LoginState = {
-      ...payload,
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static login_success_type(payload) {
-    return {type: "login_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static login_success_reducer = (state: LoginState, payload): LoginState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * loginByMobile_effect({payload}, {call, put, select}) {
-    const user: User = yield call(LoginApis.loginByMobile, payload);
-    const oldUserArea = yield select((_) => _.login.userArea);
-    const users = updateArray(oldUserArea.list, user ? user : null, "userId");
-
-    const newPayload: LoginState = {
-      userArea: {
-        list: users,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static loginByMobile_success_type(payload) {
-    return {type: "loginByMobile_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static loginByMobile_success_reducer = (state: LoginState, payload): LoginState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const loginModel: LoginModel = loginInitModel;
 
@@ -90,3 +32,60 @@ loginModel.effects.loginByMobile = function* ({payload}, {call, put, select}) {
 loginModel.reducers.loginByMobile_success = (state: LoginState, {payload}): LoginState => {
   return LoginCommand.loginByMobile_success_reducer(state, payload);
 };
+
+export class LoginCommand extends BaseCommand {
+
+  /**  */
+  static * login_effect({payload}, {call, put, select}) {
+    const simpleResponse: SimpleResponse = yield call(LoginApis.login, payload);
+    if (simpleResponse && !simpleResponse.success) {
+      throw simpleResponse.message;
+    }
+
+    const newPayload: LoginState = {
+      ...payload,
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static login_success_type(payload) {
+    return {type: "login_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static login_success_reducer = (state: LoginState, payload): LoginState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * loginByMobile_effect({payload}, {call, put, select}) {
+    const user: User = yield call(LoginApis.loginByMobile, payload);
+    const oldUserArea = yield select((_) => _.login.userArea);
+    const users = updateArray(oldUserArea.list, user, "userId");
+
+    const newPayload: LoginState = {
+      userArea: {
+        list: users,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static loginByMobile_success_type(payload) {
+    return {type: "loginByMobile_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static loginByMobile_success_reducer = (state: LoginState, payload): LoginState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

@@ -498,20 +498,6 @@ namespace MenuColumns {
     },
   } as ColumnConfig<Menu>;
 
-  /** menuChildren  */
-  export const menuChildren = {
-    key: 'menuChildren',
-    dataIndex: 'menuChildren',
-    title: 'menuChildren',
-    renderColumn: UIColumns.InputRender,
-    isArray: true,
-    config: {
-    },
-    render: (text: any, record: Menu, index: number) =>{
-      return menuChildren.renderColumn(record, null, text, index, menuChildren);
-    },
-  } as ColumnConfig<Menu>;
-
   /** 打开顺序，前端model存储用  */
   export const opendOrder = {
     key: 'opendOrder',
@@ -523,6 +509,20 @@ namespace MenuColumns {
     },
     render: (text: any, record: Menu, index: number) =>{
       return opendOrder.renderColumn(record, null, text, index, opendOrder);
+    },
+  } as ColumnConfig<Menu>;
+
+  /** menuChildren  */
+  export const menuChildren = {
+    key: 'menuChildren',
+    dataIndex: 'menuChildren',
+    title: 'menuChildren',
+    renderColumn: UIColumns.InputRender,
+    isArray: true,
+    config: {
+    },
+    render: (text: any, record: Menu, index: number) =>{
+      return menuChildren.renderColumn(record, null, text, index, menuChildren);
     },
   } as ColumnConfig<Menu>;
 
