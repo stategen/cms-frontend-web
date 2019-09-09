@@ -10,6 +10,19 @@ import UIColumns from "@utils/UIColumns";
 
 namespace AntdPageListColumns {
 
+  /** pagination  */
+  export const pagination = {
+    key: 'pagination',
+    dataIndex: 'pagination',
+    title: 'pagination',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+    render: (text: any, record: AntdPageList<E>, index: number) =>{
+      return pagination.renderColumn(record, null, text, index, pagination);
+    },
+  } as ColumnConfig<AntdPageList<E>>;
+
   /** list  */
   export const list = {
     key: 'list',
@@ -24,23 +37,10 @@ namespace AntdPageListColumns {
     },
   } as ColumnConfig<AntdPageList<E>>;
 
-  /** pagination  */
-  export const pagination = {
-    key: 'pagination',
-    dataIndex: 'pagination',
-    title: 'pagination',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: AntdPageList<E>, index: number) =>{
-      return pagination.renderColumn(record, null, text, index, pagination);
-    },
-  } as ColumnConfig<AntdPageList<E>>;
-
 
   export const renderColumns = {
-    list,
     pagination,
+    list,
   }
 
 }

@@ -10,7 +10,7 @@ import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from 'antd/es/pagination';
 import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class UserApis {
   /**
@@ -19,7 +19,7 @@ export default class UserApis {
    */
   static delete(params: { userId: string } | string): string {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/delete';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {userId: params};
@@ -33,7 +33,7 @@ export default class UserApis {
    */
   static deleteByUserIds(params: { userIds?: string[] } | string[]): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/deleteByUserIds';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {userIds: params};
@@ -47,7 +47,7 @@ export default class UserApis {
    */
   static getUserPageList(params: { userId?: string, userIds?: string[], usernameLike?: string, roleTypes?: string[], ageMin?: number, ageMax?: number, valiDatetimeMin?: Date, birthdayDateMin?: Date, workTimeMin?: Date, provinceId?: string, cityIds?: string[], statuss?: StatusEnum[], gradeMin?: number, postAddressId?: string, page?: number, pageSize?: number }): AntdPageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/getUserPageList';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -61,7 +61,7 @@ export default class UserApis {
    */
   static insert(params: { hoppyIds?: number[], cascaderPostAddressIds?: number[], username?: string, password?: string, roleType?: string, name?: string, nickName?: string, age?: number, address?: string, avatarImgId?: string, email?: string, valiDatetime?: Date, birthdayDate?: Date, workTime?: Date, provinceId?: string, cityId?: string, status?: StatusEnum, grade?: number, sex?: boolean, postAddressId?: string, userId?: string }): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/insert';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -75,7 +75,7 @@ export default class UserApis {
    */
   static update(params: { hoppyIds?: number[], cascaderPostAddressIds?: number[], username?: string, password?: string, roleType?: string, name?: string, nickName?: string, age?: number, address?: string, avatarImgId?: string, email?: string, valiDatetime?: Date, birthdayDate?: Date, workTime?: Date, provinceId?: string, cityId?: string, status?: StatusEnum, grade?: number, sex?: boolean, postAddressId?: string, userId?: string }): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/update';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;

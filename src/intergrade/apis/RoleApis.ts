@@ -10,7 +10,7 @@ import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from 'antd/es/pagination';
 import Role from "../beans/Role";
 import RoleType from "../enums/RoleType";
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class RoleApis {
   /**
@@ -19,7 +19,7 @@ export default class RoleApis {
    */
   static delete(params: { roleId?: string } | string): string {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/role/delete';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {roleId: params};
@@ -33,7 +33,7 @@ export default class RoleApis {
    */
   static deleteByRoleIds(params: { roleIds: string[] } | string[]): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/role/deleteByRoleIds';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {roleIds: params};
@@ -47,7 +47,7 @@ export default class RoleApis {
    */
   static getRolePageList(params: { roleIds?: string[], roleNameLike?: string, descriptionLike?: string, createTimeMin?: Date, createTimeMax?: Date, updateTimeMin?: Date, updateTimeMax?: Date, roleTypes?: RoleType[], showDateMin?: Date, showDateMax?: Date, showTimeMin?: Date, showTimeMax?: Date, showDateTimeMin?: Date, showDateTimeMax?: Date, page?: number, pageSize?: number }): AntdPageList<Role> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/role/getRolePageList';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -61,7 +61,7 @@ export default class RoleApis {
    */
   static insert(params: { roleId?: string, roleName?: string, description?: string, roleType?: string }): Role {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/role/insert';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -75,7 +75,7 @@ export default class RoleApis {
    */
   static update(params: { roleName?: string, description?: string, roleType?: string, roleId?: string }): Role {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/role/update';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;

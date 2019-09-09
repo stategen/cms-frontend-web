@@ -7,7 +7,7 @@
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import User from "../beans/User";
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class User_$userIdApis {
   /**
@@ -16,7 +16,7 @@ export default class User_$userIdApis {
    */
   static getUserById(params: { userId: string } | string): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/:userId';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {userId: params};
