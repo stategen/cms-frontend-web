@@ -9,7 +9,7 @@ import User from "../beans/User";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
 import SimpleResponseColumns from '../columns/SimpleResponseColumns';
@@ -135,7 +135,7 @@ namespace LoginApiForms {
    >
    </PasswordEditor>
    */
-  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): ILoginFormItemConfigMap => {
+  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): ILoginFormItemConfigMap => {
     /** Input */
     const login_usernameValue = queryRule.username;
     /** Password */
@@ -149,7 +149,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Password: {
         ...login_password,
@@ -157,7 +157,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return LoginFormItemConfigMap;
@@ -198,7 +198,7 @@ namespace LoginApiForms {
    >
    </PasswordEditor>
    */
-  export const getLoginByMobileFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): ILoginByMobileFormItemConfigMap => {
+  export const getLoginByMobileFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): ILoginByMobileFormItemConfigMap => {
     /** Input */
     const loginByMobile_interCodeValue = queryRule.interCode;
     /** Input */
@@ -214,7 +214,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Mobile: {
         ...loginByMobile_mobile,
@@ -222,7 +222,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Password: {
         ...loginByMobile_password,
@@ -230,7 +230,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return LoginByMobileFormItemConfigMap;

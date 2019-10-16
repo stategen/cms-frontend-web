@@ -8,7 +8,7 @@ import {userInitModel, UserModel, UserState} from "../interfaces/UserFaces";
 import UserApis from "../apis/UserApis";
 import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
-import AntdPageList from "../beans/AntdPageList";
+import PageList from "../beans/PageList";
 import {PaginationProps} from 'antd/es/pagination';
 import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
@@ -186,12 +186,12 @@ export class UserCommand extends BaseCommand {
   static * getUserPageList_effect({payload}, {call, put, select}) {
     const oldUserArea = yield select((_) => _.user.userArea);
     payload = {page: DEFAULT_PAGE_NUM, pageSize: DEFAULT_PAGE_SIZE, ...payload};
-    const userPageList: AntdPageList<User> = yield call(UserApis.getUserPageList, payload);
+    const userPageList: PageList<User> = yield call(UserApis.getUserPageList, payload);
     const pagination =userPageList!.pagination;
 
     const newPayload: UserState = {
       userArea: {
-        list: userPageList!.list || [],
+        list: userPageList!.items || [],
         pagination,
         queryRule: payload,
         ...payload!.areaExtraProps__,
@@ -210,7 +210,7 @@ export class UserCommand extends BaseCommand {
     const pagination = oldUserArea!.pagination;
     let page = pagination!.current;
     page = (page || 0) + 1;
-    const totalPages = Math.trunc(pagination!.total / (pagination!.pageSize || 10)) + 1;
+    const totalPages = Math.trunc(pagination!.total / (pagination!.pageSize || DEFAULT_PAGE_SIZE)) + 1;
     page = Math.min(page, totalPages)
     payload = {...oldUserArea!.queryRule, page};
     const newPayload = yield UserCommand.getUserPageList_effect({payload}, {call, put, select});

@@ -6,7 +6,7 @@
  */
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
-import AntdPageList from "../beans/AntdPageList";
+import PageList from "../beans/PageList";
 import {PaginationProps} from 'antd/es/pagination';
 import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
@@ -45,7 +45,7 @@ export default class UserApis {
    * POST /api/user/getUserPageList
    * 用户列表
    */
-  static getUserPageList(params: { userId?: string, userIds?: string[], usernameLike?: string, roleTypes?: string[], ageMin?: number, ageMax?: number, valiDatetimeMin?: Date, birthdayDateMin?: Date, workTimeMin?: Date, provinceId?: string, cityIds?: string[], statuss?: StatusEnum[], gradeMin?: number, postAddressId?: string, page?: number, pageSize?: number }): AntdPageList<User> {
+  static getUserPageList(params: { userId?: string, userIds?: string[], usernameLike?: string, roleTypes?: string[], ageMin?: number, ageMax?: number, valiDatetimeMin?: Date, birthdayDateMin?: Date, workTimeMin?: Date, provinceId?: string, cityIds?: string[], statuss?: StatusEnum[], gradeMin?: number, postAddressId?: string, page?: number, pageSize?: number }): PageList<User> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/user/getUserPageList';

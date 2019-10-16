@@ -4,17 +4,17 @@
  *  created by [stategen.progen] ,do not edit it manually otherwise your code will be override by next call progen,
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
-import AntdPageList from "../beans/AntdPageList";
+import PageList from "../beans/PageList";
 import {PaginationProps} from 'antd/es/pagination';
 import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
-import AntdPageListColumns from '../columns/AntdPageListColumns';
+import PageListColumns from '../columns/PageListColumns';
 import {statusEnumOptions} from '../enums/StatusEnum';
 import UserColumns from '../columns/UserColumns';
 
@@ -614,7 +614,7 @@ namespace UserApiForms {
    >
    </PostAddressIdEditor>
    */
-  export const getUserPageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IGetUserPageListFormItemConfigMap => {
+  export const getUserPageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IGetUserPageListFormItemConfigMap => {
     /** Hidden */
     const getUserPageList_userIdValue = queryRule.userId;
     /** Input */
@@ -652,7 +652,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UserIds: {
         ...getUserPageList_userIds,
@@ -660,7 +660,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UsernameLike: {
         ...getUserPageList_usernameLike,
@@ -668,7 +668,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleTypes: {
         ...getUserPageList_roleTypes,
@@ -676,7 +676,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AgeMin: {
         ...getUserPageList_ageMin,
@@ -684,7 +684,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AgeMax: {
         ...getUserPageList_ageMax,
@@ -692,7 +692,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ValiDatetimeMin: {
         ...getUserPageList_valiDatetimeMin,
@@ -700,7 +700,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       BirthdayDateMin: {
         ...getUserPageList_birthdayDateMin,
@@ -708,7 +708,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       WorkTimeMin: {
         ...getUserPageList_workTimeMin,
@@ -716,7 +716,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ProvinceId: {
         ...getUserPageList_provinceId,
@@ -724,7 +724,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CityIds: {
         ...getUserPageList_cityIds,
@@ -732,7 +732,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Statuss: {
         ...getUserPageList_statuss,
@@ -740,7 +740,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       GradeMin: {
         ...getUserPageList_gradeMin,
@@ -748,7 +748,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       PostAddressId: {
         ...getUserPageList_postAddressId,
@@ -756,7 +756,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return UserPageListFormItemConfigMap;
@@ -959,7 +959,7 @@ namespace UserApiForms {
    >
    </UserIdEditor>
    */
-  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IInsertFormItemConfigMap => {
+  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IInsertFormItemConfigMap => {
     /** CheckboxGroup */
     const insert_hoppyIdsValue = queryRule.hoppyIds;
     /** Cascader */
@@ -1011,7 +1011,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CascaderPostAddressIds: {
         ...insert_cascaderPostAddressIds,
@@ -1019,7 +1019,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Username: {
         ...insert_username,
@@ -1027,7 +1027,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Password: {
         ...insert_password,
@@ -1035,7 +1035,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleType: {
         ...insert_roleType,
@@ -1043,7 +1043,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Name: {
         ...insert_name,
@@ -1051,7 +1051,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       NickName: {
         ...insert_nickName,
@@ -1059,7 +1059,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Age: {
         ...insert_age,
@@ -1067,7 +1067,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Address: {
         ...insert_address,
@@ -1075,7 +1075,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AvatarImgId: {
         ...insert_avatarImgId,
@@ -1083,7 +1083,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Email: {
         ...insert_email,
@@ -1091,7 +1091,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ValiDatetime: {
         ...insert_valiDatetime,
@@ -1099,7 +1099,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       BirthdayDate: {
         ...insert_birthdayDate,
@@ -1107,7 +1107,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       WorkTime: {
         ...insert_workTime,
@@ -1115,7 +1115,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ProvinceId: {
         ...insert_provinceId,
@@ -1123,7 +1123,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CityId: {
         ...insert_cityId,
@@ -1131,7 +1131,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Status: {
         ...insert_status,
@@ -1139,7 +1139,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Grade: {
         ...insert_grade,
@@ -1147,7 +1147,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Sex: {
         ...insert_sex,
@@ -1155,7 +1155,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       PostAddressId: {
         ...insert_postAddressId,
@@ -1163,7 +1163,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UserId: {
         ...insert_userId,
@@ -1171,7 +1171,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return InsertFormItemConfigMap;
@@ -1374,7 +1374,7 @@ namespace UserApiForms {
    >
    </UserIdEditor>
    */
-  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IUpdateFormItemConfigMap => {
+  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IUpdateFormItemConfigMap => {
     /** CheckboxGroup */
     const update_hoppyIdsValue = queryRule.hoppyIds;
     /** Cascader */
@@ -1426,7 +1426,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CascaderPostAddressIds: {
         ...update_cascaderPostAddressIds,
@@ -1434,7 +1434,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Username: {
         ...update_username,
@@ -1442,7 +1442,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Password: {
         ...update_password,
@@ -1450,7 +1450,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleType: {
         ...update_roleType,
@@ -1458,7 +1458,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Name: {
         ...update_name,
@@ -1466,7 +1466,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       NickName: {
         ...update_nickName,
@@ -1474,7 +1474,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Age: {
         ...update_age,
@@ -1482,7 +1482,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Address: {
         ...update_address,
@@ -1490,7 +1490,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AvatarImgId: {
         ...update_avatarImgId,
@@ -1498,7 +1498,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Email: {
         ...update_email,
@@ -1506,7 +1506,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ValiDatetime: {
         ...update_valiDatetime,
@@ -1514,7 +1514,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       BirthdayDate: {
         ...update_birthdayDate,
@@ -1522,7 +1522,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       WorkTime: {
         ...update_workTime,
@@ -1530,7 +1530,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ProvinceId: {
         ...update_provinceId,
@@ -1538,7 +1538,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CityId: {
         ...update_cityId,
@@ -1546,7 +1546,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Status: {
         ...update_status,
@@ -1554,7 +1554,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Grade: {
         ...update_grade,
@@ -1562,7 +1562,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Sex: {
         ...update_sex,
@@ -1570,7 +1570,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       PostAddressId: {
         ...update_postAddressId,
@@ -1578,7 +1578,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UserId: {
         ...update_userId,
@@ -1586,7 +1586,7 @@ namespace UserApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return UpdateFormItemConfigMap;

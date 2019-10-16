@@ -8,7 +8,7 @@ import User from "../beans/User";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
 import UserColumns from '../columns/UserColumns';
