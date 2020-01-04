@@ -13,20 +13,19 @@ import Province from "../beans/Province";
 import Region from "../beans/Region";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class AppApis {
   /**
-   * POST /api/app/getAllMenus
+   * GET /api/app/getAllMenus
    * 获所所有菜单
    */
   static getAllMenus(params?: {}): Menu[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getAllMenus';
-    requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
-    requestInit.method = Method.POST;
+    requestInit.method = Method.GET;
     return Net.fetch(requestInit);
   }
 
@@ -36,7 +35,7 @@ export default class AppApis {
    */
   static getCityOptions(params: { provinceId?: string } | string): City[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getCityOptions';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {provinceId: params};
@@ -50,7 +49,7 @@ export default class AppApis {
    */
   static getCookieUser(params?: {}): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getCookieUser';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -59,16 +58,28 @@ export default class AppApis {
   }
 
   /**
-   * POST /api/app/getHoppyOptions
+   * GET /api/app/getHoppyOptions
    * 爱好
    */
   static getHoppyOptions(params?: {}): Hoppy[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getHoppyOptions';
-    requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
-    requestInit.method = Method.POST;
+    requestInit.method = Method.GET;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * GET /api/app/getLongs
+   * 
+   */
+  static getLongs(params: { parentRegionId?: number } | number): number[] {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/getLongs';
+    requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {parentRegionId: params};
+    requestInit.method = Method.GET;
     return Net.fetch(requestInit);
   }
 
@@ -78,7 +89,7 @@ export default class AppApis {
    */
   static getProvinceOptions(params?: {}): Province[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getProvinceOptions';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -92,7 +103,7 @@ export default class AppApis {
    */
   static getRegionOptions(params: { parentRegionIds?: number[] } | number[]): Region[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getRegionOptions';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {parentRegionIds: params};
@@ -106,7 +117,7 @@ export default class AppApis {
    */
   static getUserOptions(params: { userIds?: string[] } | string[]): User[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/getUserOptions';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {userIds: params};
@@ -120,11 +131,24 @@ export default class AppApis {
    */
   static logout(params?: {}): SimpleResponse {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/app/logout';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
     requestInit.method = Method.POST;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * GET /api/app/testRegions
+   * 
+   */
+  static testRegions(params: { parentRegionId?: number } | number): Region[] {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/testRegions';
+    requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {parentRegionId: params};
+    requestInit.method = Method.GET;
     return Net.fetch(requestInit);
   }
 

@@ -11,7 +11,7 @@ import TopicType from "../enums/TopicType";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
 import AntdPageListColumns from '../columns/AntdPageListColumns';
@@ -303,7 +303,7 @@ namespace Bbs_topicApiForms {
    >
    </VisitCountMaxEditor>
    */
-  export const getTopicPageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IGetTopicPageListFormItemConfigMap => {
+  export const getTopicPageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IGetTopicPageListFormItemConfigMap => {
     /** Input */
     const getTopicPageList_topicIdsValue = queryRule.topicIds;
     /** Input */
@@ -329,7 +329,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AuthorIds: {
         ...getTopicPageList_authorIds,
@@ -337,7 +337,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TopicType: {
         ...getTopicPageList_topicType,
@@ -345,7 +345,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TopicTypes: {
         ...getTopicPageList_topicTypes,
@@ -353,7 +353,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Title: {
         ...getTopicPageList_title,
@@ -361,7 +361,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TitleLike: {
         ...getTopicPageList_titleLike,
@@ -369,7 +369,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       VisitCountMin: {
         ...getTopicPageList_visitCountMin,
@@ -377,7 +377,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       VisitCountMax: {
         ...getTopicPageList_visitCountMax,
@@ -385,7 +385,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return TopicPageListFormItemConfigMap;
@@ -480,7 +480,7 @@ namespace Bbs_topicApiForms {
    >
    </VisitCountEditor>
    */
-  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IInsertFormItemConfigMap => {
+  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IInsertFormItemConfigMap => {
     /** Hidden */
     const insert_topicIdValue = queryRule.topicId;
     /** Input */
@@ -508,7 +508,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       AuthorId: {
         ...insert_authorId,
@@ -516,7 +516,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TopicType: {
         ...insert_topicType,
@@ -524,7 +524,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Content: {
         ...insert_content,
@@ -532,7 +532,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Title: {
         ...insert_title,
@@ -540,7 +540,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       LastReplyAt: {
         ...insert_lastReplyAt,
@@ -548,7 +548,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Good: {
         ...insert_good,
@@ -556,7 +556,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Top: {
         ...insert_top,
@@ -564,7 +564,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       VisitCount: {
         ...insert_visitCount,
@@ -572,7 +572,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return InsertFormItemConfigMap;
@@ -667,7 +667,7 @@ namespace Bbs_topicApiForms {
    >
    </TopicIdEditor>
    */
-  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IUpdateFormItemConfigMap => {
+  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IUpdateFormItemConfigMap => {
     /** Input */
     const update_authorIdValue = queryRule.authorId;
     /** Select */
@@ -695,7 +695,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TopicType: {
         ...update_topicType,
@@ -703,7 +703,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Content: {
         ...update_content,
@@ -711,7 +711,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Title: {
         ...update_title,
@@ -719,7 +719,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       LastReplyAt: {
         ...update_lastReplyAt,
@@ -727,7 +727,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Good: {
         ...update_good,
@@ -735,7 +735,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Top: {
         ...update_top,
@@ -743,7 +743,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       VisitCount: {
         ...update_visitCount,
@@ -751,7 +751,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       TopicId: {
         ...update_topicId,
@@ -759,7 +759,7 @@ namespace Bbs_topicApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return UpdateFormItemConfigMap;

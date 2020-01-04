@@ -8,7 +8,7 @@ import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
 import FileSummary from "../beans/FileSummary";
 import {UploadFile} from 'antd/es/upload/interface';
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class FileSummaryApis {
   /**
@@ -17,7 +17,7 @@ export default class FileSummaryApis {
    */
   static upload(params: { file: UploadFile } | UploadFile): FileSummary {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/fileSummary/upload';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {file: params};

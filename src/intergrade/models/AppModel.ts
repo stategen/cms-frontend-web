@@ -6,7 +6,7 @@
  */
 import {appInitModel, AppModel, AppState} from "../interfaces/AppFaces";
 import AppApis from "../apis/AppApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import City from "../beans/City";
 import Hoppy from "../beans/Hoppy";
@@ -15,107 +15,6 @@ import Province from "../beans/Province";
 import Region from "../beans/Region";
 import SimpleResponse from "../beans/SimpleResponse";
 import User from "../beans/User";
-
-
-export class AppCommand extends BaseCommand {
-  static * setup_effect({payload}, {call, put, select}) {
-    let newPayload = {};
-    const {getAllMenusParams = null, getCookieUserParams = null, ...lastParams} = payload || {};
-
-    /** 获所所有菜单 */
-    const getAllMenusPayload = yield AppCommand.getAllMenus_effect({payload: {...lastParams, ...getAllMenusParams}}, {call, put, select});
-    newPayload = AppCommand.getAllMenus_success_reducer(<AppState>newPayload, getAllMenusPayload);
-    /**  */
-    const getCookieUserPayload = yield AppCommand.getCookieUser_effect({payload: {...lastParams, ...getCookieUserParams}}, {call, put, select});
-    newPayload = AppCommand.getCookieUser_success_reducer(<AppState>newPayload, getCookieUserPayload);
-    return newPayload;
-  };
-
-  static setup_success_type(payload) {
-    return {type: "setup_success", payload: payload};
-  }
-
-
-  /** 获所所有菜单 */
-  static * getAllMenus_effect({payload}, {call, put, select}) {
-    const menus: Menu[] = yield call(AppApis.getAllMenus, payload);
-
-    const newPayload: AppState = {
-      menuArea: {
-        list: menus ? menus : [],
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getAllMenus_success_type(payload) {
-    return {type: "getAllMenus_success", payload: payload};
-  }
-
-  /** 获所所有菜单  成功后 更新状态*/
-  static getAllMenus_success_reducer = (state: AppState, payload): AppState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * getCookieUser_effect({payload}, {call, put, select}) {
-    const user: User = yield call(AppApis.getCookieUser, payload);
-
-    const newPayload: AppState = {
-      userArea: {
-        list: user ? [user] : [],
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getCookieUser_success_type(payload) {
-    return {type: "getCookieUser_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static getCookieUser_success_reducer = (state: AppState, payload): AppState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * logout_effect({payload}, {call, put, select}) {
-    const simpleResponse: SimpleResponse = yield call(AppApis.logout, payload);
-    if (simpleResponse && !simpleResponse.success) {
-      throw simpleResponse.message;
-    }
-
-    const newPayload: AppState = {
-      userArea: {
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static logout_success_type(payload) {
-    return {type: "logout_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static logout_success_reducer = (state: AppState, payload): AppState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const appModel: AppModel = appInitModel;
 
@@ -190,3 +89,103 @@ appModel.effects.logout = function* ({payload}, {call, put, select}) {
 appModel.reducers.logout_success = (state: AppState, {payload}): AppState => {
   return AppCommand.logout_success_reducer(state, payload);
 };
+
+export class AppCommand extends BaseCommand {
+  static * setup_effect({payload}, {call, put, select}) {
+    let newPayload = {};
+    const {getAllMenusParams = null, getCookieUserParams = null, ...lastParams} = payload || {};
+
+    /** 获所所有菜单 */
+    const getAllMenusPayload = yield AppCommand.getAllMenus_effect({payload: {...lastParams, ...getAllMenusParams}}, {call, put, select});
+    newPayload = AppCommand.getAllMenus_success_reducer(<AppState>newPayload, getAllMenusPayload);
+    /**  */
+    const getCookieUserPayload = yield AppCommand.getCookieUser_effect({payload: {...lastParams, ...getCookieUserParams}}, {call, put, select});
+    newPayload = AppCommand.getCookieUser_success_reducer(<AppState>newPayload, getCookieUserPayload);
+    return newPayload;
+  };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
+
+
+  /** 获所所有菜单 */
+  static * getAllMenus_effect({payload}, {call, put, select}) {
+    const menus: Menu[] = yield call(AppApis.getAllMenus, payload);
+
+    const newPayload: AppState = {
+      menuArea: {
+        list: menus ? menus : [],
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getAllMenus_success_type(payload) {
+    return {type: "getAllMenus_success", payload: payload};
+  }
+
+  /** 获所所有菜单  成功后 更新状态*/
+  static getAllMenus_success_reducer = (state: AppState, payload): AppState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * getCookieUser_effect({payload}, {call, put, select}) {
+    const user: User = yield call(AppApis.getCookieUser, payload);
+
+    const newPayload: AppState = {
+      userArea: {
+        list: user ? [user] : [],
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getCookieUser_success_type(payload) {
+    return {type: "getCookieUser_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static getCookieUser_success_reducer = (state: AppState, payload): AppState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * logout_effect({payload}, {call, put, select}) {
+    const simpleResponse: SimpleResponse = yield call(AppApis.logout, payload);
+    if (simpleResponse && !simpleResponse.success) {
+      throw simpleResponse.message;
+    }
+
+    const newPayload: AppState = {
+      userArea: {
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static logout_success_type(payload) {
+    return {type: "logout_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static logout_success_reducer = (state: AppState, payload): AppState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

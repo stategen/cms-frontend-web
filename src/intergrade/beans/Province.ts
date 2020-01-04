@@ -11,50 +11,50 @@ export const Province_ID: string = 'provinceId';
 
 export default interface Province extends Bean {
 
-  /** provinceId */
-  provinceId?: string;
-
-  /** name */
-  name?: string;
-
-  /** pycode */
-  pycode?: string;
-
   /** 创建时间 */
   createTime?: Date;
-
-  /** 更新时间 */
-  updateTime?: Date;
-
-  /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
-
-  /** provinceId s */
-  provinceIds?: string[];
-
-  /** nameLike */
-  nameLike?: string;
-
-  /** pycodeLike */
-  pycodeLike?: string;
-
-  /** 创建时间Min */
-  createTimeMin?: Date;
 
   /** 创建时间Max */
   createTimeMax?: Date;
 
-  /** 更新时间Min */
-  updateTimeMin?: Date;
+  /** 创建时间Min */
+  createTimeMin?: Date;
+
+  /** 是否删除(0:正常，1删除) */
+  deleteFlag?: number;
+
+  /** name */
+  name?: string;
+
+  /** nameLike */
+  nameLike?: string;
+
+  /** provinceId */
+  provinceId?: string;
+
+  /** provinceId s */
+  provinceIds?: string[];
+
+  /** pycode */
+  pycode?: string;
+
+  /** pycodeLike */
+  pycodeLike?: string;
+
+  /** title */
+  title?: string;
+
+  /** 更新时间 */
+  updateTime?: Date;
 
   /** 更新时间Max */
   updateTimeMax?: Date;
 
+  /** 更新时间Min */
+  updateTimeMin?: Date;
+
   /** value */
   value?: string;
-
-  /** title */
-  title?: string;
 
 }
 

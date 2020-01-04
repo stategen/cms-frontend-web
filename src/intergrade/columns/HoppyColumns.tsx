@@ -10,6 +10,60 @@ import UIColumns from "@utils/UIColumns";
 
 namespace HoppyColumns {
 
+  /** 创建时间  TIMESTAMP*/
+  export const createTime = {
+    key: 'createTime',
+    dataIndex: 'createTime',
+    title: '创建时间',
+    renderColumn: UIColumns.TimeStampRender,
+    hidden: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+    render: (text: any, record: Hoppy, index: number) =>{
+      return createTime.renderColumn(record, null, text, index, createTime);
+    },
+  } as ColumnConfig<Hoppy>;
+
+  /** 创建时间Max  TIMESTAMP*/
+  export const createTimeMax = {
+    key: 'createTimeMax',
+    dataIndex: 'createTimeMax',
+    title: '创建时间Max',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<Hoppy>;
+
+  /** 创建时间Min  TIMESTAMP*/
+  export const createTimeMin = {
+    key: 'createTimeMin',
+    dataIndex: 'createTimeMin',
+    title: '创建时间Min',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<Hoppy>;
+
+  /** 是否删除(0:正常，1删除)  */
+  export const deleteFlag = {
+    key: 'deleteFlag',
+    dataIndex: 'deleteFlag',
+    title: '是否删除(0:正常',
+    renderColumn: UIColumns.InputRender,
+    hidden: true,
+    config: {
+    },
+    render: (text: any, record: Hoppy, index: number) =>{
+      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
+    },
+  } as ColumnConfig<Hoppy>;
+
   /** hoppyId  */
   export const hoppyId = {
     key: 'hoppyId',
@@ -21,6 +75,17 @@ namespace HoppyColumns {
     },
     render: (text: any, record: Hoppy, index: number) =>{
       return hoppyId.renderColumn(record, null, text, index, hoppyId);
+    },
+  } as ColumnConfig<Hoppy>;
+
+  /** hoppyId s  */
+  export const hoppyIds = {
+    key: 'hoppyIds',
+    dataIndex: 'hoppyIds',
+    title: 'hoppyId',
+    noJson: true,
+    isArray: true,
+    config: {
     },
   } as ColumnConfig<Hoppy>;
 
@@ -43,19 +108,26 @@ namespace HoppyColumns {
     },
   } as ColumnConfig<Hoppy>;
 
-  /** 创建时间  TIMESTAMP*/
-  export const createTime = {
-    key: 'createTime',
-    dataIndex: 'createTime',
-    title: '创建时间',
-    renderColumn: UIColumns.TimeStampRender,
-    hidden: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
+  /** hoppyNameLike  */
+  export const hoppyNameLike = {
+    key: 'hoppyNameLike',
+    dataIndex: 'hoppyNameLike',
+    title: 'hoppyNameLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<Hoppy>;
+
+  /** title  */
+  export const title = {
+    key: 'title',
+    dataIndex: 'title',
+    title: 'title',
+    renderColumn: UIColumns.InputRender,
     config: {
     },
     render: (text: any, record: Hoppy, index: number) =>{
-      return createTime.renderColumn(record, null, text, index, createTime);
+      return title.renderColumn(record, null, text, index, title);
     },
   } as ColumnConfig<Hoppy>;
 
@@ -75,58 +147,11 @@ namespace HoppyColumns {
     },
   } as ColumnConfig<Hoppy>;
 
-  /** 是否删除(0:正常，1删除)  */
-  export const deleteFlag = {
-    key: 'deleteFlag',
-    dataIndex: 'deleteFlag',
-    title: '是否删除(0:正常',
-    renderColumn: UIColumns.InputRender,
-    hidden: true,
-    config: {
-    },
-    render: (text: any, record: Hoppy, index: number) =>{
-      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
-    },
-  } as ColumnConfig<Hoppy>;
-
-  /** hoppyId s  */
-  export const hoppyIds = {
-    key: 'hoppyIds',
-    dataIndex: 'hoppyIds',
-    title: 'hoppyId',
-    noJson: true,
-    isArray: true,
-    config: {
-    },
-  } as ColumnConfig<Hoppy>;
-
-  /** hoppyNameLike  */
-  export const hoppyNameLike = {
-    key: 'hoppyNameLike',
-    dataIndex: 'hoppyNameLike',
-    title: 'hoppyNameLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<Hoppy>;
-
-  /** 创建时间Min  TIMESTAMP*/
-  export const createTimeMin = {
-    key: 'createTimeMin',
-    dataIndex: 'createTimeMin',
-    title: '创建时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<Hoppy>;
-
-  /** 创建时间Max  TIMESTAMP*/
-  export const createTimeMax = {
-    key: 'createTimeMax',
-    dataIndex: 'createTimeMax',
-    title: '创建时间Max',
+  /** 更新时间Max  TIMESTAMP*/
+  export const updateTimeMax = {
+    key: 'updateTimeMax',
+    dataIndex: 'updateTimeMax',
+    title: '更新时间Max',
     noJson: true,
     temporalType: TemporalType.TIMESTAMP,
     format: TIMESTAMP_FORMAT,
@@ -139,18 +164,6 @@ namespace HoppyColumns {
     key: 'updateTimeMin',
     dataIndex: 'updateTimeMin',
     title: '更新时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<Hoppy>;
-
-  /** 更新时间Max  TIMESTAMP*/
-  export const updateTimeMax = {
-    key: 'updateTimeMax',
-    dataIndex: 'updateTimeMax',
-    title: '更新时间Max',
     noJson: true,
     temporalType: TemporalType.TIMESTAMP,
     format: TIMESTAMP_FORMAT,
@@ -171,27 +184,14 @@ namespace HoppyColumns {
     },
   } as ColumnConfig<Hoppy>;
 
-  /** title  */
-  export const title = {
-    key: 'title',
-    dataIndex: 'title',
-    title: 'title',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: Hoppy, index: number) =>{
-      return title.renderColumn(record, null, text, index, title);
-    },
-  } as ColumnConfig<Hoppy>;
-
 
   export const renderColumns = {
+    createTime,
     hoppyId,
     hoppyName,
-    createTime,
+    title,
     updateTime,
     value,
-    title,
   }
 
 }

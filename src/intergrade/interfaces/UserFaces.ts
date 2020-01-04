@@ -7,7 +7,7 @@
 import {Effect, Effects, Reducers, IModel, BaseState, modelPathsProxy, ConnectionPros, Reducer, AreaState, Subscription,
         Subscriptions, RouterReduxPushPros, SetupParamsFun, mergeObjects, initAreaState, abstractModel} from '@utils/DvaUtil';
 import {userCustomState,UserCustomSubscriptions , UserCustomEffects, UserCustomReducers} from '@pages/user/UserCustomFaces'
-import AntdPageList from "../beans/AntdPageList";
+import PageList from "../beans/PageList";
 import {PaginationProps} from 'antd/es/pagination';
 import StatusEnum from "../enums/StatusEnum";
 import User from "../beans/User";

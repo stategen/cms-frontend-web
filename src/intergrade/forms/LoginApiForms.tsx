@@ -5,13 +5,15 @@
  *  由 [stategen.progen]代码生成器创建，不要手动修改,否则将在下次创建时自动覆盖
  */
 import SimpleResponse from "../beans/SimpleResponse";
+import User from "../beans/User";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
 import SimpleResponseColumns from '../columns/SimpleResponseColumns';
+import UserColumns from '../columns/UserColumns';
 
 
 namespace LoginApiForms {
@@ -63,6 +65,48 @@ namespace LoginApiForms {
       login_password,
     ]
   );
+  /** 国际区号 */
+  const loginByMobile_interCode = {
+    key: 'interCode',
+    dataIndex: 'interCode',
+    title: '国际区号',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+
+    UIEditor__: UIEditors.BuildInputEditor,
+    Editor: UIEditors.BuildInputEditor,
+  };
+  /** 手机号 */
+  const loginByMobile_mobile = {
+    key: 'mobile',
+    dataIndex: 'mobile',
+    title: '手机号',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+
+    UIEditor__: UIEditors.BuildInputEditor,
+    Editor: UIEditors.BuildInputEditor,
+  };
+  /** 密码 */
+  const loginByMobile_password = {
+    key: 'password',
+    dataIndex: 'password',
+    title: '密码',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+
+    UIEditor__: UIEditors.BuildInputEditor,
+    Editor: UIEditors.BuildInputEditor,
+  };
+  confirmChanges([
+      loginByMobile_interCode,
+      loginByMobile_mobile,
+      loginByMobile_password,
+    ]
+  );
 
 
   export interface ILoginFormItemConfigMap extends FormItemConfigMap {
@@ -91,7 +135,7 @@ namespace LoginApiForms {
    >
    </PasswordEditor>
    */
-  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): ILoginFormItemConfigMap => {
+  export const getLoginFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): ILoginFormItemConfigMap => {
     /** Input */
     const login_usernameValue = queryRule.username;
     /** Password */
@@ -105,7 +149,7 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Password: {
         ...login_password,
@@ -113,10 +157,83 @@ namespace LoginApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return LoginFormItemConfigMap;
+  }
+
+  export interface ILoginByMobileFormItemConfigMap extends FormItemConfigMap {
+    /** 国际区号  */
+    InterCode?: typeof loginByMobile_interCode & Partial<FormItemConfig>,
+    /** 手机号  */
+    Mobile?: typeof loginByMobile_mobile & Partial<FormItemConfig>,
+    /** 密码  */
+    Password?: typeof loginByMobile_password & Partial<FormItemConfig>,
+  }
+
+  let LoginByMobileFormItemConfigMap = null;
+  export const removeLoginByMobileFormItemConfigMapRef = ((ref) => ref ? null : LoginByMobileFormItemConfigMap = null);
+  loginByMobile_interCode.Editor = ((props?: UIEditors.InputEditorProps) => {
+    return UIEditors.rebuildEditor(props, LoginByMobileFormItemConfigMap.InterCode, removeLoginByMobileFormItemConfigMapRef);
+  }) as any;
+  loginByMobile_mobile.Editor = ((props?: UIEditors.InputEditorProps) => {
+    return UIEditors.rebuildEditor(props, LoginByMobileFormItemConfigMap.Mobile, removeLoginByMobileFormItemConfigMapRef);
+  }) as any;
+  loginByMobile_password.Editor = ((props?: UIEditors.InputEditorProps) => {
+    return UIEditors.rebuildEditor(props, LoginByMobileFormItemConfigMap.Password, removeLoginByMobileFormItemConfigMapRef);
+  }) as any;
+
+  /**
+   const InterCodeEditor = loginByMobileFormItemConfigMap.InterCode.Editor;
+   const MobileEditor = loginByMobileFormItemConfigMap.Mobile.Editor;
+   const PasswordEditor = loginByMobileFormItemConfigMap.Password.Editor;
+   <InterCodeEditor
+   >
+   </InterCodeEditor>
+   <MobileEditor
+   >
+   </MobileEditor>
+   <PasswordEditor
+   >
+   </PasswordEditor>
+   */
+  export const getLoginByMobileFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): ILoginByMobileFormItemConfigMap => {
+    /** Input */
+    const loginByMobile_interCodeValue = queryRule.interCode;
+    /** Input */
+    const loginByMobile_mobileValue = queryRule.mobile;
+    /** Input */
+    const loginByMobile_passwordValue = queryRule.password;
+    queryRule.lastOptions__ ? null : queryRule.lastOptions__ = {};
+    const componentMap = {};
+    LoginByMobileFormItemConfigMap = {
+      InterCode: {
+        ...loginByMobile_interCode,
+        config: {...loginByMobile_interCode.config, initialValue: loginByMobile_interCodeValue},
+        formProps,
+        record: queryRule,
+        componentMap,
+        
+      },
+      Mobile: {
+        ...loginByMobile_mobile,
+        config: {...loginByMobile_mobile.config, initialValue: loginByMobile_mobileValue},
+        formProps,
+        record: queryRule,
+        componentMap,
+        
+      },
+      Password: {
+        ...loginByMobile_password,
+        config: {...loginByMobile_password.config, initialValue: loginByMobile_passwordValue},
+        formProps,
+        record: queryRule,
+        componentMap,
+        
+      },
+    }
+    return LoginByMobileFormItemConfigMap;
   }
 }
 export default LoginApiForms;

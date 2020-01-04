@@ -6,7 +6,7 @@
  */
 import {Net, Method, MediaType, RequestInitEx} from "@utils/Net";
 
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class HomeApis {
   /**
@@ -15,7 +15,7 @@ export default class HomeApis {
    */
   static getDashboard(params?: {}): any {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/home';
     requestInit.data = params;
     requestInit.method = Method.GET;

@@ -6,18 +6,18 @@
  */
 import {AppState} from "../interfaces/AppFaces";
 import {Bbs_topicState} from "../interfaces/Bbs_topicFaces";
-import {RoleState} from "../interfaces/RoleFaces";
 import {HomeState} from "../interfaces/HomeFaces";
-import {UserState} from "../interfaces/UserFaces";
 import {LoginState} from "../interfaces/LoginFaces";
+import {RoleState} from "../interfaces/RoleFaces";
+import {UserState} from "../interfaces/UserFaces";
 import {User_$userIdState} from "../interfaces/User_$userIdFaces";
 
 export default interface StatesAlias {
   app: AppState;
   bbs_topic: Bbs_topicState;
-  role: RoleState;
   home: HomeState;
-  user: UserState;
   login: LoginState;
+  role: RoleState;
+  user: UserState;
   user_$userId: User_$userIdState;
 }

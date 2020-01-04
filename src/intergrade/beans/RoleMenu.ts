@@ -11,44 +11,44 @@ export const RoleMenu_ID: string = 'id';
 
 export default interface RoleMenu extends Bean {
 
-  /** id */
-  id?: number;
-
-  /** roleId */
-  roleId?: string;
-
-  /** menuId */
-  menuId?: number;
-
   /** 数据创建时间 */
   createTime?: Date;
-
-  /** 数据更新时间 */
-  updateTime?: Date;
-
-  /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
-
-  /** id s */
-  ids?: number[];
-
-  /** roleId s */
-  roleIds?: string[];
-
-  /** menuId s */
-  menuIds?: number[];
-
-  /** 数据创建时间Min */
-  createTimeMin?: Date;
 
   /** 数据创建时间Max */
   createTimeMax?: Date;
 
-  /** 数据更新时间Min */
-  updateTimeMin?: Date;
+  /** 数据创建时间Min */
+  createTimeMin?: Date;
+
+  /** 是否删除(0:正常，1删除) */
+  deleteFlag?: number;
+
+  /** id */
+  id?: number;
+
+  /** id s */
+  ids?: number[];
+
+  /** menuId */
+  menuId?: number;
+
+  /** menuId s */
+  menuIds?: number[];
+
+  /** roleId */
+  roleId?: string;
+
+  /** roleId s */
+  roleIds?: string[];
+
+  /** 数据更新时间 */
+  updateTime?: Date;
 
   /** 数据更新时间Max */
   updateTimeMax?: Date;
+
+  /** 数据更新时间Min */
+  updateTimeMin?: Date;
 
 }
 

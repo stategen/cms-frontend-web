@@ -24,6 +24,19 @@ namespace ResponseColumns {
     },
   } as ColumnConfig<Response<T>>;
 
+  /** data  */
+  export const data = {
+    key: 'data',
+    dataIndex: 'data',
+    title: 'data',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+    render: (text: any, record: Response<T>, index: number) =>{
+      return data.renderColumn(record, null, text, index, data);
+    },
+  } as ColumnConfig<Response<T>>;
+
   /** exeptionClass  */
   export const exeptionClass = {
     key: 'exeptionClass',
@@ -37,16 +50,16 @@ namespace ResponseColumns {
     },
   } as ColumnConfig<Response<T>>;
 
-  /** data  */
-  export const data = {
-    key: 'data',
-    dataIndex: 'data',
-    title: 'data',
+  /** message  */
+  export const message = {
+    key: 'message',
+    dataIndex: 'message',
+    title: 'message',
     renderColumn: UIColumns.InputRender,
     config: {
     },
     render: (text: any, record: Response<T>, index: number) =>{
-      return data.renderColumn(record, null, text, index, data);
+      return message.renderColumn(record, null, text, index, message);
     },
   } as ColumnConfig<Response<T>>;
 
@@ -67,19 +80,6 @@ namespace ResponseColumns {
     },
   } as ColumnConfig<Response<T>>;
 
-  /** message  */
-  export const message = {
-    key: 'message',
-    dataIndex: 'message',
-    title: 'message',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: Response<T>, index: number) =>{
-      return message.renderColumn(record, null, text, index, message);
-    },
-  } as ColumnConfig<Response<T>>;
-
   /** success  */
   export const success = {
     key: 'success',
@@ -96,10 +96,10 @@ namespace ResponseColumns {
 
   export const renderColumns = {
     code,
-    exeptionClass,
     data,
-    status,
+    exeptionClass,
     message,
+    status,
     success,
   }
 

@@ -11,68 +11,68 @@ export const City_ID: string = 'cityId';
 
 export default interface City extends Bean {
 
-  /** cityId */
-  cityId?: string;
-
-  /** name */
-  name?: string;
-
-  /** pycode */
-  pycode?: string;
-
-  /** provinceId */
-  provinceId?: string;
-
-  /** postcode */
-  postcode?: string;
-
   /** areacode */
   areacode?: string;
-
-  /** 创建时间 */
-  createTime?: Date;
-
-  /** 更新时间 */
-  updateTime?: Date;
-
-  /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
-
-  /** cityId s */
-  cityIds?: string[];
-
-  /** nameLike */
-  nameLike?: string;
-
-  /** pycodeLike */
-  pycodeLike?: string;
-
-  /** provinceId s */
-  provinceIds?: string[];
-
-  /** postcodeLike */
-  postcodeLike?: string;
 
   /** areacodeLike */
   areacodeLike?: string;
 
-  /** 创建时间Min */
-  createTimeMin?: Date;
+  /** cityId */
+  cityId?: string;
+
+  /** cityId s */
+  cityIds?: string[];
+
+  /** 创建时间 */
+  createTime?: Date;
 
   /** 创建时间Max */
   createTimeMax?: Date;
 
-  /** 更新时间Min */
-  updateTimeMin?: Date;
+  /** 创建时间Min */
+  createTimeMin?: Date;
+
+  /** 是否删除(0:正常，1删除) */
+  deleteFlag?: number;
+
+  /** name */
+  name?: string;
+
+  /** nameLike */
+  nameLike?: string;
+
+  /** postcode */
+  postcode?: string;
+
+  /** postcodeLike */
+  postcodeLike?: string;
+
+  /** provinceId */
+  provinceId?: string;
+
+  /** provinceId s */
+  provinceIds?: string[];
+
+  /** pycode */
+  pycode?: string;
+
+  /** pycodeLike */
+  pycodeLike?: string;
+
+  /** title */
+  title?: string;
+
+  /** 更新时间 */
+  updateTime?: Date;
 
   /** 更新时间Max */
   updateTimeMax?: Date;
 
+  /** 更新时间Min */
+  updateTimeMin?: Date;
+
   /** value */
   value?: string;
-
-  /** title */
-  title?: string;
 
 }
 

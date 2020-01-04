@@ -6,184 +6,12 @@
  */
 import {bbs_topicInitModel, Bbs_topicModel, Bbs_topicState} from "../interfaces/Bbs_topicFaces";
 import Bbs_topicApis from "../apis/Bbs_topicApis";
-import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand} from "@utils/DvaUtil";
+import {updateArray, delateArray, mergeObjects, AreaState, BaseCommand, DEFAULT_PAGE_NUM, DEFAULT_PAGE_SIZE} from "@utils/DvaUtil";
 import RouteUtil from "@utils/RouteUtil";
 import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from 'antd/es/pagination';
 import Topic from "../beans/Topic";
 import TopicType from "../enums/TopicType";
-
-
-export class Bbs_topicCommand extends BaseCommand {
-  static * setup_effect({payload}, {call, put, select}) {
-    let newPayload = {};
-
-    /**  */
-    const getTopicPageListPayload = yield Bbs_topicCommand.getTopicPageList_effect({payload}, {call, put, select});
-    newPayload = Bbs_topicCommand.getTopicPageList_success_reducer(<Bbs_topicState>newPayload, getTopicPageListPayload);
-    return newPayload;
-  };
-
-  static setup_success_type(payload) {
-    return {type: "setup_success", payload: payload};
-  }
-
-
-  /**  */
-  static * delete_effect({payload}, {call, put, select}) {
-    const result: string = yield call(Bbs_topicApis.delete, payload);
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    const topics = delateArray(oldTopicArea.list, result ? result : null, "topicId");
-
-    const newPayload: Bbs_topicState = {
-      topicArea: {
-        list: topics,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static delete_success_type(payload) {
-    return {type: "delete_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static delete_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * deleteByTopicIds_effect({payload}, {call, put, select}) {
-    const result: string[] = yield call(Bbs_topicApis.deleteByTopicIds, payload);
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    const topics = delateArray(oldTopicArea.list, result ? result : null, "topicId");
-
-    const newPayload: Bbs_topicState = {
-      topicArea: {
-        list: topics,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static deleteByTopicIds_success_type(payload) {
-    return {type: "deleteByTopicIds_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static deleteByTopicIds_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * getTopicPageList_effect({payload}, {call, put, select}) {
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    payload = {page: 1, pageSize: 10, ...oldTopicArea.queryRule, ...payload};
-    const topicPageList: AntdPageList<Topic> = yield call(Bbs_topicApis.getTopicPageList, payload);
-    const pagination = topicPageList ? topicPageList.pagination : null;
-
-    const newPayload: Bbs_topicState = {
-      topicArea: {
-        list: topicPageList ? topicPageList.list : [],
-        pagination,
-        queryRule: payload,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static getTopicPageList_success_type(payload) {
-    return {type: "getTopicPageList_success", payload: payload};
-  }
-
-  static * getTopicPageList_next_effect({payload}, {call, put, select}) {
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    const pagination = oldTopicArea.pagination;
-    let page = pagination.current;
-    page = (page ? page : 0) + 1;
-    const totalPages = Math.trunc(pagination.total / (pagination.pageSize || 10)) + 1;
-    page = Math.min(page, totalPages)
-    payload = {...oldTopicArea.queryRule, page};
-    const newPayload = yield Bbs_topicCommand.getTopicPageList_effect({payload}, {call, put, select});
-    return newPayload;
-  }
-
-  /**   成功后 更新状态*/
-  static getTopicPageList_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * insert_effect({payload}, {call, put, select}) {
-    const topic: Topic = yield call(Bbs_topicApis.insert, payload);
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    const topics = updateArray(oldTopicArea.list, topic ? topic : null, "topicId");
-
-    const newPayload: Bbs_topicState = {
-      topicArea: {
-        list: topics,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static insert_success_type(payload) {
-    return {type: "insert_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static insert_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-
-  /**  */
-  static * update_effect({payload}, {call, put, select}) {
-    const topic: Topic = yield call(Bbs_topicApis.update, payload);
-    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
-    const topics = updateArray(oldTopicArea.list, topic ? topic : null, "topicId");
-
-    const newPayload: Bbs_topicState = {
-      topicArea: {
-        list: topics,
-        ...payload ? payload.areaExtraProps__ : null,
-      },
-      ...payload ? payload.stateExtraProps__ : null,
-    };
-    return newPayload;
-  };
-
-  static update_success_type(payload) {
-    return {type: "update_success", payload: payload};
-  }
-
-  /**   成功后 更新状态*/
-  static update_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
-    return mergeObjects(
-      state,
-      payload,
-    );
-  };
-}
 
 export const bbs_topicModel: Bbs_topicModel = bbs_topicInitModel;
 
@@ -282,3 +110,174 @@ bbs_topicModel.effects.update = function* ({payload}, {call, put, select}) {
 bbs_topicModel.reducers.update_success = (state: Bbs_topicState, {payload}): Bbs_topicState => {
   return Bbs_topicCommand.update_success_reducer(state, payload);
 };
+
+export class Bbs_topicCommand extends BaseCommand {
+  static * setup_effect({payload}, {call, put, select}) {
+    let newPayload = {};
+
+    /**  */
+    const getTopicPageListPayload = yield Bbs_topicCommand.getTopicPageList_effect({payload}, {call, put, select});
+    newPayload = Bbs_topicCommand.getTopicPageList_success_reducer(<Bbs_topicState>newPayload, getTopicPageListPayload);
+    return newPayload;
+  };
+
+  static setup_success_type(payload) {
+    return {type: "setup_success", payload: payload};
+  }
+
+
+  /**  */
+  static * delete_effect({payload}, {call, put, select}) {
+    const result: string = yield call(Bbs_topicApis.delete, payload);
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    const topics = delateArray(oldTopicArea.list, result, "topicId");
+
+    const newPayload: Bbs_topicState = {
+      topicArea: {
+        list: topics,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static delete_success_type(payload) {
+    return {type: "delete_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static delete_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * deleteByTopicIds_effect({payload}, {call, put, select}) {
+    const result: string[] = yield call(Bbs_topicApis.deleteByTopicIds, payload);
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    const topics = delateArray(oldTopicArea.list, result, "topicId");
+
+    const newPayload: Bbs_topicState = {
+      topicArea: {
+        list: topics,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static deleteByTopicIds_success_type(payload) {
+    return {type: "deleteByTopicIds_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static deleteByTopicIds_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * getTopicPageList_effect({payload}, {call, put, select}) {
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    payload = {page: DEFAULT_PAGE_NUM, pageSize: DEFAULT_PAGE_SIZE, ...payload};
+    const topicPageList: AntdPageList<Topic> = yield call(Bbs_topicApis.getTopicPageList, payload);
+    const pagination =topicPageList!.pagination;
+
+    const newPayload: Bbs_topicState = {
+      topicArea: {
+        list: topicPageList!.list || [],
+        pagination,
+        queryRule: payload,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static getTopicPageList_success_type(payload) {
+    return {type: "getTopicPageList_success", payload: payload};
+  }
+
+  static * getTopicPageList_next_effect({payload}, {call, put, select}) {
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    const pagination = oldTopicArea!.pagination;
+    let page = pagination!.current;
+    page = (page || 0) + 1;
+    const totalPages = Math.trunc(pagination!.total / (pagination!.pageSize || DEFAULT_PAGE_SIZE)) + 1;
+    page = Math.min(page, totalPages)
+    payload = {...oldTopicArea!.queryRule, page};
+    const newPayload = yield Bbs_topicCommand.getTopicPageList_effect({payload}, {call, put, select});
+    return newPayload;
+  }
+
+  /**   成功后 更新状态*/
+  static getTopicPageList_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * insert_effect({payload}, {call, put, select}) {
+    const topic: Topic = yield call(Bbs_topicApis.insert, payload);
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    const topics = updateArray(oldTopicArea.list, topic, "topicId");
+
+    const newPayload: Bbs_topicState = {
+      topicArea: {
+        list: topics,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static insert_success_type(payload) {
+    return {type: "insert_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static insert_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+
+  /**  */
+  static * update_effect({payload}, {call, put, select}) {
+    const topic: Topic = yield call(Bbs_topicApis.update, payload);
+    const oldTopicArea = yield select((_) => _.bbs_topic.topicArea);
+    const topics = updateArray(oldTopicArea.list, topic, "topicId");
+
+    const newPayload: Bbs_topicState = {
+      topicArea: {
+        list: topics,
+        ...payload!.areaExtraProps__,
+      },
+      ...payload!.stateExtraProps__,
+    };
+    return newPayload;
+  };
+
+  static update_success_type(payload) {
+    return {type: "update_success", payload: payload};
+  }
+
+  /**   成功后 更新状态*/
+  static update_success_reducer = (state: Bbs_topicState, payload): Bbs_topicState => {
+    return mergeObjects(
+      state,
+      payload,
+    );
+  };
+}

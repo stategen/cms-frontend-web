@@ -10,6 +10,35 @@ import UIColumns from "@utils/UIColumns";
 
 namespace CityColumns {
 
+  /** areacode  */
+  export const areacode = {
+    key: 'areacode',
+    dataIndex: 'areacode',
+    title: 'areacode',
+    renderColumn: UIColumns.InputRender,
+    config: {
+      rules: [
+        {
+          max: 50,
+          message: "最大不能超过{max}",
+        },
+      ],
+    },
+    render: (text: any, record: City, index: number) =>{
+      return areacode.renderColumn(record, null, text, index, areacode);
+    },
+  } as ColumnConfig<City>;
+
+  /** areacodeLike  */
+  export const areacodeLike = {
+    key: 'areacodeLike',
+    dataIndex: 'areacodeLike',
+    title: 'areacodeLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
   /** cityId  */
   export const cityId = {
     key: 'cityId',
@@ -27,6 +56,71 @@ namespace CityColumns {
     },
     render: (text: any, record: City, index: number) =>{
       return cityId.renderColumn(record, null, text, index, cityId);
+    },
+  } as ColumnConfig<City>;
+
+  /** cityId s  */
+  export const cityIds = {
+    key: 'cityIds',
+    dataIndex: 'cityIds',
+    title: 'cityId',
+    noJson: true,
+    isArray: true,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** 创建时间  TIMESTAMP*/
+  export const createTime = {
+    key: 'createTime',
+    dataIndex: 'createTime',
+    title: '创建时间',
+    renderColumn: UIColumns.TimeStampRender,
+    hidden: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+    render: (text: any, record: City, index: number) =>{
+      return createTime.renderColumn(record, null, text, index, createTime);
+    },
+  } as ColumnConfig<City>;
+
+  /** 创建时间Max  TIMESTAMP*/
+  export const createTimeMax = {
+    key: 'createTimeMax',
+    dataIndex: 'createTimeMax',
+    title: '创建时间Max',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** 创建时间Min  TIMESTAMP*/
+  export const createTimeMin = {
+    key: 'createTimeMin',
+    dataIndex: 'createTimeMin',
+    title: '创建时间Min',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** 是否删除(0:正常，1删除)  */
+  export const deleteFlag = {
+    key: 'deleteFlag',
+    dataIndex: 'deleteFlag',
+    title: '是否删除(0:正常',
+    renderColumn: UIColumns.InputRender,
+    hidden: true,
+    config: {
+    },
+    render: (text: any, record: City, index: number) =>{
+      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
     },
   } as ColumnConfig<City>;
 
@@ -49,41 +143,13 @@ namespace CityColumns {
     },
   } as ColumnConfig<City>;
 
-  /** pycode  */
-  export const pycode = {
-    key: 'pycode',
-    dataIndex: 'pycode',
-    title: 'pycode',
-    renderColumn: UIColumns.InputRender,
+  /** nameLike  */
+  export const nameLike = {
+    key: 'nameLike',
+    dataIndex: 'nameLike',
+    title: 'nameLike',
+    noJson: true,
     config: {
-      rules: [
-        {
-          max: 50,
-          message: "最大不能超过{max}",
-        },
-      ],
-    },
-    render: (text: any, record: City, index: number) =>{
-      return pycode.renderColumn(record, null, text, index, pycode);
-    },
-  } as ColumnConfig<City>;
-
-  /** provinceId  */
-  export const provinceId = {
-    key: 'provinceId',
-    dataIndex: 'provinceId',
-    title: 'provinceId',
-    renderColumn: UIColumns.InputRender,
-    config: {
-      rules: [
-        {
-          max: 64,
-          message: "最大不能超过{max}",
-        },
-      ],
-    },
-    render: (text: any, record: City, index: number) =>{
-      return provinceId.renderColumn(record, null, text, index, provinceId);
     },
   } as ColumnConfig<City>;
 
@@ -106,11 +172,51 @@ namespace CityColumns {
     },
   } as ColumnConfig<City>;
 
-  /** areacode  */
-  export const areacode = {
-    key: 'areacode',
-    dataIndex: 'areacode',
-    title: 'areacode',
+  /** postcodeLike  */
+  export const postcodeLike = {
+    key: 'postcodeLike',
+    dataIndex: 'postcodeLike',
+    title: 'postcodeLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** provinceId  */
+  export const provinceId = {
+    key: 'provinceId',
+    dataIndex: 'provinceId',
+    title: 'provinceId',
+    renderColumn: UIColumns.InputRender,
+    config: {
+      rules: [
+        {
+          max: 64,
+          message: "最大不能超过{max}",
+        },
+      ],
+    },
+    render: (text: any, record: City, index: number) =>{
+      return provinceId.renderColumn(record, null, text, index, provinceId);
+    },
+  } as ColumnConfig<City>;
+
+  /** provinceId s  */
+  export const provinceIds = {
+    key: 'provinceIds',
+    dataIndex: 'provinceIds',
+    title: 'provinceId',
+    noJson: true,
+    isArray: true,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** pycode  */
+  export const pycode = {
+    key: 'pycode',
+    dataIndex: 'pycode',
+    title: 'pycode',
     renderColumn: UIColumns.InputRender,
     config: {
       rules: [
@@ -121,23 +227,30 @@ namespace CityColumns {
       ],
     },
     render: (text: any, record: City, index: number) =>{
-      return areacode.renderColumn(record, null, text, index, areacode);
+      return pycode.renderColumn(record, null, text, index, pycode);
     },
   } as ColumnConfig<City>;
 
-  /** 创建时间  TIMESTAMP*/
-  export const createTime = {
-    key: 'createTime',
-    dataIndex: 'createTime',
-    title: '创建时间',
-    renderColumn: UIColumns.TimeStampRender,
-    hidden: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
+  /** pycodeLike  */
+  export const pycodeLike = {
+    key: 'pycodeLike',
+    dataIndex: 'pycodeLike',
+    title: 'pycodeLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<City>;
+
+  /** title  */
+  export const title = {
+    key: 'title',
+    dataIndex: 'title',
+    title: 'title',
+    renderColumn: UIColumns.InputRender,
     config: {
     },
     render: (text: any, record: City, index: number) =>{
-      return createTime.renderColumn(record, null, text, index, createTime);
+      return title.renderColumn(record, null, text, index, title);
     },
   } as ColumnConfig<City>;
 
@@ -157,99 +270,11 @@ namespace CityColumns {
     },
   } as ColumnConfig<City>;
 
-  /** 是否删除(0:正常，1删除)  */
-  export const deleteFlag = {
-    key: 'deleteFlag',
-    dataIndex: 'deleteFlag',
-    title: '是否删除(0:正常',
-    renderColumn: UIColumns.InputRender,
-    hidden: true,
-    config: {
-    },
-    render: (text: any, record: City, index: number) =>{
-      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
-    },
-  } as ColumnConfig<City>;
-
-  /** cityId s  */
-  export const cityIds = {
-    key: 'cityIds',
-    dataIndex: 'cityIds',
-    title: 'cityId',
-    noJson: true,
-    isArray: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** nameLike  */
-  export const nameLike = {
-    key: 'nameLike',
-    dataIndex: 'nameLike',
-    title: 'nameLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** pycodeLike  */
-  export const pycodeLike = {
-    key: 'pycodeLike',
-    dataIndex: 'pycodeLike',
-    title: 'pycodeLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** provinceId s  */
-  export const provinceIds = {
-    key: 'provinceIds',
-    dataIndex: 'provinceIds',
-    title: 'provinceId',
-    noJson: true,
-    isArray: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** postcodeLike  */
-  export const postcodeLike = {
-    key: 'postcodeLike',
-    dataIndex: 'postcodeLike',
-    title: 'postcodeLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** areacodeLike  */
-  export const areacodeLike = {
-    key: 'areacodeLike',
-    dataIndex: 'areacodeLike',
-    title: 'areacodeLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** 创建时间Min  TIMESTAMP*/
-  export const createTimeMin = {
-    key: 'createTimeMin',
-    dataIndex: 'createTimeMin',
-    title: '创建时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** 创建时间Max  TIMESTAMP*/
-  export const createTimeMax = {
-    key: 'createTimeMax',
-    dataIndex: 'createTimeMax',
-    title: '创建时间Max',
+  /** 更新时间Max  TIMESTAMP*/
+  export const updateTimeMax = {
+    key: 'updateTimeMax',
+    dataIndex: 'updateTimeMax',
+    title: '更新时间Max',
     noJson: true,
     temporalType: TemporalType.TIMESTAMP,
     format: TIMESTAMP_FORMAT,
@@ -262,18 +287,6 @@ namespace CityColumns {
     key: 'updateTimeMin',
     dataIndex: 'updateTimeMin',
     title: '更新时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<City>;
-
-  /** 更新时间Max  TIMESTAMP*/
-  export const updateTimeMax = {
-    key: 'updateTimeMax',
-    dataIndex: 'updateTimeMax',
-    title: '更新时间Max',
     noJson: true,
     temporalType: TemporalType.TIMESTAMP,
     format: TIMESTAMP_FORMAT,
@@ -294,31 +307,18 @@ namespace CityColumns {
     },
   } as ColumnConfig<City>;
 
-  /** title  */
-  export const title = {
-    key: 'title',
-    dataIndex: 'title',
-    title: 'title',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: City, index: number) =>{
-      return title.renderColumn(record, null, text, index, title);
-    },
-  } as ColumnConfig<City>;
-
 
   export const renderColumns = {
-    cityId,
-    name,
-    pycode,
-    provinceId,
-    postcode,
     areacode,
+    cityId,
     createTime,
+    name,
+    postcode,
+    provinceId,
+    pycode,
+    title,
     updateTime,
     value,
-    title,
   }
 
 }

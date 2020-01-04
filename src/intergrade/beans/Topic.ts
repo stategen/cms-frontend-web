@@ -16,95 +16,95 @@ export default interface Topic extends Bean {
   /** author */
   author?: User;
 
-  /** replyCount */
-  replyCount?: number;
-
-  /** 主题ID */
-  topicId?: string;
-
   /** 作者ID */
   authorId?: string;
-
-  /** 主题类型 */
-  topicType?: TopicType;
-
-  /** 内容 */
-  content?: string;
-
-  /** 标题 */
-  title?: string;
-
-  /** 最后回复 */
-  lastReplyAt?: Date;
-
-  /** 精华 */
-  good?: number;
-
-  /** 置顶 */
-  top?: number;
-
-  /** 浏览次数 */
-  visitCount?: number;
-
-  /** 创建时间 */
-  createTime?: Date;
-
-  /** 更新时间 */
-  updateTime?: Date;
-
-  /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
-
-  /** 主题ID s */
-  topicIds?: string[];
 
   /** 作者ID s */
   authorIds?: string[];
 
-  /** 主题类型 s */
-  topicTypes?: TopicType[];
+  /** 内容 */
+  content?: string;
 
   /** 内容Like */
   contentLike?: string;
 
-  /** 标题Like */
-  titleLike?: string;
-
-  /** 最后回复Min */
-  lastReplyAtMin?: Date;
-
-  /** 最后回复Max */
-  lastReplyAtMax?: Date;
-
-  /** 精华Min */
-  goodMin?: number;
-
-  /** 精华Max */
-  goodMax?: number;
-
-  /** 置顶Min */
-  topMin?: number;
-
-  /** 置顶Max */
-  topMax?: number;
-
-  /** 浏览次数Min */
-  visitCountMin?: number;
-
-  /** 浏览次数Max */
-  visitCountMax?: number;
-
-  /** 创建时间Min */
-  createTimeMin?: Date;
+  /** 创建时间 */
+  createTime?: Date;
 
   /** 创建时间Max */
   createTimeMax?: Date;
 
-  /** 更新时间Min */
-  updateTimeMin?: Date;
+  /** 创建时间Min */
+  createTimeMin?: Date;
+
+  /** 是否删除(0:正常，1删除) */
+  deleteFlag?: number;
+
+  /** 精华 */
+  good?: number;
+
+  /** 精华Max */
+  goodMax?: number;
+
+  /** 精华Min */
+  goodMin?: number;
+
+  /** 最后回复 */
+  lastReplyAt?: Date;
+
+  /** 最后回复Max */
+  lastReplyAtMax?: Date;
+
+  /** 最后回复Min */
+  lastReplyAtMin?: Date;
+
+  /** replyCount */
+  replyCount?: number;
+
+  /** 标题 */
+  title?: string;
+
+  /** 标题Like */
+  titleLike?: string;
+
+  /** 置顶 */
+  top?: number;
+
+  /** 置顶Max */
+  topMax?: number;
+
+  /** 置顶Min */
+  topMin?: number;
+
+  /** 主题ID */
+  topicId?: string;
+
+  /** 主题ID s */
+  topicIds?: string[];
+
+  /** 主题类型 */
+  topicType?: TopicType;
+
+  /** 主题类型 s */
+  topicTypes?: TopicType[];
+
+  /** 更新时间 */
+  updateTime?: Date;
 
   /** 更新时间Max */
   updateTimeMax?: Date;
+
+  /** 更新时间Min */
+  updateTimeMin?: Date;
+
+  /** 浏览次数 */
+  visitCount?: number;
+
+  /** 浏览次数Max */
+  visitCountMax?: number;
+
+  /** 浏览次数Min */
+  visitCountMin?: number;
 
 }
 

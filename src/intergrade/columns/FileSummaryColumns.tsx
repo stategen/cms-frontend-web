@@ -10,6 +10,60 @@ import UIColumns from "@utils/UIColumns";
 
 namespace FileSummaryColumns {
 
+  /** 创建时间  TIMESTAMP*/
+  export const createTime = {
+    key: 'createTime',
+    dataIndex: 'createTime',
+    title: '创建时间',
+    renderColumn: UIColumns.TimeStampRender,
+    hidden: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return createTime.renderColumn(record, null, text, index, createTime);
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 创建时间Max  TIMESTAMP*/
+  export const createTimeMax = {
+    key: 'createTimeMax',
+    dataIndex: 'createTimeMax',
+    title: '创建时间Max',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 创建时间Min  TIMESTAMP*/
+  export const createTimeMin = {
+    key: 'createTimeMin',
+    dataIndex: 'createTimeMin',
+    title: '创建时间Min',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 是否删除 (0:正常，1删除)  */
+  export const deleteFlag = {
+    key: 'deleteFlag',
+    dataIndex: 'deleteFlag',
+    title: '是否删除',
+    renderColumn: UIColumns.InputRender,
+    hidden: true,
+    config: {
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
+    },
+  } as ColumnConfig<FileSummary>;
+
   /** fileId  */
   export const fileId = {
     key: 'fileId',
@@ -30,35 +84,14 @@ namespace FileSummaryColumns {
     },
   } as ColumnConfig<FileSummary>;
 
-  /** url  */
-  export const url = {
-    key: 'url',
-    dataIndex: 'url',
-    title: 'url',
-    renderColumn: UIColumns.InputRender,
+  /** fileId s  */
+  export const fileIds = {
+    key: 'fileIds',
+    dataIndex: 'fileIds',
+    title: 'fileId',
+    noJson: true,
+    isArray: true,
     config: {
-      rules: [
-        {
-          max: 255,
-          message: "最大不能超过{max}",
-        },
-      ],
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return url.renderColumn(record, null, text, index, url);
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** size  */
-  export const size = {
-    key: 'size',
-    dataIndex: 'size',
-    title: 'size',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return size.renderColumn(record, null, text, index, size);
     },
   } as ColumnConfig<FileSummary>;
 
@@ -81,6 +114,49 @@ namespace FileSummaryColumns {
     },
   } as ColumnConfig<FileSummary>;
 
+  /** nameLike  */
+  export const nameLike = {
+    key: 'nameLike',
+    dataIndex: 'nameLike',
+    title: 'nameLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** size  */
+  export const size = {
+    key: 'size',
+    dataIndex: 'size',
+    title: 'size',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return size.renderColumn(record, null, text, index, size);
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** sizeMax  */
+  export const sizeMax = {
+    key: 'sizeMax',
+    dataIndex: 'sizeMax',
+    title: 'sizeMax',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** sizeMin  */
+  export const sizeMin = {
+    key: 'sizeMin',
+    dataIndex: 'sizeMin',
+    title: 'sizeMin',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
   /** type  */
   export const type = {
     key: 'type',
@@ -97,6 +173,89 @@ namespace FileSummaryColumns {
     },
     render: (text: any, record: FileSummary, index: number) =>{
       return type.renderColumn(record, null, text, index, type);
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** type s  */
+  export const types = {
+    key: 'types',
+    dataIndex: 'types',
+    title: 'type',
+    noJson: true,
+    isArray: true,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** uid  */
+  export const uid = {
+    key: 'uid',
+    dataIndex: 'uid',
+    title: 'uid',
+    renderColumn: UIColumns.InputRender,
+    config: {
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return uid.renderColumn(record, null, text, index, uid);
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 更新时间  TIMESTAMP*/
+  export const updateTime = {
+    key: 'updateTime',
+    dataIndex: 'updateTime',
+    title: '更新时间',
+    renderColumn: UIColumns.TimeStampRender,
+    hidden: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return updateTime.renderColumn(record, null, text, index, updateTime);
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 更新时间Max  TIMESTAMP*/
+  export const updateTimeMax = {
+    key: 'updateTimeMax',
+    dataIndex: 'updateTimeMax',
+    title: '更新时间Max',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** 更新时间Min  TIMESTAMP*/
+  export const updateTimeMin = {
+    key: 'updateTimeMin',
+    dataIndex: 'updateTimeMin',
+    title: '更新时间Min',
+    noJson: true,
+    temporalType: TemporalType.TIMESTAMP,
+    format: TIMESTAMP_FORMAT,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
+  /** url  */
+  export const url = {
+    key: 'url',
+    dataIndex: 'url',
+    title: 'url',
+    renderColumn: UIColumns.InputRender,
+    config: {
+      rules: [
+        {
+          max: 255,
+          message: "最大不能超过{max}",
+        },
+      ],
+    },
+    render: (text: any, record: FileSummary, index: number) =>{
+      return url.renderColumn(record, null, text, index, url);
     },
   } as ColumnConfig<FileSummary>;
 
@@ -119,104 +278,6 @@ namespace FileSummaryColumns {
     },
   } as ColumnConfig<FileSummary>;
 
-  /** 创建时间  TIMESTAMP*/
-  export const createTime = {
-    key: 'createTime',
-    dataIndex: 'createTime',
-    title: '创建时间',
-    renderColumn: UIColumns.TimeStampRender,
-    hidden: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return createTime.renderColumn(record, null, text, index, createTime);
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** 更新时间  TIMESTAMP*/
-  export const updateTime = {
-    key: 'updateTime',
-    dataIndex: 'updateTime',
-    title: '更新时间',
-    renderColumn: UIColumns.TimeStampRender,
-    hidden: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return updateTime.renderColumn(record, null, text, index, updateTime);
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** 是否删除 (0:正常，1删除)  */
-  export const deleteFlag = {
-    key: 'deleteFlag',
-    dataIndex: 'deleteFlag',
-    title: '是否删除',
-    renderColumn: UIColumns.InputRender,
-    hidden: true,
-    config: {
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return deleteFlag.renderColumn(record, null, text, index, deleteFlag);
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** fileId s  */
-  export const fileIds = {
-    key: 'fileIds',
-    dataIndex: 'fileIds',
-    title: 'fileId',
-    noJson: true,
-    isArray: true,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** sizeMin  */
-  export const sizeMin = {
-    key: 'sizeMin',
-    dataIndex: 'sizeMin',
-    title: 'sizeMin',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** sizeMax  */
-  export const sizeMax = {
-    key: 'sizeMax',
-    dataIndex: 'sizeMax',
-    title: 'sizeMax',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** nameLike  */
-  export const nameLike = {
-    key: 'nameLike',
-    dataIndex: 'nameLike',
-    title: 'nameLike',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** type s  */
-  export const types = {
-    key: 'types',
-    dataIndex: 'types',
-    title: 'type',
-    noJson: true,
-    isArray: true,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
   /** userId s  */
   export const userIds = {
     key: 'userIds',
@@ -228,78 +289,17 @@ namespace FileSummaryColumns {
     },
   } as ColumnConfig<FileSummary>;
 
-  /** 创建时间Min  TIMESTAMP*/
-  export const createTimeMin = {
-    key: 'createTimeMin',
-    dataIndex: 'createTimeMin',
-    title: '创建时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** 创建时间Max  TIMESTAMP*/
-  export const createTimeMax = {
-    key: 'createTimeMax',
-    dataIndex: 'createTimeMax',
-    title: '创建时间Max',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** 更新时间Min  TIMESTAMP*/
-  export const updateTimeMin = {
-    key: 'updateTimeMin',
-    dataIndex: 'updateTimeMin',
-    title: '更新时间Min',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** 更新时间Max  TIMESTAMP*/
-  export const updateTimeMax = {
-    key: 'updateTimeMax',
-    dataIndex: 'updateTimeMax',
-    title: '更新时间Max',
-    noJson: true,
-    temporalType: TemporalType.TIMESTAMP,
-    format: TIMESTAMP_FORMAT,
-    config: {
-    },
-  } as ColumnConfig<FileSummary>;
-
-  /** uid  */
-  export const uid = {
-    key: 'uid',
-    dataIndex: 'uid',
-    title: 'uid',
-    renderColumn: UIColumns.InputRender,
-    config: {
-    },
-    render: (text: any, record: FileSummary, index: number) =>{
-      return uid.renderColumn(record, null, text, index, uid);
-    },
-  } as ColumnConfig<FileSummary>;
-
 
   export const renderColumns = {
-    fileId,
-    url,
-    size,
-    name,
-    type,
-    userId,
     createTime,
-    updateTime,
+    fileId,
+    name,
+    size,
+    type,
     uid,
+    updateTime,
+    url,
+    userId,
   }
 
 }

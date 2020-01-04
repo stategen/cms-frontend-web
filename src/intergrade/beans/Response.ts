@@ -14,11 +14,11 @@ export default interface Response<T> extends Bean, SimpleResponse {
   /** code */
   code?: number;
 
-  /** exeptionClass */
-  exeptionClass?: string;
-
   /** data */
   data?: T;
+
+  /** exeptionClass */
+  exeptionClass?: string;
 
   /** status */
   status?: ResponseStatus;

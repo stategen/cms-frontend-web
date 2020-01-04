@@ -11,7 +11,7 @@ import RoleType from "../enums/RoleType";
 import UIEditors from "@utils/UIEditors";
 import {
   FormItemConfig, FormItemConfigMap, TIME_FORMAT, DATE_FORMAT, TIMESTAMP_FORMAT, ObjectMap,
-  TemporalType, FormProps, confirmChanges, FormItemProps, moment
+  TemporalType, FormProps, confirmChanges, moment
 } from "@utils/DvaUtil";
 import UIColumns from "@utils/UIColumns";
 import AntdPageListColumns from '../columns/AntdPageListColumns';
@@ -366,7 +366,7 @@ namespace RoleApiForms {
    >
    </ShowDateTimeMaxEditor>
    */
-  export const getRolePageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IGetRolePageListFormItemConfigMap => {
+  export const getRolePageListFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IGetRolePageListFormItemConfigMap => {
     /** Input */
     const getRolePageList_roleIdsValue = queryRule.roleIds;
     /** Input */
@@ -404,7 +404,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleNameLike: {
         ...getRolePageList_roleNameLike,
@@ -412,7 +412,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       DescriptionLike: {
         ...getRolePageList_descriptionLike,
@@ -420,7 +420,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CreateTimeMin: {
         ...getRolePageList_createTimeMin,
@@ -428,7 +428,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       CreateTimeMax: {
         ...getRolePageList_createTimeMax,
@@ -436,7 +436,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UpdateTimeMin: {
         ...getRolePageList_updateTimeMin,
@@ -444,7 +444,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       UpdateTimeMax: {
         ...getRolePageList_updateTimeMax,
@@ -452,7 +452,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleTypes: {
         ...getRolePageList_roleTypes,
@@ -460,7 +460,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowDateMin: {
         ...getRolePageList_showDateMin,
@@ -468,7 +468,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowDateMax: {
         ...getRolePageList_showDateMax,
@@ -476,7 +476,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowTimeMin: {
         ...getRolePageList_showTimeMin,
@@ -484,7 +484,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowTimeMax: {
         ...getRolePageList_showTimeMax,
@@ -492,7 +492,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowDateTimeMin: {
         ...getRolePageList_showDateTimeMin,
@@ -500,7 +500,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       ShowDateTimeMax: {
         ...getRolePageList_showDateTimeMax,
@@ -508,7 +508,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return RolePageListFormItemConfigMap;
@@ -558,7 +558,7 @@ namespace RoleApiForms {
    >
    </RoleTypeEditor>
    */
-  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IInsertFormItemConfigMap => {
+  export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IInsertFormItemConfigMap => {
     /** Hidden */
     const insert_roleIdValue = queryRule.roleId;
     /** Input */
@@ -576,7 +576,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleName: {
         ...insert_roleName,
@@ -584,7 +584,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Description: {
         ...insert_description,
@@ -592,7 +592,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleType: {
         ...insert_roleType,
@@ -600,7 +600,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return InsertFormItemConfigMap;
@@ -650,7 +650,7 @@ namespace RoleApiForms {
    >
    </RoleIdEditor>
    */
-  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps, formItemProps?: FormItemProps): IUpdateFormItemConfigMap => {
+  export const getUpdateFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IUpdateFormItemConfigMap => {
     /** Input */
     const update_roleNameValue = queryRule.roleName;
     /** Input */
@@ -668,7 +668,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       Description: {
         ...update_description,
@@ -676,7 +676,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleType: {
         ...update_roleType,
@@ -684,7 +684,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
       RoleId: {
         ...update_roleId,
@@ -692,7 +692,7 @@ namespace RoleApiForms {
         formProps,
         record: queryRule,
         componentMap,
-        formItemProps,
+        
       },
     }
     return UpdateFormItemConfigMap;

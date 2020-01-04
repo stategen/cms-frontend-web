@@ -10,7 +10,7 @@ import AntdPageList from "../beans/AntdPageList";
 import {PaginationProps} from 'antd/es/pagination';
 import Topic from "../beans/Topic";
 import TopicType from "../enums/TopicType";
-import {apiUrlKey} from "../configs/tradeCms-config";
+import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class Bbs_topicApis {
   /**
@@ -19,7 +19,7 @@ export default class Bbs_topicApis {
    */
   static delete(params: { topicId?: string } | string): string {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/topic/delete';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {topicId: params};
@@ -33,7 +33,7 @@ export default class Bbs_topicApis {
    */
   static deleteByTopicIds(params: { topicIds?: string[] } | string[]): string[] {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/topic/deleteByTopicIds';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = (params instanceof Object && !Array.isArray(params)) ? params : {topicIds: params};
@@ -47,7 +47,7 @@ export default class Bbs_topicApis {
    */
   static getTopicPageList(params: { topicIds?: string[], authorIds?: string[], topicType?: TopicType, topicTypes?: TopicType[], title?: string, titleLike?: string, visitCountMin?: number, visitCountMax?: number, page?: number, pageSize?: number }): AntdPageList<Topic> {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/topic/getTopicPageList';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -61,7 +61,7 @@ export default class Bbs_topicApis {
    */
   static insert(params: { topicId?: string, authorId?: string, topicType?: TopicType, content?: string, title?: string, lastReplyAt?: Date, good?: number, top?: number, visitCount?: number }): Topic {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/topic/insert';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;
@@ -75,7 +75,7 @@ export default class Bbs_topicApis {
    */
   static update(params: { authorId?: string, topicType?: TopicType, content?: string, title?: string, lastReplyAt?: Date, good?: number, top?: TopicType, visitCount?: number, topicId?: string }): Topic {
     let requestInit: RequestInitEx = <RequestInitEx>{};
-    requestInit.apiUrlKey = apiUrlKey;
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
     requestInit.url = '/api/topic/update';
     requestInit.mediaType = MediaType.FORM;
     requestInit.data = params;

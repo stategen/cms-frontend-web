@@ -11,44 +11,44 @@ export const Hoppy_ID: string = 'hoppyId';
 
 export default interface Hoppy extends Bean {
 
-  /** hoppyId */
-  hoppyId?: number;
-
-  /** hoppyName */
-  hoppyName?: string;
-
   /** 创建时间 */
   createTime?: Date;
-
-  /** 更新时间 */
-  updateTime?: Date;
-
-  /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
-
-  /** hoppyId s */
-  hoppyIds?: number[];
-
-  /** hoppyNameLike */
-  hoppyNameLike?: string;
-
-  /** 创建时间Min */
-  createTimeMin?: Date;
 
   /** 创建时间Max */
   createTimeMax?: Date;
 
-  /** 更新时间Min */
-  updateTimeMin?: Date;
+  /** 创建时间Min */
+  createTimeMin?: Date;
+
+  /** 是否删除(0:正常，1删除) */
+  deleteFlag?: number;
+
+  /** hoppyId */
+  hoppyId?: number;
+
+  /** hoppyId s */
+  hoppyIds?: number[];
+
+  /** hoppyName */
+  hoppyName?: string;
+
+  /** hoppyNameLike */
+  hoppyNameLike?: string;
+
+  /** title */
+  title?: string;
+
+  /** 更新时间 */
+  updateTime?: Date;
 
   /** 更新时间Max */
   updateTimeMax?: Date;
 
+  /** 更新时间Min */
+  updateTimeMin?: Date;
+
   /** value */
   value?: string;
-
-  /** title */
-  title?: string;
 
 }
 
