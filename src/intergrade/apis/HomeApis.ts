@@ -10,13 +10,13 @@ import {tradeCmsBaseUrlKey} from "../configs/tradeCms-config";
 
 export default class HomeApis {
   /**
-   * GET /api/home
+   * GET /api/home/
    * 
    */
   static getDashboard(params?: {}): any {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = tradeCmsBaseUrlKey;
-    requestInit.url = '/api/home';
+    requestInit.url = '/api/home/';
     requestInit.data = params;
     requestInit.method = Method.GET;
     return Net.fetch(requestInit);

@@ -28,7 +28,7 @@ export default interface Region extends Bean {
   createTimeMin?: Date;
 
   /** 是否删除 (0:正常，1删除) */
-  deleteFlag?: number;
+  deleteFlag?: boolean;
 
   /** isLeaf */
   isLeaf?: boolean;

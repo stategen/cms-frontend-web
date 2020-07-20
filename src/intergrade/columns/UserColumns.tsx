@@ -104,9 +104,6 @@ namespace UserColumns {
     referConfig: {
       api: 'getFileSummaryOptions',
       referField: 'avatarImg',
-      optionConvertor: {
-        value: 'fileId',
-      },
     },
     config: {
       rules: [

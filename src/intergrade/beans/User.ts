@@ -76,7 +76,7 @@ export default interface User extends Bean {
   createTimeMin?: Date;
 
   /** 是否删除 (0:正常，1删除) */
-  deleteFlag?: number;
+  deleteFlag?: boolean;
 
   /** 邮箱 */
   email?: string;
