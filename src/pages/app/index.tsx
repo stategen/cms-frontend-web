@@ -14,7 +14,7 @@ import './index.less'
 import {AppDispatch, appEffects, AppProps, appReducers, AppState} from "@i/interfaces/AppFaces";
 import {Tabs} from 'antd';
 import {ConnectionPros, makeMap} from "@utils/DvaUtil";
-import Menu, {MenuFields} from "@i/beans/Menu";
+import Menu, {Menu_ID} from "@i/beans/Menu";
 import {TabsProps} from "antd/lib/tabs";
 import {routerRedux} from 'dva/router'
 import User from "@i/beans/User";
@@ -131,7 +131,7 @@ const appPage = ({children, dispatch, appState, loading, location}: AppPagesProp
     const onEdit = (targetKey, action) => {
       if (action === 'remove') {
         const preMaxRoute = RouteUtil.checkAndGetPreOrder(appState.routeOrders, targetKey);
-        const menuRouteMap = makeMap(menus, MenuFields.route);
+        const menuRouteMap = makeMap(menus, 'route');
         const preMenu: Menu = menuRouteMap[preMaxRoute];
         const theMenu =preMenu|| homeMenu;
         dispatch(routerRedux.push({

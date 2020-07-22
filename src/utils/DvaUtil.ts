@@ -234,6 +234,7 @@ export interface DvaPageElement {
 export interface LoadingProps {
   effects?: any;
   models?: any;
+  global?: any;
 }
 
 export interface ConnectionPros {
