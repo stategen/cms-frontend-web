@@ -176,6 +176,16 @@ namespace FileSummaryColumns {
     },
   } as ColumnConfig<FileSummary>;
 
+  /** typeLike  */
+  export const typeLike = {
+    key: 'typeLike',
+    dataIndex: 'typeLike',
+    title: 'typeLike',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<FileSummary>;
+
   /** type s  */
   export const types = {
     key: 'types',

@@ -9,6 +9,10 @@ import {Bean} from "@utils/DvaUtil";
 /** cityId */
 export const City_ID: string = 'cityId';
 
+export const CityFields = {
+  cityId: City_ID,
+}
+
 export default interface City extends Bean {
 
   /** areacode */

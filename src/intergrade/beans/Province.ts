@@ -9,6 +9,10 @@ import {Bean} from "@utils/DvaUtil";
 /** provinceId */
 export const Province_ID: string = 'provinceId';
 
+export const ProvinceFields = {
+  provinceId: Province_ID,
+}
+
 export default interface Province extends Bean {
 
   /** 创建时间 */

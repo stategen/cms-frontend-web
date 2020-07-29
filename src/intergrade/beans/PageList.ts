@@ -8,6 +8,9 @@ import {PaginationProps} from 'antd/es/pagination';
 import {Bean} from "@utils/DvaUtil";
 
 
+export const PageListFields = {
+}
+
 export default interface PageList<E> extends Bean {
 
   /** items */

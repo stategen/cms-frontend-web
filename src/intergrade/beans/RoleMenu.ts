@@ -9,6 +9,10 @@ import {Bean} from "@utils/DvaUtil";
 /** id */
 export const RoleMenu_ID: string = 'id';
 
+export const RoleMenuFields = {
+  id: RoleMenu_ID,
+}
+
 export default interface RoleMenu extends Bean {
 
   /** 数据创建时间 */
@@ -25,6 +29,12 @@ export default interface RoleMenu extends Bean {
 
   /** id */
   id?: number;
+
+  /** idMax */
+  idMax?: number;
+
+  /** idMin */
+  idMin?: number;
 
   /** id s */
   ids?: number[];

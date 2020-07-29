@@ -82,8 +82,8 @@ namespace Bbs_topicApiForms {
   /** 主题ID */
   const insert_topicId = {
     ...TopicColumns.topicId,
-    UIEditor__: UIEditors.BuildHiddenEditor,
-    Editor: UIEditors.BuildHiddenEditor,
+    UIEditor__: UIEditors.BuildInputEditor,
+    Editor: UIEditors.BuildInputEditor,
   };
   /** 作者ID */
   const insert_authorId = {
@@ -206,8 +206,8 @@ namespace Bbs_topicApiForms {
   /** 主题ID */
   const update_topicId = {
     ...TopicColumns.topicId,
-    UIEditor__: UIEditors.BuildHiddenEditor,
-    Editor: UIEditors.BuildHiddenEditor,
+    UIEditor__: UIEditors.BuildInputEditor,
+    Editor: UIEditors.BuildInputEditor,
   };
   confirmChanges([
       update_authorId,
@@ -414,7 +414,7 @@ namespace Bbs_topicApiForms {
 
   let InsertFormItemConfigMap = null;
   export const removeInsertFormItemConfigMapRef = ((ref) => ref ? null : InsertFormItemConfigMap = null);
-  insert_topicId.Editor = ((props?: UIEditors.HiddenEditorProps) => {
+  insert_topicId.Editor = ((props?: UIEditors.InputEditorProps) => {
     return UIEditors.rebuildEditor(props, InsertFormItemConfigMap.TopicId, removeInsertFormItemConfigMapRef);
   }) as any;
   insert_authorId.Editor = ((props?: UIEditors.InputEditorProps) => {
@@ -481,7 +481,7 @@ namespace Bbs_topicApiForms {
    </VisitCountEditor>
    */
   export const getInsertFormItemConfigMap = (queryRule: ObjectMap<any> = {}, formProps?: FormProps): IInsertFormItemConfigMap => {
-    /** Hidden */
+    /** Input */
     const insert_topicIdValue = queryRule.topicId;
     /** Input */
     const insert_authorIdValue = queryRule.authorId;
@@ -625,7 +625,7 @@ namespace Bbs_topicApiForms {
   update_visitCount.Editor = ((props?: UIEditors.InputEditorProps) => {
     return UIEditors.rebuildEditor(props, UpdateFormItemConfigMap.VisitCount, removeUpdateFormItemConfigMapRef);
   }) as any;
-  update_topicId.Editor = ((props?: UIEditors.HiddenEditorProps) => {
+  update_topicId.Editor = ((props?: UIEditors.InputEditorProps) => {
     return UIEditors.rebuildEditor(props, UpdateFormItemConfigMap.TopicId, removeUpdateFormItemConfigMapRef);
   }) as any;
 
@@ -684,7 +684,7 @@ namespace Bbs_topicApiForms {
     const update_topValue = queryRule.top;
     /** Input */
     const update_visitCountValue = queryRule.visitCount;
-    /** Hidden */
+    /** Input */
     const update_topicIdValue = queryRule.topicId;
     queryRule.lastOptions__ ? null : queryRule.lastOptions__ = {};
     const componentMap = {};

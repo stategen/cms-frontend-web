@@ -16,6 +16,12 @@ import {Bean} from "@utils/DvaUtil";
 /** userId */
 export const User_ID: string = 'userId';
 
+export const UserFields = {
+  email: 'email',
+  userId: User_ID,
+  username: 'username',
+}
+
 export default interface User extends Bean {
 
   /** 详细地址 */
@@ -158,6 +164,9 @@ export default interface User extends Bean {
 
   /** 状态 enum */
   status?: StatusEnum;
+
+  /** 状态Like */
+  statusLike?: StatusEnum;
 
   /** 状态 s */
   statuss?: StatusEnum[];

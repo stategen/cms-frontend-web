@@ -78,6 +78,26 @@ namespace RoleMenuColumns {
     },
   } as ColumnConfig<RoleMenu>;
 
+  /** idMax  */
+  export const idMax = {
+    key: 'idMax',
+    dataIndex: 'idMax',
+    title: 'idMax',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<RoleMenu>;
+
+  /** idMin  */
+  export const idMin = {
+    key: 'idMin',
+    dataIndex: 'idMin',
+    title: 'idMin',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<RoleMenu>;
+
   /** id s  */
   export const ids = {
     key: 'ids',

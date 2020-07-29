@@ -9,6 +9,10 @@ import {Bean} from "@utils/DvaUtil";
 /** hoppyId */
 export const Hoppy_ID: string = 'hoppyId';
 
+export const HoppyFields = {
+  hoppyId: Hoppy_ID,
+}
+
 export default interface Hoppy extends Bean {
 
   /** 创建时间 */

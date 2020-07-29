@@ -10,6 +10,10 @@ import {Bean} from "@utils/DvaUtil";
 /** regionId */
 export const Region_ID: string = 'regionId';
 
+export const RegionFields = {
+  regionId: Region_ID,
+}
+
 export default interface Region extends Bean {
 
   /** 代码 */

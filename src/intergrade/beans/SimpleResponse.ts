@@ -7,6 +7,9 @@
 import {Bean} from "@utils/DvaUtil";
 
 
+export const SimpleResponseFields = {
+}
+
 export default interface SimpleResponse extends Bean {
 
   /** message */

@@ -11,6 +11,10 @@ import {Bean} from "@utils/DvaUtil";
 /** topicId */
 export const Topic_ID: string = 'topicId';
 
+export const TopicFields = {
+  topicId: Topic_ID,
+}
+
 export default interface Topic extends Bean {
 
   /** author */
@@ -25,9 +29,6 @@ export default interface Topic extends Bean {
   /** 内容 */
   content?: string;
 
-  /** 内容Like */
-  contentLike?: string;
-
   /** 创建时间 */
   createTime?: Date;
 
@@ -37,8 +38,14 @@ export default interface Topic extends Bean {
   /** 创建时间Min */
   createTimeMin?: Date;
 
+  /** 树(类似部门)主键currOrgId */
+  currOrgId?: number;
+
+  /** 所有者currUserId */
+  currUserId?: string;
+
   /** 是否删除(0:正常，1删除) */
-  deleteFlag?: number;
+  deleteFlag?: boolean;
 
   /** 精华 */
   good?: number;
@@ -48,6 +55,18 @@ export default interface Topic extends Bean {
 
   /** 精华Min */
   goodMin?: number;
+
+  /** inclCurrOrgId */
+  inclCurrOrgId?: boolean;
+
+  /** inclInvokerOrgId */
+  inclInvokerOrgId?: boolean;
+
+  /** 树(类似部门)主键invokerOrgId */
+  invokerOrgId?: number;
+
+  /** 所有者invokerUserId */
+  invokerUserId?: string;
 
   /** 最后回复 */
   lastReplyAt?: Date;

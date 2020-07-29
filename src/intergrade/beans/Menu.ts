@@ -11,10 +11,21 @@ import {Bean} from "@utils/DvaUtil";
 /** menuId */
 export const Menu_ID: string = 'menuId';
 
+export const MenuFields = {
+  menuId: Menu_ID,
+  route: 'route',
+}
+
 export default interface Menu extends Bean {
 
   /** menuId与bpid组成树图 */
   bpid?: number;
+
+  /** menuId与bpid组成树图Max */
+  bpidMax?: number;
+
+  /** menuId与bpid组成树图Min */
+  bpidMin?: number;
 
   /** menuId与bpid组成树图 s */
   bpids?: number[];
@@ -84,6 +95,12 @@ export default interface Menu extends Bean {
 
   /** 大部分情况下与bpid相同，当为动态目录时，mpid=-1 */
   mpid?: number;
+
+  /** 大部分情况下与bpid相同Max */
+  mpidMax?: number;
+
+  /** 大部分情况下与bpid相同Min */
+  mpidMin?: number;
 
   /** 大部分情况下与bpid相同 s */
   mpids?: number[];

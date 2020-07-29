@@ -25,6 +25,26 @@ namespace MenuColumns {
     },
   } as ColumnConfig<Menu>;
 
+  /** menuId与bpid组成树图Max  */
+  export const bpidMax = {
+    key: 'bpidMax',
+    dataIndex: 'bpidMax',
+    title: 'menuId与bpid组成树图Max',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<Menu>;
+
+  /** menuId与bpid组成树图Min  */
+  export const bpidMin = {
+    key: 'bpidMin',
+    dataIndex: 'bpidMin',
+    title: 'menuId与bpid组成树图Min',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<Menu>;
+
   /** menuId与bpid组成树图 s  */
   export const bpids = {
     key: 'bpids',
@@ -342,6 +362,26 @@ namespace MenuColumns {
     },
   } as ColumnConfig<Menu>;
 
+  /** 大部分情况下与bpid相同Max  */
+  export const mpidMax = {
+    key: 'mpidMax',
+    dataIndex: 'mpidMax',
+    title: '大部分情况下与bpid相同Max',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<Menu>;
+
+  /** 大部分情况下与bpid相同Min  */
+  export const mpidMin = {
+    key: 'mpidMin',
+    dataIndex: 'mpidMin',
+    title: '大部分情况下与bpid相同Min',
+    noJson: true,
+    config: {
+    },
+  } as ColumnConfig<Menu>;
+
   /** 大部分情况下与bpid相同 s  */
   export const mpids = {
     key: 'mpids',
@@ -446,6 +486,10 @@ namespace MenuColumns {
     renderColumn: UIColumns.InputRender,
     config: {
       rules: [
+        {
+          required: true,
+          message: "不能为null",
+        },
         {
           max: 64,
           message: "最大不能超过{max}",

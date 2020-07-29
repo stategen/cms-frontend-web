@@ -736,6 +736,20 @@ namespace UserColumns {
     },
   } as ColumnConfig<User>;
 
+  /** 状态Like  */
+  export const statusLike = {
+    key: 'statusLike',
+    dataIndex: 'statusLike',
+    title: '状态Like',
+    noJson: true,
+    isEnum: true,
+    referConfig: {
+      options: statusEnumOptions,
+    },
+    config: {
+    },
+  } as ColumnConfig<User>;
+
   /** 状态 s  */
   export const statuss = {
     key: 'statuss',

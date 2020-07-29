@@ -9,6 +9,10 @@ import {Bean} from "@utils/DvaUtil";
 /** fileId */
 export const FileSummary_ID: string = 'fileId';
 
+export const FileSummaryFields = {
+  fileId: FileSummary_ID,
+}
+
 export default interface FileSummary extends Bean {
 
   /** 创建时间 */
@@ -46,6 +50,9 @@ export default interface FileSummary extends Bean {
 
   /** type */
   type?: string;
+
+  /** typeLike */
+  typeLike?: string;
 
   /** type s */
   types?: string[];
