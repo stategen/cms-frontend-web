@@ -1,0 +1,46 @@
+                            <!-- 生成ts文件模型和cms -->
+                            <execution>
+                                <id>>>>>>>>>>>>>>>>> tradeCms auto generate web frondend files 生成前端 web 代码 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>WebFacadeProcessor</mainClass>
+                                    <classpathScope>test</classpathScope>
+                                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                                    <classpathScope>test</classpathScope>
+                                </configuration>
+                            </execution>
+                            <!-- 安装前端代码需要的插件 -->
+                            <execution>
+                                <id>>>>>>>>>>>>>>>>>tradeCms yarn 下载 web 前端 web 依赖 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <workingDirectory>./cms-frontend-web/</workingDirectory>
+                                    <executable>yarn</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                        <argument>--ignore-engines</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- 编译前端代码 -->
+                            <execution>
+                                <id>>>>>>>>>>>>>>>>>tradeCms yarn run build 编译 web 前端 web 代码 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <workingDirectory>./cms-frontend-web/</workingDirectory>
+                                    <executable>yarn</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>build</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>

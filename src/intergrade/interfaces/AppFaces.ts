@@ -56,6 +56,8 @@ interface AppInitReducers<S extends AppState> extends Reducers<S> {
   /**   成功后 更新状态*/
   logout_success?: Reducer<AppState>,
   /**   更新状态*/
+  /**   更新状态*/
+  /**   更新状态*/
 }
 
 export type AppReducers = AppInitReducers<AppState> & AppCustomReducers;
@@ -181,6 +183,10 @@ export class AppDispatch {
       }
     }
   };
+
+
+
+
 
 
 

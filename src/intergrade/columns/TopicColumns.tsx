@@ -191,36 +191,6 @@ namespace TopicColumns {
     },
   } as ColumnConfig<Topic>;
 
-  /** inclInvokerOrgId  */
-  export const inclInvokerOrgId = {
-    key: 'inclInvokerOrgId',
-    dataIndex: 'inclInvokerOrgId',
-    title: 'inclInvokerOrgId',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<Topic>;
-
-  /** 树(类似部门)主键invokerOrgId  */
-  export const invokerOrgId = {
-    key: 'invokerOrgId',
-    dataIndex: 'invokerOrgId',
-    title: '树(类似部门)主键invokerOrgId',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<Topic>;
-
-  /** 所有者invokerUserId  */
-  export const invokerUserId = {
-    key: 'invokerUserId',
-    dataIndex: 'invokerUserId',
-    title: '所有者invokerUserId',
-    noJson: true,
-    config: {
-    },
-  } as ColumnConfig<Topic>;
-
   /** 最后回复  TIMESTAMP*/
   export const lastReplyAt = {
     key: 'lastReplyAt',

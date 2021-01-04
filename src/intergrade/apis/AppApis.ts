@@ -139,4 +139,30 @@ export default class AppApis {
     return Net.fetch(requestInit, false);
   }
 
+  /**
+   * GET /api/app/testSeataAt
+   * 
+   */
+  static testSeataAt(params?: {}): User {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/testSeataAt';
+    requestInit.data = params;
+    requestInit.method = Method.GET;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * GET /api/app/testUid
+   * 
+   */
+  static testUid(params?: {}): string {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/testUid';
+    requestInit.data = params;
+    requestInit.method = Method.GET;
+    return Net.fetch(requestInit);
+  }
+
 }

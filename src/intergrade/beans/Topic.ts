@@ -59,15 +59,6 @@ export default interface Topic extends Bean {
   /** inclCurrOrgId */
   inclCurrOrgId?: boolean;
 
-  /** inclInvokerOrgId */
-  inclInvokerOrgId?: boolean;
-
-  /** 树(类似部门)主键invokerOrgId */
-  invokerOrgId?: number;
-
-  /** 所有者invokerUserId */
-  invokerUserId?: string;
-
   /** 最后回复 */
   lastReplyAt?: Date;
 

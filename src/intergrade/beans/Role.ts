@@ -10,7 +10,9 @@ import {Bean} from "@utils/DvaUtil";
 export const Role_ID: string = 'roleId';
 
 export const RoleFields = {
+  description: 'description',
   roleId: Role_ID,
+  roleName: 'roleName',
 }
 
 export default interface Role extends Bean {
