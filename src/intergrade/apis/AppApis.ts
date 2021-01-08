@@ -113,6 +113,20 @@ export default class AppApis {
   }
 
   /**
+   * POST /api/app/login
+   * 
+   */
+  static login(params: { username: string, password: string }): SimpleResponse {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/login';
+    requestInit.mediaType = MediaType.FORM;
+    requestInit.data = params;
+    requestInit.method = Method.POST;
+    return Net.fetch(requestInit);
+  }
+
+  /**
    * POST /api/app/logout
    * 
    */
@@ -140,13 +154,26 @@ export default class AppApis {
   }
 
   /**
-   * GET /api/app/testSeataAt
+   * GET /api/app/testSeata
    * 
    */
-  static testSeataAt(params?: {}): User {
+  static testSeata(params?: {}): User {
     let requestInit: RequestInitEx = <RequestInitEx>{};
     requestInit.apiUrlKey = tradeCmsBaseUrlKey;
-    requestInit.url = '/api/app/testSeataAt';
+    requestInit.url = '/api/app/testSeata';
+    requestInit.data = params;
+    requestInit.method = Method.GET;
+    return Net.fetch(requestInit);
+  }
+
+  /**
+   * GET /api/app/testSentinel
+   * 
+   */
+  static testSentinel(params?: {}): User {
+    let requestInit: RequestInitEx = <RequestInitEx>{};
+    requestInit.apiUrlKey = tradeCmsBaseUrlKey;
+    requestInit.url = '/api/app/testSentinel';
     requestInit.data = params;
     requestInit.method = Method.GET;
     return Net.fetch(requestInit);

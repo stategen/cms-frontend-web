@@ -53,8 +53,10 @@ interface AppInitReducers<S extends AppState> extends Reducers<S> {
   /** 省份  更新状态*/
   /** 获取地区  更新状态*/
   /** 获取用户  更新状态*/
+  /**   更新状态*/
   /**   成功后 更新状态*/
   logout_success?: Reducer<AppState>,
+  /**   更新状态*/
   /**   更新状态*/
   /**   更新状态*/
   /**   更新状态*/
@@ -172,6 +174,8 @@ export class AppDispatch {
 
 
 
+
+
   /**  */
   static logout_effect(params?: {}, areaExtraProps__?: AreaState<any>, stateExtraProps__?: AppState) {
     return {
@@ -183,6 +187,8 @@ export class AppDispatch {
       }
     }
   };
+
+
 
 
 

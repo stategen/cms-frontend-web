@@ -16,7 +16,9 @@ enum ResponseStatus {
   /** PAY_NO_TOKEN */
   PAY_NO_TOKEN = "PAY_NO_TOKEN",
   /** NOT_LOGIN */
-  NOT_LOGIN = "NOT_LOGIN"
+  NOT_LOGIN = "NOT_LOGIN",
+  /** BLOCK */
+  BLOCK = "BLOCK"
 
 }
 
@@ -49,6 +51,12 @@ export const responseStatusOptions = {
   NOT_LOGIN: {
     value: ResponseStatus.NOT_LOGIN,
     title: 'NOT_LOGIN',
+  },
+
+  /** BLOCK */
+  BLOCK: {
+    value: ResponseStatus.BLOCK,
+    title: 'BLOCK',
   }
 
 }
